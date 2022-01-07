@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:positioncollect/src/api/apiService.dart';
 import 'package:positioncollect/src/api/auth/authApiService.dart';
 import 'package:positioncollect/src/api/auth/authApiServiceFactory.dart';
+import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
@@ -50,4 +51,6 @@ Future<void> init() async {
   );
 
   //Bloc
+  getIt.registerFactory<AuthBloc>(() =>
+      AuthBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
 }
