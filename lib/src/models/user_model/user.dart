@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'commercial.dart';
+
 part 'user.g.dart';
 
 @JsonSerializable()
@@ -9,12 +11,14 @@ class User {
   String? email;
   @JsonKey(name: 'email_verified_at')
   String? emailVerifiedAt;
-  int? phone;
+  String? phone;
   int? role;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
+  Commercial? commercial;
+  dynamic manager;
 
   User({
     this.id,
@@ -25,11 +29,13 @@ class User {
     this.role,
     this.createdAt,
     this.updatedAt,
+    this.commercial,
+    this.manager,
   });
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, emailVerifiedAt: $emailVerifiedAt, phone: $phone, role: $role, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'User(id: $id, name: $name, email: $email, emailVerifiedAt: $emailVerifiedAt, phone: $phone, role: $role, createdAt: $createdAt, updatedAt: $updatedAt, commercial: $commercial, manager: $manager)';
   }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -41,10 +47,12 @@ class User {
     String? name,
     String? email,
     String? emailVerifiedAt,
-    int? phone,
+    String? phone,
     int? role,
     String? createdAt,
     String? updatedAt,
+    Commercial? commercial,
+    dynamic manager,
   }) {
     return User(
       id: id ?? this.id,
@@ -55,6 +63,8 @@ class User {
       role: role ?? this.role,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      commercial: commercial ?? this.commercial,
+      manager: manager ?? this.manager,
     );
   }
 }

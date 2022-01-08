@@ -1,5 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
@@ -29,14 +32,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final isSignedIn = await authRepository!.hasToken();
     final firstOpen = await sharedPreferencesHelper!.getIsFirstOpen();
     final token = await sharedPreferencesHelper!.getToken();
-    if (firstOpen == "oui") {
-      return emit(AuthFirstOpen());
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) {
+          return emit(AuthDisableLocation());
+          //  SystemNavigator.pop();
+        } else {
+          if (firstOpen == "oui") {
+            return emit(AuthFirstOpen());
+          } else {
+            if (isSignedIn) {
+              final userResult = await authRepository!.getuser(token!);
+              return emit(AuthSuccess(userResult.success!.data!.user!));
+            } else {
+              return emit(AuthFailure());
+            }
+          }
+        }
+      }
     } else {
-      if (isSignedIn) {
-        final userResult = await authRepository!.getuser(token!);
-        return emit(AuthSuccess(userResult.success!.data!.user!));
+      if (firstOpen == "oui") {
+        return emit(AuthFirstOpen());
       } else {
-        return emit(AuthFailure());
+        if (isSignedIn) {
+          final userResult = await authRepository!.getuser(token!);
+          if (userResult.success!.data!.user!.commercial!.actif == 1) {
+            return emit(AuthSuccess(userResult.success!.data!.user!));
+          } else {
+            return emit(AuthDisableAccount());
+          }
+        } else {
+          return emit(AuthFailure());
+        }
       }
     }
   }
@@ -52,7 +87,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return emit(AuthFirstOpen());
     } else {
       final userResult = await authRepository!.getuser(token!);
-      return emit(AuthSuccess(userResult.success!.data!.user!));
+      if (userResult.success!.data!.user!.commercial!.actif == 1) {
+        return emit(AuthSuccess(userResult.success!.data!.user!));
+      } else {
+        return emit(AuthDisableAccount());
+      }
     }
   }
 

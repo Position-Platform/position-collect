@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
+import 'package:positioncollect/src/views/ladingScreen/lading.dart';
+import 'package:positioncollect/src/views/splashScreen/splash.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -22,27 +24,29 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthInitial) {
-            //  return SplashScreen();
+            return SplashScreen();
           }
           if (state is AuthFirstOpen) {
-            //  return LadingPage();
+            return LadingPage();
           }
           if (state is AuthFailure) {
-            /*  return BlocProvider<LoginBloc>(
+            /* return BlocProvider<LoginBloc>(
               create: (context) => getIt<LoginBloc>(),
               child: LoginScreen(),
             );*/
+            return Container();
           }
           if (state is AuthSuccess) {
-            /* return BlocProvider<HomeBloc>(
+            /*return BlocProvider<HomeBloc>(
               create: (context) => getIt<HomeBloc>(),
               child: HomePage(
                 imageProfil: state.imageProfil,
               ),
             );*/
+            return Container();
           }
 
-          return Container();
+          return SplashScreen();
         },
       ),
     );
