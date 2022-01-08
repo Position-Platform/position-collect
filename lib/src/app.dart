@@ -8,7 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
 import 'package:positioncollect/src/views/ladingScreen/lading.dart';
 import 'package:positioncollect/src/views/splashScreen/splash.dart';
@@ -18,8 +19,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Position Collect",
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {

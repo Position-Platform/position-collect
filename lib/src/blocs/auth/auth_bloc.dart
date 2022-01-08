@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
@@ -43,8 +41,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied ||
             permission == LocationPermission.deniedForever) {
+          // SystemNavigator.pop();
           return emit(AuthDisableLocation());
-          //  SystemNavigator.pop();
         } else {
           if (firstOpen == "oui") {
             return emit(AuthFirstOpen());

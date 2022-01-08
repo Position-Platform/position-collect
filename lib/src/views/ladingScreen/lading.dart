@@ -8,11 +8,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/widgets/buttonWidget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LadingPage extends StatelessWidget {
   @override
@@ -41,18 +41,18 @@ class LadingPage extends StatelessWidget {
               title: '',
               body: '',
               footer: ButtonWidget(
-                text: AppLocalizations.of(context)!.go,
+                text: S.of(context).go,
                 onClicked: () => context.read<AuthBloc>().add(AuthFirst()),
               ),
               image: buildImage('assets/images/tuto4.png'),
               decoration: getPageDecoration(),
             ),
           ],
-          done: Text(AppLocalizations.of(context)!.go,
+          done: Text(S.of(context).go,
               style: const TextStyle(fontWeight: FontWeight.w600)),
           onDone: () => context.read<AuthBloc>().add(AuthFirst()),
           showSkipButton: true,
-          skip: Text(AppLocalizations.of(context)!.skip),
+          skip: Text(S.of(context).skip),
           onSkip: () => context.read<AuthBloc>().add(AuthFirst()),
           next: const Icon(Icons.arrow_forward),
           dotsDecorator: getDotDecoration(),

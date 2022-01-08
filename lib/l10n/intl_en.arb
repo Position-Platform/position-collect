@@ -1,4 +1,5 @@
 {
+    "@@locale" : "en",
     "appname" : "Position Collect",
     "skip": "Skip",
     "next": "Next",
