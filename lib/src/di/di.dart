@@ -1,10 +1,10 @@
-// ignore_for_file: file_names, avoid_print
-
 /*
- * Created on Fri Jan 07 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:01:23 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:01:23 
  */
+// ignore_for_file: file_names, avoid_print
 
 import 'package:chopper/chopper.dart';
 import 'package:get_it/get_it.dart';

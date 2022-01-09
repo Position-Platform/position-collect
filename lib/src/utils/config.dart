@@ -1,10 +1,10 @@
-// ignore_for_file: constant_identifier_names
-
 /*
- * Created on Thu Jan 06 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:02:55 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:02:55 
  */
+// ignore_for_file: constant_identifier_names
 
 const apiUrl = "https://services.position.cm";
 const apiKey =

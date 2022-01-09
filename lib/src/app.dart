@@ -1,10 +1,10 @@
-// ignore_for_file: file_names, avoid_print, use_key_in_widget_constructors
-
 /*
- * Created on Fri Jan 07 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:03:52 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:03:52 
  */
+// ignore_for_file: file_names, avoid_print, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

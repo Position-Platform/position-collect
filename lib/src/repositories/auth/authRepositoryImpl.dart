@@ -1,10 +1,10 @@
-// ignore_for_file: file_names, avoid_print
-
 /*
- * Created on Fri Jan 07 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:02:41 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:02:41 
  */
+// ignore_for_file: file_names, avoid_print
 
 import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/models/user_model/user_model.dart';

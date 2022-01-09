@@ -1,3 +1,9 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:00:41 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:00:41 
+ */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';

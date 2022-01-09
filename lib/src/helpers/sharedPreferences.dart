@@ -1,3 +1,9 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:01:47 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:01:47 
+ */
 // ignore_for_file: file_names, avoid_print
 
 import 'package:shared_preferences/shared_preferences.dart';

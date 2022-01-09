@@ -1,10 +1,10 @@
-// ignore_for_file: file_names
-
 /*
- * Created on Thu Jan 06 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:00:29 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:00:29 
  */
+// ignore_for_file: file_names
 
 import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/utils/config.dart';

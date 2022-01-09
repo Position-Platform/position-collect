@@ -1,3 +1,9 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:01:41 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:01:41 
+ */
 import 'dart:io';
 
 class NetworkInfoHelper {

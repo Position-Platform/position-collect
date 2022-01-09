@@ -1,10 +1,10 @@
-part of 'auth_bloc.dart';
-
 /*
- * Created on Fri Jan 07 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:00:55 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:00:55 
  */
+part of 'auth_bloc.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();

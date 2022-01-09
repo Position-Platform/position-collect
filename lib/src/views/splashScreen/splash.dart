@@ -1,10 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use
-
 /*
- * Created on Fri Jan 07 2022 by Boris Gautier
- *
- * Copyright (c) 2022 
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:03:37 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:03:37 
  */
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use
 
 import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';

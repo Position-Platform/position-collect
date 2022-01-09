@@ -1,3 +1,9 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:03:58 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:03:58 
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
