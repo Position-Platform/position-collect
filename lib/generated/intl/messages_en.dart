@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Email error. Try again!!!"),
         "emailSend": MessageLookupByLibrary.simpleMessage(
             "A reset email has been sent to you"),
+        "enableGps": MessageLookupByLibrary.simpleMessage(
+            "Please make sure you enable GPS and try again"),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("Forgot your password?"),
         "go": MessageLookupByLibrary.simpleMessage("Go ahead"),
@@ -51,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Login successful"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noAccount": MessageLookupByLibrary.simpleMessage("No Account yet?  "),
+        "noLocation":
+            MessageLookupByLibrary.simpleMessage("Cannot get current location"),
         "passError":
             MessageLookupByLibrary.simpleMessage("Different passwords"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),

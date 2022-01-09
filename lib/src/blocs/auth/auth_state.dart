@@ -38,9 +38,6 @@ class AuthFailure extends AuthState {}
 //Compte désactivé
 class AuthDisableAccount extends AuthState {}
 
-//GPS désactivé
-class AuthDisableLocation extends AuthState {}
-
 //Authetification Login
 class AuthLoginState extends AuthState {}
 

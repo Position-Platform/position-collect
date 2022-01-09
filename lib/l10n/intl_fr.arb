@@ -32,5 +32,7 @@
     "addEmail" : "Remplissez l'adresse mail",
     "phone" : "Numéro de Téléphone",
     "dashboard" : "Accueil",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "noLocation" : "Impossible d'obtenir l'emplacement actuel",
+    "enableGps" : "Assurez-vous d'activer le GPS et réessayez."
     }

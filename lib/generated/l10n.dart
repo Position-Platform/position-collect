@@ -369,6 +369,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Cannot get current location`
+  String get noLocation {
+    return Intl.message(
+      'Cannot get current location',
+      name: 'noLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please make sure you enable GPS and try again`
+  String get enableGps {
+    return Intl.message(
+      'Please make sure you enable GPS and try again',
+      name: 'enableGps',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

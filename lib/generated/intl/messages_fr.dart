@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Erreur de mail. Reesayez!!!"),
         "emailSend": MessageLookupByLibrary.simpleMessage(
             "Un mail de reinitialisation vous a été envoyé"),
+        "enableGps": MessageLookupByLibrary.simpleMessage(
+            "Assurez-vous d\'activer le GPS et réessayez."),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("Mot de Passe oublié ?"),
         "go": MessageLookupByLibrary.simpleMessage("Allez-y"),
@@ -56,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Suivant"),
         "noAccount":
             MessageLookupByLibrary.simpleMessage("Pas encore de Compte?  "),
+        "noLocation": MessageLookupByLibrary.simpleMessage(
+            "Impossible d\'obtenir l\'emplacement actuel"),
         "passError":
             MessageLookupByLibrary.simpleMessage("Mots de passes differents"),
         "password": MessageLookupByLibrary.simpleMessage("Mot de Passe"),

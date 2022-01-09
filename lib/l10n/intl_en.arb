@@ -32,5 +32,7 @@
     "addEmail" : "Fill in the email address",
     "phone" : "Phone Number",
     "dashboard" : "Home",
-    "search" : "Search"
+    "search" : "Search",
+    "noLocation" : "Cannot get current location",
+    "enableGps" : "Please make sure you enable GPS and try again"
 }

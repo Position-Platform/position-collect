@@ -7,11 +7,12 @@ part 'data.g.dart';
 @JsonSerializable()
 class Data {
   User? user;
+  String? token;
 
-  Data({this.user});
+  Data({this.user, this.token});
 
   @override
-  String toString() => 'Data(user: $user)';
+  String toString() => 'Data(user: $user,token: $token)';
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
 
@@ -19,9 +20,11 @@ class Data {
 
   Data copyWith({
     User? user,
+    String? token,
   }) {
     return Data(
       user: user ?? this.user,
+      token: token ?? this.token,
     );
   }
 }

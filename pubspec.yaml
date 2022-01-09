@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  android_intent: ^2.0.2
   chopper: ^4.0.4
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
@@ -45,9 +46,11 @@ dependencies:
   intl_utils: ^2.6.0
   introduction_screen: ^2.1.0
   json_annotation: ^4.4.0
+  location: ^4.3.0
   mapbox_gl: ^0.14.0
   meta: ^1.7.0
   path_provider: ^2.0.8
+  permission_handler: ^8.3.0
   rxdart: ^0.27.3
   shared_preferences: ^2.0.11
 
