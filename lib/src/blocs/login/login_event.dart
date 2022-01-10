@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 08:46:05 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-09 08:57:15
+ * @Last Modified time: 2022-01-09 15:23:55
  */
 part of 'login_bloc.dart';
 
@@ -13,16 +13,16 @@ abstract class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginEmailChanged extends LoginEvent {
-  final String? email;
+class LoginPhoneChanged extends LoginEvent {
+  final String? phone;
 
-  const LoginEmailChanged({@required this.email});
-
-  @override
-  List<Object> get props => [email!];
+  const LoginPhoneChanged({@required this.phone});
 
   @override
-  String toString() => 'LoginEmailChanged { email :$email }';
+  List<Object> get props => [phone!];
+
+  @override
+  String toString() => 'LoginPhoneChanged { phone :$phone }';
 }
 
 class LoginPasswordChanged extends LoginEvent {
@@ -50,19 +50,19 @@ class PasswordReset extends LoginEvent {
 }
 
 class LoginWithCredentialsPressed extends LoginEvent {
-  final String? email;
+  final String? phone;
   final String? password;
 
   const LoginWithCredentialsPressed({
-    @required this.email,
+    @required this.phone,
     @required this.password,
   });
 
   @override
-  List<Object> get props => [email!, password!];
+  List<Object> get props => [phone!, password!];
 
   @override
   String toString() {
-    return 'LoginWithCredentialsPressed { email: $email, password: $password }';
+    return 'LoginWithCredentialsPressed { phone: $phone, password: $password }';
   }
 }

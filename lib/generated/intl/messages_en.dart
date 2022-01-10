@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createAccount":
             MessageLookupByLibrary.simpleMessage("Create an account"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Home"),
+        "disabledAccount": MessageLookupByLibrary.simpleMessage(
+            "Your account has been deactivated"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailNoSend":
             MessageLookupByLibrary.simpleMessage("Email error. Try again!!!"),
@@ -43,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Forgot your password?"),
         "go": MessageLookupByLibrary.simpleMessage("Go ahead"),
         "hintEmail": MessageLookupByLibrary.simpleMessage("votremail@xyz.com"),
+        "hintPhone": MessageLookupByLibrary.simpleMessage("Phone number"),
         "invalidMail": MessageLookupByLibrary.simpleMessage("Invalid Email"),
         "invalidPass": MessageLookupByLibrary.simpleMessage("Invalid Password"),
         "invalidPhone": MessageLookupByLibrary.simpleMessage("Invalid Phone"),

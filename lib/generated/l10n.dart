@@ -389,6 +389,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Your account has been deactivated`
+  String get disabledAccount {
+    return Intl.message(
+      'Your account has been deactivated',
+      name: 'disabledAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get hintPhone {
+    return Intl.message(
+      'Phone number',
+      name: 'hintPhone',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

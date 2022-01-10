@@ -34,5 +34,7 @@
     "dashboard" : "Accueil",
     "search": "Rechercher",
     "noLocation" : "Impossible d'obtenir l'emplacement actuel",
-    "enableGps" : "Assurez-vous d'activer le GPS et réessayez."
+    "enableGps" : "Assurez-vous d'activer le GPS et réessayez.",
+    "disabledAccount" : "Votre compte a été désactivé",
+    "hintPhone" : "Numéro de Téléphone"
     }

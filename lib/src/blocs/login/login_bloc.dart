@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 08:47:12 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-09 08:59:16
+ * @Last Modified time: 2022-01-09 15:24:24
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -25,7 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     this.authRepository,
     this.sharedPreferencesHelper,
   }) : super(LoginState.initial()) {
-    on<LoginEmailChanged>(_loginEmailChanged,
+    on<LoginPhoneChanged>(_loginPhoneChanged,
         transformer: debounce(const Duration(milliseconds: 300)));
     on<LoginPasswordChanged>(_loginPasswordChanged,
         transformer: debounce(const Duration(milliseconds: 300)));
@@ -39,12 +39,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   // Action de validation d'email qui s'effectue a chaque saisie de l'utilisateur
-  void _loginEmailChanged(
-    LoginEmailChanged event,
+  void _loginPhoneChanged(
+    LoginPhoneChanged event,
     Emitter<LoginState> emit,
   ) async {
     return emit(state.update(
-      isEmailValid: Validators.isValidEmail(event.email!),
+      isPhoneValid: Validators.isValidTelephone(event.phone!),
     ));
   }
 
@@ -66,7 +66,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginState.loading());
     try {
       Result<UserModel> user =
-          await authRepository!.login(event.email!, event.password!);
+          await authRepository!.login(event.phone!, event.password!);
       if (user.success!.success!) {
         await sharedPreferencesHelper!.setToken(user.success!.data!.token!);
         return emit(LoginState.success());

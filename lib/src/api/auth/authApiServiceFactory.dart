@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:00 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-09 09:00:00 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-01-10 06:03:17
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -33,7 +33,7 @@ class AuthApiServiceFactory implements AuthApiService {
   Future<Response> getUser(String token) async {
     Response response;
     try {
-      response = await apiService!.getuser(apiKey, 'Bearer ' + token);
+      response = await apiService!.getuser('Bearer ' + token, apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -59,7 +59,7 @@ class AuthApiServiceFactory implements AuthApiService {
   Future<Response> logout(String token) async {
     Response response;
     try {
-      response = await apiService!.logout(apiKey, 'Bearer ' + token);
+      response = await apiService!.logout('Bearer ' + token, apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

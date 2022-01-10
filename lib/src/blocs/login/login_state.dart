@@ -2,14 +2,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 08:46:19 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-09 08:46:41
+ * @Last Modified time: 2022-01-09 09:12:27
  */
 
 part of 'login_bloc.dart';
 
-@immutable
-class LoginState {
-  final bool? isEmailValid;
+class LoginState extends Equatable {
+  final bool? isPhoneValid;
   final bool? isPasswordValid;
   final bool? isSubmitting;
   final bool? isSuccess;
@@ -18,10 +17,10 @@ class LoginState {
   final bool? isFailSend;
   final bool? isDisabledAccount;
 
-  bool get isFormValid => isEmailValid! && isPasswordValid!;
+  bool get isFormValid => isPhoneValid! && isPasswordValid!;
 
   const LoginState(
-      {@required this.isEmailValid,
+      {@required this.isPhoneValid,
       @required this.isPasswordValid,
       @required this.isSubmitting,
       @required this.isSuccess,
@@ -32,7 +31,7 @@ class LoginState {
 
   factory LoginState.initial() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: false,
         isSuccess: false,
@@ -44,7 +43,7 @@ class LoginState {
 
   factory LoginState.send() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: false,
         isSuccess: false,
@@ -56,7 +55,7 @@ class LoginState {
 
   factory LoginState.failSend() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: false,
         isSuccess: false,
@@ -68,7 +67,7 @@ class LoginState {
 
   factory LoginState.loading() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: true,
         isSuccess: false,
@@ -80,7 +79,7 @@ class LoginState {
 
   factory LoginState.failure() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: false,
         isSuccess: false,
@@ -92,7 +91,7 @@ class LoginState {
 
   factory LoginState.success() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: false,
         isSuccess: true,
@@ -104,7 +103,7 @@ class LoginState {
 
   factory LoginState.disabledAccount() {
     return const LoginState(
-        isEmailValid: true,
+        isPhoneValid: true,
         isPasswordValid: true,
         isSubmitting: false,
         isSuccess: false,
@@ -115,11 +114,11 @@ class LoginState {
   }
 
   LoginState update({
-    bool? isEmailValid,
+    bool? isPhoneValid,
     bool? isPasswordValid,
   }) {
     return copyWith(
-        isEmailValid: isEmailValid,
+        isPhoneValid: isPhoneValid,
         isPasswordValid: isPasswordValid,
         isSubmitting: false,
         isSuccess: false,
@@ -130,7 +129,7 @@ class LoginState {
   }
 
   LoginState copyWith(
-      {bool? isEmailValid,
+      {bool? isPhoneValid,
       bool? isPasswordValid,
       bool? isSubmitEnabled,
       bool? isSubmitting,
@@ -140,7 +139,7 @@ class LoginState {
       bool? isFailSend,
       bool? isDisabledAccount}) {
     return LoginState(
-        isEmailValid: isEmailValid ?? this.isEmailValid,
+        isPhoneValid: isPhoneValid ?? this.isPhoneValid,
         isPasswordValid: isPasswordValid ?? this.isPasswordValid,
         isSubmitting: isSubmitting ?? this.isSubmitting,
         isSuccess: isSuccess ?? this.isSuccess,
@@ -153,7 +152,7 @@ class LoginState {
   @override
   String toString() {
     return '''LoginState {
-      isEmailValid: $isEmailValid,
+      isPhoneValid: $isPhoneValid,
       isPasswordValid: $isPasswordValid,
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
@@ -163,4 +162,16 @@ class LoginState {
       isDisabledAccount : $isDisabledAccount
     }''';
   }
+
+  @override
+  List<Object> get props => [
+        isPhoneValid!,
+        isPasswordValid!,
+        isDisabledAccount!,
+        isFailSend!,
+        isSubmitting!,
+        isSuccess!,
+        isFailure!,
+        isSend!
+      ];
 }

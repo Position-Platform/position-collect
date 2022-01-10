@@ -34,5 +34,7 @@
     "dashboard" : "Home",
     "search" : "Search",
     "noLocation" : "Cannot get current location",
-    "enableGps" : "Please make sure you enable GPS and try again"
+    "enableGps" : "Please make sure you enable GPS and try again",
+    "disabledAccount" : "Your account has been deactivated",
+    "hintPhone" : "Phone number"
 }
