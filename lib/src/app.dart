@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:03:52 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-09 15:41:16
+ * @Last Modified time: 2022-01-10 11:35:12
  */
 // ignore_for_file: file_names, avoid_print, use_key_in_widget_constructors
 
@@ -14,6 +14,7 @@ import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
 import 'package:positioncollect/src/blocs/home/home_bloc.dart';
 import 'package:positioncollect/src/blocs/login/login_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
+import 'package:positioncollect/src/utils/permissions.dart';
 import 'package:positioncollect/src/views/homeScreen/home.dart';
 import 'package:positioncollect/src/views/ladingScreen/lading.dart';
 import 'package:positioncollect/src/views/loginScreen/loginPage.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
+          requestLocationPermission().then((value) => {
+                if (!value) {gpsService(context)}
+              });
           if (state is AuthInitial) {
             return SplashScreen();
           }
