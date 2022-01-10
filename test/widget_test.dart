@@ -1,3 +1,9 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-09 09:04:13 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-09 09:04:13 
+ */
 // This is a basic Flutter widget test.
 //
 // To perform an interaction with a widget in your test, use the WidgetTester
@@ -7,13 +13,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:positioncollect/main.dart';
+import 'package:positioncollect/src/app.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Position Collect Bloc test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
