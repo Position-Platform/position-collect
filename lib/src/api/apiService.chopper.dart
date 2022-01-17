@@ -68,4 +68,20 @@ class _$ApiService extends ApiService {
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> addtracking(
+      String token, String apiKey, Map<String, dynamic> body) {
+    final $url = 'https://services.position.cm/api/tracking';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

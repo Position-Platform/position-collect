@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:positioncollect/src/repositories/position/tracking/trackingRepository.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial()) {
+  final TrackingRepository? trackingRepository;
+  HomeBloc({this.trackingRepository}) : super(HomeInitial()) {
     on<HomeGetLocation>(_homeGetLocation);
   }
 
@@ -17,7 +19,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoading());
     try {
       Position position = await Geolocator.getCurrentPosition();
-      return emit(HomeLocation(position));
+      final trackingResult = await trackingRepository!.addtracking(
+          position.longitude.toString(), position.latitude.toString());
+      if (trackingResult.success!.success!) {
+        return emit(HomeLocation(position));
+      }
     } catch (_) {
       return emit(HomeError());
     }
