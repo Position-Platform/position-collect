@@ -9,6 +9,5 @@
 const apiUrl = "https://services.position.cm";
 const apiKey =
     "ZblqALRIQjtlCqqBEL8DJgi4JnkYzvi4vbcib0n99o1PwbHZlbAna1o20AK9o8UW";
-const String medium = "Medium";
-const String regular = "Regular";
-const String bold = "Bold";
+const mapbox_access_token =
+    "pk.eyJ1IjoiZ2F1dHk5NiIsImEiOiJjanN4aDd2cG8wMmw3NDRwaDc2cnc2OXJwIn0.YRVVo-3FkQtfkMPH4lt2hw";

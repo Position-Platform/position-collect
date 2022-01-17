@@ -1,14 +1,14 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:41 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-09 09:00:41 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-01-17 12:32:33
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
-import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

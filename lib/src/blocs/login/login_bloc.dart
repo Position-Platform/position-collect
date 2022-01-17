@@ -2,14 +2,14 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 08:47:12 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-09 15:24:24
+ * @Last Modified time: 2022-01-17 12:32:24
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/user_model/user_model.dart';
-import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 import 'package:positioncollect/src/utils/validators.dart';
 import 'package:rxdart/rxdart.dart';

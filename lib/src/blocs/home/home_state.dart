@@ -8,3 +8,19 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeInitial extends HomeState {}
+
+class HomeLoading extends HomeState {}
+
+class HomeLocation extends HomeState {
+  final Position position;
+
+  const HomeLocation(this.position);
+
+  @override
+  List<Object> get props => [position];
+
+  @override
+  String toString() => 'HomeLocation { Location: $position }';
+}
+
+class HomeError extends HomeState {}

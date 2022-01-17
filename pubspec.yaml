@@ -48,7 +48,7 @@ dependencies:
   intl_utils: ^2.6.0
   json_annotation: ^4.4.0
   location: ^4.3.0
-  mapbox_gl: ^0.14.0
+  mapbox_gl: ^0.15.0
   meta: ^1.7.0
   path_provider: ^2.0.8
   permission_handler: ^8.3.0
@@ -75,8 +75,6 @@ flutter_icons:
 # The following section is specific to Flutter.
 flutter_intl:
   enabled: true
-flutter:
-  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
