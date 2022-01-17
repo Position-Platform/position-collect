@@ -48,7 +48,7 @@ dependencies:
   intl_utils: ^2.6.0
   json_annotation: ^4.4.0
   location: ^4.3.0
-  mapbox_gl: ^0.14.0
+  mapbox_gl: ^0.15.0
   meta: ^1.7.0
   path_provider: ^2.0.8
   permission_handler: ^8.3.0
