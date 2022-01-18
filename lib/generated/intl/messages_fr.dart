@@ -75,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "registering":
             MessageLookupByLibrary.simpleMessage("Création du compte..."),
         "search": MessageLookupByLibrary.simpleMessage("Rechercher"),
+        "selectLayer":
+            MessageLookupByLibrary.simpleMessage("Choisir un fond de carte"),
         "skip": MessageLookupByLibrary.simpleMessage("Passer"),
         "username": MessageLookupByLibrary.simpleMessage("Nom d\'utilisateur"),
         "welcome": MessageLookupByLibrary.simpleMessage("Bienvenue")

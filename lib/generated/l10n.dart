@@ -409,6 +409,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Select Layer`
+  String get selectLayer {
+    return Intl.message(
+      'Select Layer',
+      name: 'selectLayer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
