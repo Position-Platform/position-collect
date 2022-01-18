@@ -36,5 +36,6 @@
     "noLocation" : "Cannot get current location",
     "enableGps" : "Please make sure you enable GPS and try again",
     "disabledAccount" : "Your account has been deactivated",
-    "hintPhone" : "Phone number"
+    "hintPhone" : "Phone number",
+    "selectLayer" : "Select Layer"
 }

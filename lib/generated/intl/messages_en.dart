@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registering":
             MessageLookupByLibrary.simpleMessage("Account creation..."),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
+        "selectLayer": MessageLookupByLibrary.simpleMessage("Select Layer"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "username": MessageLookupByLibrary.simpleMessage("User name"),
         "welcome": MessageLookupByLibrary.simpleMessage("Welcome")

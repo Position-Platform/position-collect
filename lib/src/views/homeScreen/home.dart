@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 00:18:02 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-17 11:29:58
+ * @Last Modified time: 2022-01-18 16:17:45
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +46,9 @@ class _HomePageState extends State<HomePage> {
           );
         }
         if (state is HomeLocation) {
-          return MapPage(position: state.position);
+          return MapPage(
+            position: state.position,
+          );
         }
         if (state is HomeError) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
