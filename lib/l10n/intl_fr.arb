@@ -34,8 +34,11 @@
     "dashboard" : "Accueil",
     "search": "Rechercher",
     "noLocation" : "Impossible d'obtenir l'emplacement actuel",
-    "enableGps" : "Assurez-vous d'activer le GPS et réessayez.",
+    "enableGps" : "Assurez-vous d'activer le GPS.",
     "disabledAccount" : "Votre compte a été désactivé",
     "hintPhone" : "Numéro de Téléphone",
-    "selectLayer" : "Choisir un fond de carte"
+    "selectLayer" : "Choisir un fond de carte",
+    "findPosition": "Trouvez ma Position",
+    "gpsAccess" : "Un accès GPS est nécessaire",
+    "askAccess": "Demandez l'access"
     }

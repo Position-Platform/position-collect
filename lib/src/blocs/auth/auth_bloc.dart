@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:41 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-17 12:32:33
+ * @Last Modified time: 2022-01-20 21:02:27
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -24,7 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthFirst>(_authFirstOpen);
     on<AuthLoggedOut>(_authLoggedOut);
     on<AuthLogin>(_authLogin);
-    on<AuthRegister>(_authRegister);
   }
 
   //Initialisation du processus d'authentification
@@ -97,14 +96,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     return emit(AuthLoginState());
-  }
-
-// Redirection vers la registerPage
-  void _authRegister(
-    AuthRegister event,
-    Emitter<AuthState> emit,
-  ) async {
-    return emit(AuthRegisterState());
   }
 
   @override

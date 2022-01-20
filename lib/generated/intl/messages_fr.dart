@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyAccount":
             MessageLookupByLibrary.simpleMessage("J\'ai déja un compte"),
         "appname": MessageLookupByLibrary.simpleMessage("Position Collect"),
+        "askAccess": MessageLookupByLibrary.simpleMessage("Demandez l\'access"),
         "connexion": MessageLookupByLibrary.simpleMessage("Connexion"),
         "cpassword":
             MessageLookupByLibrary.simpleMessage("Confirmer le Mot de Passe"),
@@ -41,10 +42,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailSend": MessageLookupByLibrary.simpleMessage(
             "Un mail de reinitialisation vous a été envoyé"),
         "enableGps": MessageLookupByLibrary.simpleMessage(
-            "Assurez-vous d\'activer le GPS et réessayez."),
+            "Assurez-vous d\'activer le GPS."),
+        "findPosition":
+            MessageLookupByLibrary.simpleMessage("Trouvez ma Position"),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("Mot de Passe oublié ?"),
         "go": MessageLookupByLibrary.simpleMessage("Allez-y"),
+        "gpsAccess":
+            MessageLookupByLibrary.simpleMessage("Un accès GPS est nécessaire"),
         "hintEmail": MessageLookupByLibrary.simpleMessage("votremail@xyz.com"),
         "hintPhone":
             MessageLookupByLibrary.simpleMessage("Numéro de Téléphone"),

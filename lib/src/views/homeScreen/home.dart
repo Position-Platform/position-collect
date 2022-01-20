@@ -7,6 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:positioncollect/src/blocs/home/home_bloc.dart';
+import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
@@ -46,8 +48,11 @@ class _HomePageState extends State<HomePage> {
           );
         }
         if (state is HomeLocation) {
-          return MapPage(
-            position: state.position,
+          return BlocProvider<MapBloc>(
+            create: (context) => getIt<MapBloc>(),
+            child: MapPage(
+              position: state.position,
+            ),
           );
         }
         if (state is HomeError) {

@@ -34,8 +34,11 @@
     "dashboard" : "Home",
     "search" : "Search",
     "noLocation" : "Cannot get current location",
-    "enableGps" : "Please make sure you enable GPS and try again",
+    "enableGps" : "Please make sure you enable GPS",
     "disabledAccount" : "Your account has been deactivated",
     "hintPhone" : "Phone number",
-    "selectLayer" : "Select Layer"
+    "selectLayer" : "Select Layer",
+    "findPosition": "Find my position",
+    "gpsAccess" : "GPS access is required",
+    "askAccess": "Request access"
 }

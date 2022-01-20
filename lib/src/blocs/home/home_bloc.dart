@@ -1,3 +1,9 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-01-20 21:01:25 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-01-20 21:01:25 
+ */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';

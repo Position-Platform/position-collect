@@ -14,8 +14,10 @@ import 'package:positioncollect/src/api/auth/authApiServiceFactory.dart';
 import 'package:positioncollect/src/api/position/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/api/position/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
+import 'package:positioncollect/src/blocs/gps/gps_bloc.dart';
 import 'package:positioncollect/src/blocs/home/home_bloc.dart';
 import 'package:positioncollect/src/blocs/login/login_bloc.dart';
+import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
@@ -72,4 +74,6 @@ Future<void> init() async {
   getIt.registerFactory<LoginBloc>(() =>
       LoginBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
   getIt.registerFactory<HomeBloc>(() => HomeBloc(trackingRepository: getIt()));
+  getIt.registerFactory<GpsBloc>(() => GpsBloc());
+  getIt.registerFactory<MapBloc>(() => MapBloc());
 }
