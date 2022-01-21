@@ -15,6 +15,7 @@ part 'apiService.chopper.dart';
 abstract class ApiService extends ChopperService {
   static ApiService create([ChopperClient? client]) => _$ApiService(client);
 
+// User Api
   @Post(path: '/api/auth/login', headers: {'Accept': 'application/json'})
   Future<Response> login(@Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
@@ -36,9 +37,16 @@ abstract class ApiService extends ChopperService {
     @Header('X-Authorization') String apiKey,
   );
 
+//Tracking Api
   @Post(path: '/api/tracking', headers: {'Accept': 'application/json'})
   Future<Response> addtracking(
       @Header('Authorization') String token,
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
+
+//Batiment Api
+  @Get(path: '/api/batiments', headers: {'Accept': 'application/json'})
+  Future<Response> getbatiments(
+    @Header('X-Authorization') String apiKey,
+  );
 }

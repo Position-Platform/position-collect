@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-17 12:34:32
+ * @Last Modified time: 2022-01-21 14:45:37
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -11,6 +11,8 @@ import 'package:get_it/get_it.dart';
 import 'package:positioncollect/src/api/apiService.dart';
 import 'package:positioncollect/src/api/auth/authApiService.dart';
 import 'package:positioncollect/src/api/auth/authApiServiceFactory.dart';
+import 'package:positioncollect/src/api/position/batiments/batimentsApiService.dart';
+import 'package:positioncollect/src/api/position/batiments/batimentsApiServiceFactory.dart';
 import 'package:positioncollect/src/api/position/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/api/position/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
@@ -21,6 +23,8 @@ import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/position/batiments/batimentsRepository.dart';
+import 'package:positioncollect/src/repositories/position/batiments/batimentsRepositoryImpl.dart';
 import 'package:positioncollect/src/repositories/position/tracking/trackingRepository.dart';
 import 'package:positioncollect/src/repositories/position/tracking/trackingRepositoryImpl.dart';
 import 'package:positioncollect/src/utils/config.dart';
@@ -45,6 +49,8 @@ Future<void> init() async {
       () => AuthApiServiceFactory(apiService: apiService));
   getIt.registerLazySingleton<TrackingApiService>(
       () => TrackingApiServiceFactory(apiService: apiService));
+  getIt.registerLazySingleton<BatimentsApiService>(
+      () => BatimentsApiServiceFactory(apiService: apiService));
 
   //Utils
   getIt.registerLazySingleton<NetworkInfoHelper>(() => NetworkInfoHelper());
@@ -63,6 +69,14 @@ Future<void> init() async {
   getIt.registerFactory<TrackingRepository>(
     () => TrackingRepositoryImpl(
       trackingApiService: getIt(),
+      networkInfoHelper: getIt(),
+      sharedPreferencesHelper: getIt(),
+    ),
+  );
+
+  getIt.registerFactory<BatimentsRepository>(
+    () => BatimentsRepositoryImpl(
+      batimentsApiService: getIt(),
       networkInfoHelper: getIt(),
       sharedPreferencesHelper: getIt(),
     ),
