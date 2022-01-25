@@ -11,7 +11,6 @@ import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/api/position/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
-import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/repositories/position/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
@@ -26,15 +25,13 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
       this.sharedPreferencesHelper});
 
   @override
-  Future<Result<BatimentsModel>> getBatiments() async {
+  Future<Result<String>> getBatiments() async {
     bool isConnected = await networkInfoHelper!.isConnected();
     if (isConnected) {
       try {
         final Response response = await batimentsApiService!.getBatiments();
 
-        var model = BatimentsModel.fromJson(response.body);
-
-        return Result(success: model);
+        return Result(success: response.bodyString);
       } catch (e) {
         return Result(error: ServerError());
       }

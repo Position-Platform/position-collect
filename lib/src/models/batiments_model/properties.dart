@@ -1,25 +1,17 @@
-/*
- * @Author: Boris Gautier 
- * @Date: 2022-01-21 14:33:31 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-21 14:33:31 
- */
 import 'package:json_annotation/json_annotation.dart';
 
-import 'etablissement.dart';
-
-part 'datum.g.dart';
+part 'properties.g.dart';
 
 @JsonSerializable()
-class Datum {
+class Properties {
   int? id;
   String? nom;
   int? nombreNiveaux;
   String? codeBatiment;
-  double? longitude;
-  double? latitude;
-  String? image;
-  dynamic indication;
+  int? longitude;
+  int? latitude;
+  dynamic image;
+  String? indication;
   String? rue;
   String? ville;
   String? commune;
@@ -30,9 +22,9 @@ class Datum {
   String? updatedAt;
   @JsonKey(name: 'deleted_at')
   dynamic deletedAt;
-  List<Etablissement>? etablissements;
+  List<dynamic>? etablissements;
 
-  Datum({
+  Properties({
     this.id,
     this.nom,
     this.nombreNiveaux,
@@ -53,22 +45,24 @@ class Datum {
 
   @override
   String toString() {
-    return 'Datum(id: $id, nom: $nom, nombreNiveaux: $nombreNiveaux, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, etablissements: $etablissements)';
+    return 'Properties(id: $id, nom: $nom, nombreNiveaux: $nombreNiveaux, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, etablissements: $etablissements)';
   }
 
-  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
+  factory Properties.fromJson(Map<String, dynamic> json) {
+    return _$PropertiesFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$DatumToJson(this);
+  Map<String, dynamic> toJson() => _$PropertiesToJson(this);
 
-  Datum copyWith({
+  Properties copyWith({
     int? id,
     String? nom,
     int? nombreNiveaux,
     String? codeBatiment,
-    double? longitude,
-    double? latitude,
-    String? image,
-    dynamic indication,
+    int? longitude,
+    int? latitude,
+    dynamic image,
+    String? indication,
     String? rue,
     String? ville,
     String? commune,
@@ -76,9 +70,9 @@ class Datum {
     String? createdAt,
     String? updatedAt,
     dynamic deletedAt,
-    List<Etablissement>? etablissements,
+    List<dynamic>? etablissements,
   }) {
-    return Datum(
+    return Properties(
       id: id ?? this.id,
       nom: nom ?? this.nom,
       nombreNiveaux: nombreNiveaux ?? this.nombreNiveaux,

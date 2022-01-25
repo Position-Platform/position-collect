@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 21:01:21 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-20 21:01:21 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-01-24 11:57:48
  */
 part of 'home_bloc.dart';
 

@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-18 16:49:15
+ * @Last Modified time: 2022-01-24 13:37:14
  */
 
 import 'package:flutter/material.dart';
@@ -33,6 +33,7 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
     _mapBloc = BlocProvider.of<MapBloc>(context);
+    _mapBloc?.add(GetBatiments());
   }
 
   @override
@@ -50,6 +51,9 @@ class _MapPageState extends State<MapPage> {
           }
           if (state is UpdateStyle) {
             style = state.style;
+          }
+          if (state is BatimentsLoaded) {
+            _mapBloc?.add(ShowBatiments(state.geojsonBatiments));
           }
         },
         child: BlocBuilder<MapBloc, MapState>(

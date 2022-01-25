@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 21:01:25 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-20 21:01:25 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-01-24 13:37:31
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

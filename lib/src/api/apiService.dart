@@ -45,7 +45,7 @@ abstract class ApiService extends ChopperService {
       @Body() Map<String, dynamic> body);
 
 //Batiment Api
-  @Get(path: '/api/batiments', headers: {'Accept': 'application/json'})
+  @Get(path: '/api/batimentsgeojson', headers: {'Accept': 'application/json'})
   Future<Response> getbatiments(
     @Header('X-Authorization') String apiKey,
   );

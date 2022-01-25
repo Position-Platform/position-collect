@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:09 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-20 14:45:09 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-01-24 11:58:07
  */
 part of 'map_bloc.dart';
 
@@ -36,3 +36,17 @@ class UpdateStyleEvent extends MapEvent {
 }
 
 class StyleLoadingEvent extends MapEvent {}
+
+class GetBatiments extends MapEvent {}
+
+class ShowBatiments extends MapEvent {
+  final String geojsonBatiments;
+
+  const ShowBatiments(this.geojsonBatiments);
+
+  @override
+  List<Object> get props => [geojsonBatiments];
+
+  @override
+  String toString() => 'Batiments { Batiments: $geojsonBatiments }';
+}
