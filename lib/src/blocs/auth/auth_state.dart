@@ -40,6 +40,3 @@ class AuthDisableAccount extends AuthState {}
 
 //Authetification Login
 class AuthLoginState extends AuthState {}
-
-//Authentification Register
-class AuthRegisterState extends AuthState {}

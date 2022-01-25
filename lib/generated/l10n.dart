@@ -380,10 +380,10 @@ class S {
     );
   }
 
-  /// `Please make sure you enable GPS and try again`
+  /// `Please make sure you enable GPS`
   String get enableGps {
     return Intl.message(
-      'Please make sure you enable GPS and try again',
+      'Please make sure you enable GPS',
       name: 'enableGps',
       desc: '',
       args: [],
@@ -415,6 +415,36 @@ class S {
     return Intl.message(
       'Select Layer',
       name: 'selectLayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find my position`
+  String get findPosition {
+    return Intl.message(
+      'Find my position',
+      name: 'findPosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GPS access is required`
+  String get gpsAccess {
+    return Intl.message(
+      'GPS access is required',
+      name: 'gpsAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request access`
+  String get askAccess {
+    return Intl.message(
+      'Request access',
+      name: 'askAccess',
       desc: '',
       args: [],
     );
