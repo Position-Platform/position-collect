@@ -40,5 +40,6 @@
     "selectLayer" : "Choisir un fond de carte",
     "findPosition": "Trouvez ma Position",
     "gpsAccess" : "Un accès GPS est nécessaire",
-    "askAccess": "Demandez l'access"
+    "askAccess": "Demandez l'access",
+    "batimentDownload" : "Chargement des Batiments..."
     }

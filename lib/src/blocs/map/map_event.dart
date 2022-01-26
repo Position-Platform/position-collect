@@ -38,15 +38,3 @@ class UpdateStyleEvent extends MapEvent {
 class StyleLoadingEvent extends MapEvent {}
 
 class GetBatiments extends MapEvent {}
-
-class ShowBatiments extends MapEvent {
-  final String geojsonBatiments;
-
-  const ShowBatiments(this.geojsonBatiments);
-
-  @override
-  List<Object> get props => [geojsonBatiments];
-
-  @override
-  String toString() => 'Batiments { Batiments: $geojsonBatiments }';
-}
