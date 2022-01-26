@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I already have an account"),
         "appname": MessageLookupByLibrary.simpleMessage("Position Collect"),
         "askAccess": MessageLookupByLibrary.simpleMessage("Request access"),
+        "batimentDownload":
+            MessageLookupByLibrary.simpleMessage("Loading of Buildings..."),
         "connexion": MessageLookupByLibrary.simpleMessage("Connection"),
         "cpassword": MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "createAccount":

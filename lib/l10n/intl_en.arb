@@ -40,5 +40,6 @@
     "selectLayer" : "Select Layer",
     "findPosition": "Find my position",
     "gpsAccess" : "GPS access is required",
-    "askAccess": "Request access"
+    "askAccess": "Request access",
+    "batimentDownload" : "Loading of Buildings..."
 }

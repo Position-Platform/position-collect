@@ -29,14 +29,8 @@ class UpdateStyle extends MapState {
 
 class StyleLoaded extends MapState {}
 
-class BatimentsLoaded extends MapState {
-  final String geojsonBatiments;
+class BatimentsLoaded extends MapState {}
 
-  const BatimentsLoaded(this.geojsonBatiments);
+class BatimentsLoading extends MapState {}
 
-  @override
-  List<Object> get props => [geojsonBatiments];
-
-  @override
-  String toString() => 'Batiments { Batiments: $geojsonBatiments }';
-}
+class BatimentsLoadingError extends MapState {}

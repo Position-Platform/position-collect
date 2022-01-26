@@ -11,11 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/widgets/drawer.dart';
 import 'package:positioncollect/src/widgets/floatingActionButton.dart';
 import 'package:positioncollect/src/widgets/mapbox.dart';
 import 'package:positioncollect/src/widgets/searchBar.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key, @required this.position}) : super(key: key);
@@ -38,6 +41,7 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
+    ProgressDialog pd = ProgressDialog(context: context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<MapBloc, MapState>(
@@ -52,8 +56,24 @@ class _MapPageState extends State<MapPage> {
           if (state is UpdateStyle) {
             style = state.style;
           }
+          if (state is BatimentsLoading) {
+            pd.show(
+                max: 100,
+                msg: S.of(context).batimentDownload,
+                progressBgColor: primaryColor,
+                progressType: ProgressType.valuable,
+                progressValueColor: accentPrimaryColor);
+          }
+          if (state is BatimentsLoadingError) {
+            pd.close();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: const Text("Error"),
+              backgroundColor: Theme.of(context).primaryColor,
+              duration: const Duration(seconds: 5),
+            ));
+          }
           if (state is BatimentsLoaded) {
-            _mapBloc?.add(ShowBatiments(state.geojsonBatiments));
+            pd.close();
           }
         },
         child: BlocBuilder<MapBloc, MapState>(

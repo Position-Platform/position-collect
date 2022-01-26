@@ -449,6 +449,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Loading of Buildings...`
+  String get batimentDownload {
+    return Intl.message(
+      'Loading of Buildings...',
+      name: 'batimentDownload',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
