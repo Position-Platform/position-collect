@@ -4,12 +4,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 00:02:41
+ * @Last Modified time: 2022-01-27 00:36:34
  */
 
 import 'package:chopper/chopper.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/position/batiments/batimentsApiService.dart';
+import 'package:positioncollect/src/database/batiments/batimentDao.dart';
 import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
