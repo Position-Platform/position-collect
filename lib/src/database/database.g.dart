@@ -9,36 +9,35 @@ part of 'database.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Batiment extends DataClass implements Insertable<Batiment> {
   final int id;
-  final String geojson;
-  final int nombreBatiment;
-  Batiment(
-      {required this.id, required this.geojson, required this.nombreBatiment});
+  final Datum? batiment;
+  Batiment({required this.id, this.batiment});
   factory Batiment.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Batiment(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      geojson: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}geojson'])!,
-      nombreBatiment: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}nombre_batiment'])!,
+      batiment: $BatimentsTable.$converter0.mapToDart(const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}batiment'])),
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['geojson'] = Variable<String>(geojson);
-    map['nombre_batiment'] = Variable<int>(nombreBatiment);
+    if (!nullToAbsent || batiment != null) {
+      final converter = $BatimentsTable.$converter0;
+      map['batiment'] = Variable<String?>(converter.mapToSql(batiment));
+    }
     return map;
   }
 
   BatimentsCompanion toCompanion(bool nullToAbsent) {
     return BatimentsCompanion(
       id: Value(id),
-      geojson: Value(geojson),
-      nombreBatiment: Value(nombreBatiment),
+      batiment: batiment == null && nullToAbsent
+          ? const Value.absent()
+          : Value(batiment),
     );
   }
 
@@ -47,8 +46,7 @@ class Batiment extends DataClass implements Insertable<Batiment> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Batiment(
       id: serializer.fromJson<int>(json['id']),
-      geojson: serializer.fromJson<String>(json['geojson']),
-      nombreBatiment: serializer.fromJson<int>(json['nombreBatiment']),
+      batiment: serializer.fromJson<Datum?>(json['batiment']),
     );
   }
   @override
@@ -56,70 +54,58 @@ class Batiment extends DataClass implements Insertable<Batiment> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'geojson': serializer.toJson<String>(geojson),
-      'nombreBatiment': serializer.toJson<int>(nombreBatiment),
+      'batiment': serializer.toJson<Datum?>(batiment),
     };
   }
 
-  Batiment copyWith({int? id, String? geojson, int? nombreBatiment}) =>
-      Batiment(
+  Batiment copyWith({int? id, Datum? batiment}) => Batiment(
         id: id ?? this.id,
-        geojson: geojson ?? this.geojson,
-        nombreBatiment: nombreBatiment ?? this.nombreBatiment,
+        batiment: batiment ?? this.batiment,
       );
   @override
   String toString() {
     return (StringBuffer('Batiment(')
           ..write('id: $id, ')
-          ..write('geojson: $geojson, ')
-          ..write('nombreBatiment: $nombreBatiment')
+          ..write('batiment: $batiment')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, geojson, nombreBatiment);
+  int get hashCode => Object.hash(id, batiment);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Batiment &&
           other.id == this.id &&
-          other.geojson == this.geojson &&
-          other.nombreBatiment == this.nombreBatiment);
+          other.batiment == this.batiment);
 }
 
 class BatimentsCompanion extends UpdateCompanion<Batiment> {
   final Value<int> id;
-  final Value<String> geojson;
-  final Value<int> nombreBatiment;
+  final Value<Datum?> batiment;
   const BatimentsCompanion({
     this.id = const Value.absent(),
-    this.geojson = const Value.absent(),
-    this.nombreBatiment = const Value.absent(),
+    this.batiment = const Value.absent(),
   });
   BatimentsCompanion.insert({
     this.id = const Value.absent(),
-    required String geojson,
-    this.nombreBatiment = const Value.absent(),
-  }) : geojson = Value(geojson);
+    this.batiment = const Value.absent(),
+  });
   static Insertable<Batiment> custom({
     Expression<int>? id,
-    Expression<String>? geojson,
-    Expression<int>? nombreBatiment,
+    Expression<Datum?>? batiment,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (geojson != null) 'geojson': geojson,
-      if (nombreBatiment != null) 'nombre_batiment': nombreBatiment,
+      if (batiment != null) 'batiment': batiment,
     });
   }
 
-  BatimentsCompanion copyWith(
-      {Value<int>? id, Value<String>? geojson, Value<int>? nombreBatiment}) {
+  BatimentsCompanion copyWith({Value<int>? id, Value<Datum?>? batiment}) {
     return BatimentsCompanion(
       id: id ?? this.id,
-      geojson: geojson ?? this.geojson,
-      nombreBatiment: nombreBatiment ?? this.nombreBatiment,
+      batiment: batiment ?? this.batiment,
     );
   }
 
@@ -129,11 +115,9 @@ class BatimentsCompanion extends UpdateCompanion<Batiment> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (geojson.present) {
-      map['geojson'] = Variable<String>(geojson.value);
-    }
-    if (nombreBatiment.present) {
-      map['nombre_batiment'] = Variable<int>(nombreBatiment.value);
+    if (batiment.present) {
+      final converter = $BatimentsTable.$converter0;
+      map['batiment'] = Variable<String?>(converter.mapToSql(batiment.value));
     }
     return map;
   }
@@ -142,8 +126,7 @@ class BatimentsCompanion extends UpdateCompanion<Batiment> {
   String toString() {
     return (StringBuffer('BatimentsCompanion(')
           ..write('id: $id, ')
-          ..write('geojson: $geojson, ')
-          ..write('nombreBatiment: $nombreBatiment')
+          ..write('batiment: $batiment')
           ..write(')'))
         .toString();
   }
@@ -161,21 +144,14 @@ class $BatimentsTable extends Batiments
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _geojsonMeta = const VerificationMeta('geojson');
+  final VerificationMeta _batimentMeta = const VerificationMeta('batiment');
   @override
-  late final GeneratedColumn<String?> geojson = GeneratedColumn<String?>(
-      'geojson', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _nombreBatimentMeta =
-      const VerificationMeta('nombreBatiment');
+  late final GeneratedColumnWithTypeConverter<Datum, String?> batiment =
+      GeneratedColumn<String?>('batiment', aliasedName, true,
+              type: const StringType(), requiredDuringInsert: false)
+          .withConverter<Datum>($BatimentsTable.$converter0);
   @override
-  late final GeneratedColumn<int?> nombreBatiment = GeneratedColumn<int?>(
-      'nombre_batiment', aliasedName, false,
-      type: const IntType(),
-      requiredDuringInsert: false,
-      defaultValue: const Constant(0));
-  @override
-  List<GeneratedColumn> get $columns => [id, geojson, nombreBatiment];
+  List<GeneratedColumn> get $columns => [id, batiment];
   @override
   String get aliasedName => _alias ?? 'batiments';
   @override
@@ -188,18 +164,7 @@ class $BatimentsTable extends Batiments
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('geojson')) {
-      context.handle(_geojsonMeta,
-          geojson.isAcceptableOrUnknown(data['geojson']!, _geojsonMeta));
-    } else if (isInserting) {
-      context.missing(_geojsonMeta);
-    }
-    if (data.containsKey('nombre_batiment')) {
-      context.handle(
-          _nombreBatimentMeta,
-          nombreBatiment.isAcceptableOrUnknown(
-              data['nombre_batiment']!, _nombreBatimentMeta));
-    }
+    context.handle(_batimentMeta, const VerificationResult.success());
     return context;
   }
 
@@ -215,6 +180,8 @@ class $BatimentsTable extends Batiments
   $BatimentsTable createAlias(String alias) {
     return $BatimentsTable(_db, alias);
   }
+
+  static TypeConverter<Datum, String> $converter0 = const BatimentConverter();
 }
 
 abstract class _$AppDatabase extends GeneratedDatabase {
