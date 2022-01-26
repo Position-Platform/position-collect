@@ -7,8 +7,9 @@
  * @Last Modified time: 2022-01-21 14:41:07
  */
 
+import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
 abstract class BatimentsRepository {
-  Future<Result<String>> getBatiments();
+  Future<Result<BatimentsModel>> getBatiments();
 }

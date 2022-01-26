@@ -1,17 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'properties.g.dart';
+import 'etablissement.dart';
+
+part 'datum.g.dart';
 
 @JsonSerializable()
-class Properties {
+class Datum {
   int? id;
   String? nom;
   int? nombreNiveaux;
   String? codeBatiment;
-  int? longitude;
-  int? latitude;
-  dynamic image;
-  String? indication;
+  double? longitude;
+  double? latitude;
+  String? image;
+  dynamic indication;
   String? rue;
   String? ville;
   String? commune;
@@ -22,9 +24,9 @@ class Properties {
   String? updatedAt;
   @JsonKey(name: 'deleted_at')
   dynamic deletedAt;
-  List<dynamic>? etablissements;
+  List<Etablissement>? etablissements;
 
-  Properties({
+  Datum({
     this.id,
     this.nom,
     this.nombreNiveaux,
@@ -45,24 +47,22 @@ class Properties {
 
   @override
   String toString() {
-    return 'Properties(id: $id, nom: $nom, nombreNiveaux: $nombreNiveaux, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, etablissements: $etablissements)';
+    return 'Datum(id: $id, nom: $nom, nombreNiveaux: $nombreNiveaux, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, etablissements: $etablissements)';
   }
 
-  factory Properties.fromJson(Map<String, dynamic> json) {
-    return _$PropertiesFromJson(json);
-  }
+  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PropertiesToJson(this);
+  Map<String, dynamic> toJson() => _$DatumToJson(this);
 
-  Properties copyWith({
+  Datum copyWith({
     int? id,
     String? nom,
     int? nombreNiveaux,
     String? codeBatiment,
-    int? longitude,
-    int? latitude,
-    dynamic image,
-    String? indication,
+    double? longitude,
+    double? latitude,
+    String? image,
+    dynamic indication,
     String? rue,
     String? ville,
     String? commune,
@@ -70,9 +70,9 @@ class Properties {
     String? createdAt,
     String? updatedAt,
     dynamic deletedAt,
-    List<dynamic>? etablissements,
+    List<Etablissement>? etablissements,
   }) {
-    return Properties(
+    return Datum(
       id: id ?? this.id,
       nom: nom ?? this.nom,
       nombreNiveaux: nombreNiveaux ?? this.nombreNiveaux,

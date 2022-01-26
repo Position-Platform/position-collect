@@ -68,7 +68,7 @@ class _MapPageState extends State<MapPage> {
             pd.close();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: const Text("Error"),
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).errorColor,
               duration: const Duration(seconds: 5),
             ));
           }

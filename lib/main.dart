@@ -29,7 +29,6 @@ void main() async {
     () {},
     blocObserver: SimpleBlocObserver(),
   );
-
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider(create: (_) => di.getIt<GpsBloc>()),

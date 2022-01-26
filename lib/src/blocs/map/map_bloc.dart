@@ -70,11 +70,47 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit(BatimentsLoading());
     final batimentsResult = await batimentsRepository?.getBatiments();
 
+    var responses = [];
+
+    for (var i = 0; i < batimentsResult!.success!.data!.length; i++) {
+      var element = batimentsResult.success!.data![i];
+      var geometry = {
+        "type": "Point",
+        "coordinates": [element.longitude, element.latitude],
+      };
+
+      var properties = {
+        "id": element.id,
+        "nom": element.nom,
+        "nombreNiveau": element.nombreNiveaux,
+        "codeBatiment": element.codeBatiment,
+        "image": element.image,
+        "rue": element.rue,
+        "ville": element.ville,
+        "commune": element.commune,
+        "quartier": element.quartier,
+        "created_at": element.createdAt,
+        "etablissements":
+            element.etablissements?.map((i) => json.encode(i)).toList(),
+      };
+
+      responses.add({
+        "type": 'Feature',
+        "geometry": geometry,
+        "properties": properties,
+      });
+    }
+
+    var geojson = {
+      "type": 'FeatureCollection',
+      "features": responses,
+    };
+
     try {
       _mapController?.addSource(
           GEOJSON_SOURCE_ID,
           GeojsonSourceProperties(
-              data: json.decode(batimentsResult!.success!),
+              data: geojson,
               cluster: true,
               clusterMaxZoom: 16,
               clusterRadius: 50));
