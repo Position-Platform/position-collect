@@ -1,18 +1,21 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'feature.dart';
+import 'datum.dart';
 
 part 'batiments_model.g.dart';
 
 @JsonSerializable()
 class BatimentsModel {
-  String? type;
-  List<Feature>? features;
+  bool? success;
+  List<Datum>? data;
+  String? message;
 
-  BatimentsModel({this.type, this.features});
+  BatimentsModel({this.success, this.data, this.message});
 
   @override
-  String toString() => 'BatimentsModel(type: $type, features: $features)';
+  String toString() {
+    return 'BatimentsModel(success: $success, data: $data, message: $message)';
+  }
 
   factory BatimentsModel.fromJson(Map<String, dynamic> json) {
     return _$BatimentsModelFromJson(json);
@@ -21,12 +24,14 @@ class BatimentsModel {
   Map<String, dynamic> toJson() => _$BatimentsModelToJson(this);
 
   BatimentsModel copyWith({
-    String? type,
-    List<Feature>? features,
+    bool? success,
+    List<Datum>? data,
+    String? message,
   }) {
     return BatimentsModel(
-      type: type ?? this.type,
-      features: features ?? this.features,
+      success: success ?? this.success,
+      data: data ?? this.data,
+      message: message ?? this.message,
     );
   }
 }

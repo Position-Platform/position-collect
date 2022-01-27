@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:36:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-21 14:38:31
+ * @Last Modified time: 2022-01-27 11:24:24
  */
 
 import 'package:chopper/chopper.dart';
@@ -22,6 +22,18 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
     Response response;
     try {
       response = await apiService!.getbatiments(apiKey);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> getBatimentsNumber() async {
+    Response response;
+    try {
+      response = await apiService!.getbatimentsnumber(apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

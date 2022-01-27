@@ -41,5 +41,6 @@
     "findPosition": "Trouvez ma Position",
     "gpsAccess" : "Un accès GPS est nécessaire",
     "askAccess": "Demandez l'access",
-    "batimentDownload" : "Chargement des Batiments..."
+    "batimentDownload" : "Chargement des Batiments...",
+    "getdata" : "Récupération des données en ligne"
     }

@@ -4,11 +4,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:35:43 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-21 14:36:17
+ * @Last Modified time: 2022-01-27 11:23:44
  */
 
 import 'package:chopper/chopper.dart';
 
 abstract class BatimentsApiService {
   Future<Response> getBatiments();
+
+  Future<Response> getBatimentsNumber();
 }

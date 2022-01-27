@@ -8,14 +8,16 @@ part of 'batiments_model.dart';
 
 BatimentsModel _$BatimentsModelFromJson(Map<String, dynamic> json) =>
     BatimentsModel(
-      type: json['type'] as String?,
-      features: (json['features'] as List<dynamic>?)
-          ?.map((e) => Feature.fromJson(e as Map<String, dynamic>))
+      success: json['success'] as bool?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
           .toList(),
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$BatimentsModelToJson(BatimentsModel instance) =>
     <String, dynamic>{
-      'type': instance.type,
-      'features': instance.features,
+      'success': instance.success,
+      'data': instance.data,
+      'message': instance.message,
     };

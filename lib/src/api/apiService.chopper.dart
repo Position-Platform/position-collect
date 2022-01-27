@@ -87,7 +87,19 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> getbatiments(String apiKey) {
-    final $url = 'https://services.position.cm/api/batimentsgeojson';
+    final $url = 'https://services.position.cm/api/batiments';
+    final $headers = {
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getbatimentsnumber(String apiKey) {
+    final $url = 'https://services.position.cm/api/batimentsnumber';
     final $headers = {
       'X-Authorization': apiKey,
       'Accept': 'application/json',

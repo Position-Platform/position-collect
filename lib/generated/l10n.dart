@@ -459,6 +459,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Online data recovery`
+  String get getdata {
+    return Intl.message(
+      'Online data recovery',
+      name: 'getdata',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

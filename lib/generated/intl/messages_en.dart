@@ -48,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Find my position"),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("Forgot your password?"),
+        "getdata": MessageLookupByLibrary.simpleMessage("Online data recovery"),
         "go": MessageLookupByLibrary.simpleMessage("Go ahead"),
         "gpsAccess":
             MessageLookupByLibrary.simpleMessage("GPS access is required"),
