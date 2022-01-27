@@ -21,6 +21,7 @@ Widget buildMapBoxMap(String style, MapBloc? _mapBloc, Position position) {
     accessToken: mapbox_access_token,
     onMapCreated: (controller) =>
         _mapBloc?.add(OnMapInitializedEvent(controller)),
+    doubleClickZoomEnabled: true,
     initialCameraPosition: CameraPosition(
         zoom: 15.0, target: LatLng(position.latitude, position.longitude)),
     onStyleLoadedCallback: () {

@@ -98,13 +98,14 @@ void main() async {
   final storage = await HydratedStorage.build(
     storageDirectory: await getApplicationSupportDirectory(),
   );
-
   HydratedBlocOverrides.runZoned(
     () {},
     storage: storage,
   );
   BlocOverrides.runZoned(
-    () {},
+    () {
+      di.getIt<GpsBloc>();
+    },
     blocObserver: SimpleBlocObserver(),
   );
   Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
