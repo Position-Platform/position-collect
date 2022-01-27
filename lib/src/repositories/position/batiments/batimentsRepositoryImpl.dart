@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 00:36:34
+ * @Last Modified time: 2022-01-27 11:26:25
  */
 
 import 'package:chopper/chopper.dart';
@@ -16,6 +16,7 @@ import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
+import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/repositories/position/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
@@ -57,7 +58,8 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
             for (var i = 0; i < model.data!.length; i++) {
               BatimentsCompanion batimentsCompanion = BatimentsCompanion(
                   id: Value(model.data![i].id!),
-                  batiment: Value(model.data![i]));
+                  batiment: Value(model.data![i]),
+                  online: const Value(true));
 
               await batimentsDao!.insertBatiment(batimentsCompanion);
             }
@@ -72,6 +74,26 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
       }
     } catch (e) {
       return Result(error: DbDataError());
+    }
+  }
+
+  @override
+  Future<Result<ResponseModel>> getBatimentsNumber() async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+
+    if (isConnected) {
+      try {
+        final Response response =
+            await batimentsApiService!.getBatimentsNumber();
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
     }
   }
 }

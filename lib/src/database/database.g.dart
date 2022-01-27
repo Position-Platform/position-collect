@@ -10,7 +10,8 @@ part of 'database.dart';
 class Batiment extends DataClass implements Insertable<Batiment> {
   final int id;
   final Datum? batiment;
-  Batiment({required this.id, this.batiment});
+  final bool online;
+  Batiment({required this.id, this.batiment, required this.online});
   factory Batiment.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -19,6 +20,8 @@ class Batiment extends DataClass implements Insertable<Batiment> {
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       batiment: $BatimentsTable.$converter0.mapToDart(const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}batiment'])),
+      online: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}online'])!,
     );
   }
   @override
@@ -29,6 +32,7 @@ class Batiment extends DataClass implements Insertable<Batiment> {
       final converter = $BatimentsTable.$converter0;
       map['batiment'] = Variable<String?>(converter.mapToSql(batiment));
     }
+    map['online'] = Variable<bool>(online);
     return map;
   }
 
@@ -38,6 +42,7 @@ class Batiment extends DataClass implements Insertable<Batiment> {
       batiment: batiment == null && nullToAbsent
           ? const Value.absent()
           : Value(batiment),
+      online: Value(online),
     );
   }
 
@@ -47,6 +52,7 @@ class Batiment extends DataClass implements Insertable<Batiment> {
     return Batiment(
       id: serializer.fromJson<int>(json['id']),
       batiment: serializer.fromJson<Datum?>(json['batiment']),
+      online: serializer.fromJson<bool>(json['online']),
     );
   }
   @override
@@ -55,57 +61,68 @@ class Batiment extends DataClass implements Insertable<Batiment> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'batiment': serializer.toJson<Datum?>(batiment),
+      'online': serializer.toJson<bool>(online),
     };
   }
 
-  Batiment copyWith({int? id, Datum? batiment}) => Batiment(
+  Batiment copyWith({int? id, Datum? batiment, bool? online}) => Batiment(
         id: id ?? this.id,
         batiment: batiment ?? this.batiment,
+        online: online ?? this.online,
       );
   @override
   String toString() {
     return (StringBuffer('Batiment(')
           ..write('id: $id, ')
-          ..write('batiment: $batiment')
+          ..write('batiment: $batiment, ')
+          ..write('online: $online')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, batiment);
+  int get hashCode => Object.hash(id, batiment, online);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Batiment &&
           other.id == this.id &&
-          other.batiment == this.batiment);
+          other.batiment == this.batiment &&
+          other.online == this.online);
 }
 
 class BatimentsCompanion extends UpdateCompanion<Batiment> {
   final Value<int> id;
   final Value<Datum?> batiment;
+  final Value<bool> online;
   const BatimentsCompanion({
     this.id = const Value.absent(),
     this.batiment = const Value.absent(),
+    this.online = const Value.absent(),
   });
   BatimentsCompanion.insert({
     this.id = const Value.absent(),
     this.batiment = const Value.absent(),
-  });
+    required bool online,
+  }) : online = Value(online);
   static Insertable<Batiment> custom({
     Expression<int>? id,
     Expression<Datum?>? batiment,
+    Expression<bool>? online,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (batiment != null) 'batiment': batiment,
+      if (online != null) 'online': online,
     });
   }
 
-  BatimentsCompanion copyWith({Value<int>? id, Value<Datum?>? batiment}) {
+  BatimentsCompanion copyWith(
+      {Value<int>? id, Value<Datum?>? batiment, Value<bool>? online}) {
     return BatimentsCompanion(
       id: id ?? this.id,
       batiment: batiment ?? this.batiment,
+      online: online ?? this.online,
     );
   }
 
@@ -119,6 +136,9 @@ class BatimentsCompanion extends UpdateCompanion<Batiment> {
       final converter = $BatimentsTable.$converter0;
       map['batiment'] = Variable<String?>(converter.mapToSql(batiment.value));
     }
+    if (online.present) {
+      map['online'] = Variable<bool>(online.value);
+    }
     return map;
   }
 
@@ -126,7 +146,8 @@ class BatimentsCompanion extends UpdateCompanion<Batiment> {
   String toString() {
     return (StringBuffer('BatimentsCompanion(')
           ..write('id: $id, ')
-          ..write('batiment: $batiment')
+          ..write('batiment: $batiment, ')
+          ..write('online: $online')
           ..write(')'))
         .toString();
   }
@@ -150,8 +171,15 @@ class $BatimentsTable extends Batiments
       GeneratedColumn<String?>('batiment', aliasedName, true,
               type: const StringType(), requiredDuringInsert: false)
           .withConverter<Datum>($BatimentsTable.$converter0);
+  final VerificationMeta _onlineMeta = const VerificationMeta('online');
   @override
-  List<GeneratedColumn> get $columns => [id, batiment];
+  late final GeneratedColumn<bool?> online = GeneratedColumn<bool?>(
+      'online', aliasedName, false,
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (online IN (0, 1))');
+  @override
+  List<GeneratedColumn> get $columns => [id, batiment, online];
   @override
   String get aliasedName => _alias ?? 'batiments';
   @override
@@ -165,6 +193,12 @@ class $BatimentsTable extends Batiments
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
     context.handle(_batimentMeta, const VerificationResult.success());
+    if (data.containsKey('online')) {
+      context.handle(_onlineMeta,
+          online.isAcceptableOrUnknown(data['online']!, _onlineMeta));
+    } else if (isInserting) {
+      context.missing(_onlineMeta);
+    }
     return context;
   }
 

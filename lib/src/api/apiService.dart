@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:29 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-17 11:48:01
+ * @Last Modified time: 2022-01-27 11:23:17
  */
 // ignore_for_file: file_names
 
@@ -47,6 +47,11 @@ abstract class ApiService extends ChopperService {
 //Batiment Api
   @Get(path: '/api/batiments', headers: {'Accept': 'application/json'})
   Future<Response> getbatiments(
+    @Header('X-Authorization') String apiKey,
+  );
+
+  @Get(path: '/api/batimentsnumber', headers: {'Accept': 'application/json'})
+  Future<Response> getbatimentsnumber(
     @Header('X-Authorization') String apiKey,
   );
 }
