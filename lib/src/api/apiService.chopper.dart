@@ -108,4 +108,18 @@ class _$ApiService extends ApiService {
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> searchetablissement(String apiKey, String query) {
+    final $url = 'https://services.position.cm/api/search/etablissements';
+    final $params = <String, dynamic>{'q': query};
+    final $headers = {
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
