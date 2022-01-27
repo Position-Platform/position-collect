@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
@@ -10,6 +12,7 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -39,6 +42,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final ByteData bytes = await rootBundle.load("assets/images/building.png");
     final Uint8List list = bytes.buffer.asUint8List();
     _mapController?.addImage("markerBatimentImage", list);
+    _mapController?.onFeatureTapped.add((id, point, coordinates) async {
+      if (id == "") {
+        List<dynamic>? features = await _mapController?.queryRenderedFeatures(
+            point, ["batiments-circles", UNCLUSTERED_POINTS], null);
+        if (features!.isNotEmpty) {
+          onClusterClick(features[0], Offset(point.x, point.y));
+        }
+      } else {
+        _mapController?.animateCamera(CameraUpdate.zoomIn());
+      }
+    });
   }
 
   void _zoomIn(ZoomInEvent event, Emitter<MapState> emit) {
@@ -155,6 +169,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     } catch (e) {
       return emit(BatimentsLoadingError());
     }
+  }
+
+  onClusterClick(dynamic cluster, Offset point) {
+    debugPrint(cluster.toString());
   }
 
   @override

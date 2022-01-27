@@ -47,11 +47,12 @@ class _MapPageState extends State<MapPage> {
       body: BlocListener<MapBloc, MapState>(
         listener: (context, state) {
           if (state is StyleLoaded) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            /*  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: const Text("Style loaded :)"),
               backgroundColor: Theme.of(context).primaryColor,
               duration: const Duration(seconds: 1),
-            ));
+            ));*/
+            _mapBloc?.add(GetBatiments());
           }
           if (state is UpdateStyle) {
             style = state.style;
