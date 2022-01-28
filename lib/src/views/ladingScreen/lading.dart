@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:03:28 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-09 14:46:20
+ * @Last Modified time: 2022-01-28 12:45:49
  */
 // ignore_for_file: avoid_print, use_key_in_widget_constructors
 
@@ -13,6 +13,7 @@ import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
 import 'package:positioncollect/src/utils/flutter_overboard/overboard.dart';
 import 'package:positioncollect/src/utils/flutter_overboard/page_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:positioncollect/src/utils/ladingUtils.dart';
 
 class LadingPage extends StatefulWidget {
   @override
@@ -20,33 +21,7 @@ class LadingPage extends StatefulWidget {
 }
 
 class _LadingPageState extends State<LadingPage> {
-  // create each page of onBoard here
-  final _pageList = [
-    PageModel(
-        color: Colors.white,
-        imageAssetPath: 'assets/images/tuto1.png',
-        title: '',
-        body: '',
-        doAnimateImage: true),
-    PageModel(
-        color: Colors.white,
-        imageAssetPath: 'assets/images/tuto2.png',
-        title: '',
-        body: '',
-        doAnimateImage: true),
-    PageModel(
-        color: Colors.white,
-        imageAssetPath: 'assets/images/tuto3.png',
-        title: '',
-        body: '',
-        doAnimateImage: true),
-    PageModel(
-        color: Colors.white,
-        imageAssetPath: 'assets/images/tuto4.png',
-        title: '',
-        body: '',
-        doAnimateImage: true),
-  ];
+  List<PageModel> _pageList = [];
 
   @override
   void initState() {
@@ -60,6 +35,14 @@ class _LadingPageState extends State<LadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Locale appLocale = Localizations.localeOf(context);
+
+    if (appLocale.languageCode == "fr") {
+      _pageList = pageListFr;
+    } else {
+      _pageList = pageListEn;
+    }
+
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
       value:
