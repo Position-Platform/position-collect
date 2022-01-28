@@ -32,7 +32,7 @@
     "addEmail" : "Remplissez l'adresse mail",
     "phone" : "Numéro de Téléphone",
     "dashboard" : "Accueil",
-    "search": "Rechercher",
+    "search": "Rechercher un lieu un etablissement ou une catégorie",
     "noLocation" : "Impossible d'obtenir l'emplacement actuel",
     "enableGps" : "Assurez-vous d'activer le GPS.",
     "disabledAccount" : "Votre compte a été désactivé",

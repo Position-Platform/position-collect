@@ -85,7 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Création du compte reussie verifiez vos mails..."),
         "registering":
             MessageLookupByLibrary.simpleMessage("Création du compte..."),
-        "search": MessageLookupByLibrary.simpleMessage("Rechercher"),
+        "search": MessageLookupByLibrary.simpleMessage(
+            "Rechercher un lieu un etablissement ou une catégorie"),
         "selectLayer":
             MessageLookupByLibrary.simpleMessage("Choisir un fond de carte"),
         "serverError":

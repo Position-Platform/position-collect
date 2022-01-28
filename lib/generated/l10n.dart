@@ -360,10 +360,10 @@ class S {
     );
   }
 
-  /// `Search`
+  /// `Search for a place, an establishment or a category`
   String get search {
     return Intl.message(
-      'Search',
+      'Search for a place, an establishment or a category',
       name: 'search',
       desc: '',
       args: [],
