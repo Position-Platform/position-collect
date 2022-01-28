@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 00:21:55
+ * @Last Modified time: 2022-01-28 00:33:17
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -107,5 +107,6 @@ Future<void> init() async {
       LoginBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
   getIt.registerFactory<HomeBloc>(() => HomeBloc(trackingRepository: getIt()));
   getIt.registerFactory<GpsBloc>(() => GpsBloc());
-  getIt.registerFactory<MapBloc>(() => MapBloc(batimentsRepository: getIt()));
+  getIt.registerFactory<MapBloc>(() =>
+      MapBloc(batimentsRepository: getIt(), etablissementsRepository: getIt()));
 }

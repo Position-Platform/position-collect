@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:positioncollect/src/models/batiments_model/sous_category.dart';
 
 import 'batiment.dart';
 import 'commercial.dart';
@@ -37,7 +38,7 @@ class Datum {
   List<Telephone>? telephones;
   String? nomCommercial;
   @JsonKey(name: 'sous_categories')
-  List<dynamic>? sousCategories;
+  List<SousCategory>? sousCategories;
   Commercial? commercial;
   String? nomCategorie;
   @JsonKey(name: 'logo_url')
@@ -106,7 +107,7 @@ class Datum {
     List<Horaire>? horaires,
     List<Telephone>? telephones,
     String? nomCommercial,
-    List<dynamic>? sousCategories,
+    List<SousCategory>? sousCategories,
     Commercial? commercial,
     String? nomCategorie,
     String? logoUrl,

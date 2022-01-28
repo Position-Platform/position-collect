@@ -38,7 +38,9 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
           ?.map((e) => Telephone.fromJson(e as Map<String, dynamic>))
           .toList(),
       nomCommercial: json['nomCommercial'] as String?,
-      sousCategories: json['sous_categories'] as List<dynamic>?,
+      sousCategories: (json['sous_categories'] as List<dynamic>?)
+          ?.map((e) => SousCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
       commercial: json['commercial'] == null
           ? null
           : Commercial.fromJson(json['commercial'] as Map<String, dynamic>),

@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:09 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-24 11:58:07
+ * @Last Modified time: 2022-01-28 00:26:21
  */
 part of 'map_bloc.dart';
 
@@ -38,3 +38,15 @@ class UpdateStyleEvent extends MapEvent {
 class StyleLoadingEvent extends MapEvent {}
 
 class GetBatiments extends MapEvent {}
+
+class SearchEtablissements extends MapEvent {
+  final String query;
+
+  const SearchEtablissements(this.query);
+
+  @override
+  List<Object> get props => [query];
+
+  @override
+  String toString() => 'Query { Query: $query }';
+}

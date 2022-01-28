@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-24 14:07:17
+ * @Last Modified time: 2022-01-28 01:47:17
  */
 import 'dart:async';
 import 'dart:convert';
@@ -16,7 +16,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:positioncollect/src/models/search_model/datum.dart';
 import 'package:positioncollect/src/repositories/position/batiments/batimentsRepository.dart';
+import 'package:positioncollect/src/repositories/position/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
 
 part 'map_event.dart';
@@ -25,8 +27,10 @@ part 'map_state.dart';
 class MapBloc extends Bloc<MapEvent, MapState> {
   MapboxMapController? _mapController;
   BatimentsRepository? batimentsRepository;
+  EtablissementsRepository? etablissementsRepository;
 
-  MapBloc({this.batimentsRepository}) : super(MapInitial()) {
+  MapBloc({this.batimentsRepository, this.etablissementsRepository})
+      : super(MapInitial()) {
     on<OnMapInitializedEvent>(_onInitMap);
     on<StyleLoadingEvent>(_styleLoading);
     on<ZoomInEvent>(_zoomIn);
@@ -34,6 +38,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<GetUserLocationEvent>(_getUserLocation);
     on<UpdateStyleEvent>(_updateStyle);
     on<GetBatiments>(_getBatiments);
+    on<SearchEtablissements>(_searchEtablissements);
   }
 
   Future<void> _onInitMap(
@@ -121,50 +126,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     };
 
     try {
-      _mapController?.addSource(
-          GEOJSON_SOURCE_ID,
-          GeojsonSourceProperties(
-              data: geojson,
-              cluster: true,
-              clusterMaxZoom: 16,
-              clusterRadius: 50));
-      _mapController?.addLayer(
-          GEOJSON_SOURCE_ID,
-          UNCLUSTERED_POINTS,
-          const SymbolLayerProperties(
-              iconImage: "markerBatimentImage",
-              iconSize: 0.17,
-              iconAllowOverlap: true,
-              symbolSortKey: 10.0));
-      _mapController?.addLayer(
-          GEOJSON_SOURCE_ID,
-          "batiments-circles",
-          const CircleLayerProperties(circleColor: [
-            Expressions.step,
-            [Expressions.get, 'point_count'],
-            '#04bc94',
-            100,
-            '#04bc94',
-            750,
-            '#04bc94'
-          ], circleRadius: [
-            Expressions.step,
-            [Expressions.get, 'point_count'],
-            20,
-            100,
-            20,
-            750,
-            20
-          ]));
-      _mapController?.addLayer(
-          GEOJSON_SOURCE_ID,
-          "batiments-count",
-          const SymbolLayerProperties(
-              textField: [Expressions.get, 'point_count'],
-              textFont: ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-              textSize: 12,
-              textColor: "#ffffff"));
-
+      addGeoJsonInmap(_mapController, geojson);
       return emit(BatimentsLoaded());
     } catch (e) {
       return emit(BatimentsLoadingError());
@@ -173,6 +135,22 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   onClusterClick(dynamic cluster, Offset point) {
     debugPrint(cluster.toString());
+  }
+
+  void _searchEtablissements(
+    SearchEtablissements event,
+    Emitter<MapState> emit,
+  ) async {
+    emit(SearchLoading());
+
+    try {
+      final searchResult =
+          await etablissementsRepository?.searchEtablissements(event.query);
+
+      emit(SearchComplete(searchResult!.success!.data));
+    } catch (e) {
+      emit(SearchError());
+    }
   }
 
   @override
