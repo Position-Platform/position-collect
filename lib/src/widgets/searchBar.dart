@@ -26,6 +26,7 @@ Widget buildFloatingSearchBar(
     builder: (context, state) {
       return FloatingSearchBar(
         hint: S.of(context).search,
+        elevation: 8,
         clearQueryOnClose: true,
         debounceDelay: const Duration(milliseconds: 500),
         progress: state is SearchLoading ? true : false,
@@ -60,6 +61,7 @@ Widget buildFloatingSearchBar(
             return Container(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Material(
+                elevation: 8,
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 clipBehavior: Clip.antiAlias,
