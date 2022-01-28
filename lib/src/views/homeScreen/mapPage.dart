@@ -16,7 +16,6 @@ import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/widgets/drawer.dart';
 import 'package:positioncollect/src/widgets/floatingActionButton.dart';
-import 'package:positioncollect/src/widgets/mapbox.dart';
 import 'package:positioncollect/src/widgets/searchBar.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -42,6 +41,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     ProgressDialog pd = ProgressDialog(context: context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<MapBloc, MapState>(
@@ -81,9 +81,10 @@ class _MapPageState extends State<MapPage> {
         child: BlocBuilder<MapBloc, MapState>(
           builder: (context, state) {
             return Stack(
+              fit: StackFit.expand,
               children: [
-                buildMapBoxMap(style, _mapBloc, widget.position!),
-                buildFloatingSearchBar(context, _mapBloc),
+                buildFloatingSearchBar(
+                    context, _mapBloc, style, widget.position!),
               ],
             );
           },

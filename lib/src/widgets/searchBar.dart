@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -15,8 +16,10 @@ import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
 import 'package:positioncollect/src/utils/config.dart';
+import 'package:positioncollect/src/widgets/mapbox.dart';
 
-Widget buildFloatingSearchBar(BuildContext context, MapBloc? mapBloc) {
+Widget buildFloatingSearchBar(
+    BuildContext context, MapBloc? mapBloc, String style, Position position) {
   final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
   return BlocBuilder<MapBloc, MapState>(
@@ -34,12 +37,11 @@ Widget buildFloatingSearchBar(BuildContext context, MapBloc? mapBloc) {
         openAxisAlignment: 0.0,
         width: isPortrait ? 600 : 500,
         onQueryChanged: (query) {
-          if (query.length >= 3) {
+          if (query.length > 3) {
             mapBloc?.add(SearchEtablissements(query));
           }
         },
-        // Specify a custom transition to be used for
-        // animating between opened and closed stated.
+        body: buildMapBoxMap(style, mapBloc, position),
         transition: CircularFloatingSearchBarTransition(),
         actions: [
           FloatingSearchBarAction(
@@ -111,8 +113,11 @@ Widget buildItem(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
                   child: etablissement.sousCategories!.isNotEmpty
-                      ? Image.network(apiUrl +
-                          etablissement.sousCategories![0].categorie!.logoUrl!)
+                      ? Image.network(
+                          apiUrl +
+                              etablissement
+                                  .sousCategories![0].categorie!.logoUrl!,
+                        )
                       : const Icon(Icons.place),
                 ),
               ),
@@ -124,7 +129,7 @@ Widget buildItem(
                   children: [
                     Text(
                       etablissement.nom!,
-                      style: textTheme.subtitle1,
+                      style: textTheme.subtitle2,
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -133,8 +138,8 @@ Widget buildItem(
                               "," +
                               etablissement.sousCategories![0].categorie!.nom!
                           : "",
-                      style: textTheme.bodyText2
-                          ?.copyWith(color: Colors.grey.shade600),
+                      style: const TextStyle(fontStyle: FontStyle.italic)
+                          .copyWith(color: Colors.grey.shade600),
                     ),
                   ],
                 ),
@@ -143,9 +148,6 @@ Widget buildItem(
           ),
         ),
       ),
-      if (state.etablissements!.isNotEmpty &&
-          etablissement != state.etablissements!.last)
-        const Divider(height: 0),
     ],
   );
 }

@@ -14,6 +14,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
@@ -29,6 +30,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   BatimentsRepository? batimentsRepository;
   EtablissementsRepository? etablissementsRepository;
 
+  late StreamSubscription<bool> keyboardSubscription;
+  var keyboardVisibilityController = KeyboardVisibilityController();
+
   MapBloc({this.batimentsRepository, this.etablissementsRepository})
       : super(MapInitial()) {
     on<OnMapInitializedEvent>(_onInitMap);
@@ -39,6 +43,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<UpdateStyleEvent>(_updateStyle);
     on<GetBatiments>(_getBatiments);
     on<SearchEtablissements>(_searchEtablissements);
+    on<SetKeyBoardStatus>(_setKeyBoardStatus);
+  }
+
+  void _setKeyBoardStatus(SetKeyBoardStatus event, Emitter<MapState> emit) {
+    emit(KeyBoardStatus(event.keyboardStatus));
   }
 
   Future<void> _onInitMap(
@@ -47,6 +56,12 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final ByteData bytes = await rootBundle.load("assets/images/building.png");
     final Uint8List list = bytes.buffer.asUint8List();
     _mapController?.addImage("markerBatimentImage", list);
+
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) async {
+      add(SetKeyBoardStatus(visible));
+    });
+
     _mapController?.onFeatureTapped.add((id, point, coordinates) async {
       if (id == "") {
         List<dynamic>? features = await _mapController?.queryRenderedFeatures(
@@ -155,6 +170,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   @override
   Future<void> close() {
+    keyboardSubscription.cancel();
     return super.close();
   }
 }
