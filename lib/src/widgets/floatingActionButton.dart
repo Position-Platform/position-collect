@@ -74,15 +74,10 @@ Widget buildFloatingActionButton(
                               color: blackColor,
                             ),
                           ),
-                          keyboardIsOpened
-                              ? const Divider(
-                                  height: 100,
-                                  color: transparent,
-                                )
-                              : const Divider(
-                                  height: 300,
-                                  color: transparent,
-                                ),
+                          const Divider(
+                            height: 300,
+                            color: transparent,
+                          ),
                           FloatingActionButton(
                               mini: true,
                               tooltip: "Location",
