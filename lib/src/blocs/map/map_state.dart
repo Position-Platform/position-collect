@@ -50,3 +50,15 @@ class SearchComplete extends MapState {
   @override
   String toString() => 'Etablissements { Etablissements: $etablissements }';
 }
+
+class KeyBoardStatus extends MapState {
+  final bool? keyboardStatus;
+
+  const KeyBoardStatus(this.keyboardStatus);
+
+  @override
+  List<Object> get props => [keyboardStatus!];
+
+  @override
+  String toString() => 'KeyBoardStatus { KeyBoardStatus: $keyboardStatus }';
+}

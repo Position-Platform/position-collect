@@ -50,3 +50,15 @@ class SearchEtablissements extends MapEvent {
   @override
   String toString() => 'Query { Query: $query }';
 }
+
+class SetKeyBoardStatus extends MapEvent {
+  final bool? keyboardStatus;
+
+  const SetKeyBoardStatus(this.keyboardStatus);
+
+  @override
+  List<Object> get props => [keyboardStatus!];
+
+  @override
+  String toString() => 'KeyBoardStatus { KeyBoardStatus: $keyboardStatus }';
+}
