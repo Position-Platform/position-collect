@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 21:01:16 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-24 11:57:57
+ * @Last Modified time: 2022-01-28 16:57:55
  */
 part of 'home_bloc.dart';
 
@@ -30,3 +30,5 @@ class HomeLocation extends HomeState {
 }
 
 class HomeError extends HomeState {}
+
+class HomeNoInternet extends HomeState {}

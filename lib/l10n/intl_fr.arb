@@ -42,5 +42,8 @@
     "gpsAccess" : "Un accès GPS est nécessaire",
     "askAccess": "Demandez l'access",
     "batimentDownload" : "Chargement des Batiments...",
-    "getdata" : "Récupération des données en ligne"
+    "getdata" : "Récupération des données en ligne",
+    "serverError" : "Une erreur est survenue",
+    "tryAgain" : "Reesayez",
+    "noInternet" : "Pas de connexion internet"
     }

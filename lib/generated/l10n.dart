@@ -200,10 +200,10 @@ class S {
     );
   }
 
-  /// `Connection`
+  /// `Login`
   String get connexion {
     return Intl.message(
-      'Connection',
+      'Login',
       name: 'connexion',
       desc: '',
       args: [],
@@ -465,6 +465,36 @@ class S {
     return Intl.message(
       'Online data recovery',
       name: 'getdata',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error has occurred`
+  String get serverError {
+    return Intl.message(
+      'An error has occurred',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get tryAgain {
+    return Intl.message(
+      'Try again',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection`
+  String get noInternet {
+    return Intl.message(
+      'No internet connection',
+      name: 'noInternet',
       desc: '',
       args: [],
     );

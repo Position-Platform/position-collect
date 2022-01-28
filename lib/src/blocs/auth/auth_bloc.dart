@@ -2,13 +2,14 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:41 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-20 21:02:27
+ * @Last Modified time: 2022-01-28 17:13:56
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/repositories/auth/authRepository.dart';
+import 'package:positioncollect/src/utils/result.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -39,11 +40,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return emit(AuthFirstOpen());
     } else {
       if (isSignedIn) {
-        final userResult = await authRepository!.getuser(token!);
-        if (userResult.success!.data!.user!.commercial!.actif == 1) {
-          return emit(AuthSuccess(userResult.success!.data!.user!));
-        } else {
-          return emit(AuthDisableAccount());
+        try {
+          final userResult = await authRepository!.getuser(token!);
+          if (userResult.error is NoInternetError) {
+            return emit(AuthNoInternet());
+          } else if (userResult.error is ServerError) {
+            return emit(AuthServerError());
+          } else {
+            if (userResult.success!.data!.user!.commercial!.actif == 1) {
+              return emit(AuthSuccess(userResult.success!.data!.user!));
+            } else {
+              return emit(AuthDisableAccount());
+            }
+          }
+        } catch (e) {
+          return emit(AuthServerError());
         }
       } else {
         return emit(AuthFailure());
@@ -61,11 +72,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (firstOpen == "oui") {
       return emit(AuthFirstOpen());
     } else {
-      final userResult = await authRepository!.getuser(token!);
-      if (userResult.success!.data!.user!.commercial!.actif == 1) {
-        return emit(AuthSuccess(userResult.success!.data!.user!));
-      } else {
-        return emit(AuthDisableAccount());
+      try {
+        final userResult = await authRepository!.getuser(token!);
+        if (userResult.error is NoInternetError) {
+          return emit(AuthNoInternet());
+        } else if (userResult.error is ServerError) {
+          return emit(AuthServerError());
+        } else {
+          if (userResult.success!.data!.user!.commercial!.actif == 1) {
+            return emit(AuthSuccess(userResult.success!.data!.user!));
+          } else {
+            return emit(AuthDisableAccount());
+          }
+        }
+      } catch (e) {
+        return emit(AuthServerError());
       }
     }
   }

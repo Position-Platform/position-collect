@@ -4,12 +4,11 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 14:51:11 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-10 11:42:37
+ * @Last Modified time: 2022-01-28 17:24:04
  */
 
 import 'dart:io';
 
-import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
