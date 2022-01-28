@@ -71,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Suivant"),
         "noAccount":
             MessageLookupByLibrary.simpleMessage("Pas encore de Compte?  "),
+        "noInternet":
+            MessageLookupByLibrary.simpleMessage("Pas de connexion internet"),
         "noLocation": MessageLookupByLibrary.simpleMessage(
             "Impossible d\'obtenir l\'emplacement actuel"),
         "passError":
@@ -86,7 +88,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "search": MessageLookupByLibrary.simpleMessage("Rechercher"),
         "selectLayer":
             MessageLookupByLibrary.simpleMessage("Choisir un fond de carte"),
+        "serverError":
+            MessageLookupByLibrary.simpleMessage("Une erreur est survenue"),
         "skip": MessageLookupByLibrary.simpleMessage("Passer"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Reesayez"),
         "username": MessageLookupByLibrary.simpleMessage("Nom d\'utilisateur"),
         "welcome": MessageLookupByLibrary.simpleMessage("Bienvenue")
       };

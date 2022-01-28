@@ -30,7 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "askAccess": MessageLookupByLibrary.simpleMessage("Request access"),
         "batimentDownload":
             MessageLookupByLibrary.simpleMessage("Loading of Buildings..."),
-        "connexion": MessageLookupByLibrary.simpleMessage("Connection"),
+        "connexion": MessageLookupByLibrary.simpleMessage("Login"),
         "cpassword": MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "createAccount":
             MessageLookupByLibrary.simpleMessage("Create an account"),
@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Login successful"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noAccount": MessageLookupByLibrary.simpleMessage("No Account yet?  "),
+        "noInternet":
+            MessageLookupByLibrary.simpleMessage("No internet connection"),
         "noLocation":
             MessageLookupByLibrary.simpleMessage("Cannot get current location"),
         "passError":
@@ -78,7 +80,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account creation..."),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "selectLayer": MessageLookupByLibrary.simpleMessage("Select Layer"),
+        "serverError":
+            MessageLookupByLibrary.simpleMessage("An error has occurred"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "username": MessageLookupByLibrary.simpleMessage("User name"),
         "welcome": MessageLookupByLibrary.simpleMessage("Welcome")
       };

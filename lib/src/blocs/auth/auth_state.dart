@@ -40,3 +40,9 @@ class AuthDisableAccount extends AuthState {}
 
 //Authetification Login
 class AuthLoginState extends AuthState {}
+
+//Pas de Connexion Internet
+class AuthNoInternet extends AuthState {}
+
+//Server Error
+class AuthServerError extends AuthState {}

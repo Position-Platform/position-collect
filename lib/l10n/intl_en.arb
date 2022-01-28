@@ -15,7 +15,7 @@
     "hintEmail" : "votremail@xyz.com",
     "invalidPass" : "Invalid Password",
     "forgotPass" : "Forgot your password?",
-    "connexion" : "Connection",
+    "connexion" : "Login",
     "noAccount" : "No Account yet?  ",
     "password" : "Password",
     "registering" : "Account creation...",
@@ -42,5 +42,8 @@
     "gpsAccess" : "GPS access is required",
     "askAccess": "Request access",
     "batimentDownload" : "Loading of Buildings...",
-    "getdata" : "Online data recovery"
+    "getdata" : "Online data recovery",
+    "serverError" : "An error has occurred",
+    "tryAgain" : "Try again",
+    "noInternet" : "No internet connection"
 }

@@ -2,10 +2,11 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 00:18:02 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-18 16:17:45
+ * @Last Modified time: 2022-01-28 17:00:51
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/home/home_bloc.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
@@ -13,6 +14,7 @@ import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/homeScreen/mapPage.dart';
+import 'package:positioncollect/src/widgets/errorWidget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, this.user}) : super(key: key);
@@ -56,11 +58,12 @@ class _HomePageState extends State<HomePage> {
           );
         }
         if (state is HomeError) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Error"),
-            backgroundColor: red,
-            duration: Duration(seconds: 5),
-          ));
+          return errorWidget(context, S.of(context).serverError,
+              () => _homeBloc!.add(HomeGetLocation()));
+        }
+        if (state is HomeNoInternet) {
+          return errorWidget(context, S.of(context).noInternet,
+              () => _homeBloc!.add(HomeGetLocation()));
         }
         return Container();
       },
