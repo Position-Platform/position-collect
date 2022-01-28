@@ -45,6 +45,7 @@ dependencies:
   geolocator: ^8.0.1
   get_it: ^7.2.0
   hydrated_bloc: ^8.0.0
+  implicitly_animated_reorderable_list: ^0.4.2
   intl: ^0.17.0
   intl_utils: ^2.6.0
   json_annotation: ^4.4.0

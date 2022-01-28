@@ -54,4 +54,11 @@ abstract class ApiService extends ChopperService {
   Future<Response> getbatimentsnumber(
     @Header('X-Authorization') String apiKey,
   );
+
+//Search
+  @Get(
+      path: '/api/search/etablissements',
+      headers: {'Accept': 'application/json'})
+  Future<Response> searchetablissement(
+      @Header('X-Authorization') String apiKey, @Query('q') String query);
 }

@@ -1,60 +1,151 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:55 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-20 14:44:55 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-01-28 07:31:21
  */
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
+import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:positioncollect/generated/l10n.dart';
+import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/models/search_model/datum.dart';
+import 'package:positioncollect/src/utils/config.dart';
 
-Widget buildFloatingSearchBar(BuildContext context) {
+Widget buildFloatingSearchBar(BuildContext context, MapBloc? mapBloc) {
   final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
-  return FloatingSearchBar(
-    hint: S.of(context).search,
-    scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-    transitionDuration: const Duration(milliseconds: 800),
-    transitionCurve: Curves.easeInOut,
-    physics: const BouncingScrollPhysics(),
-    axisAlignment: isPortrait ? 0.0 : -1.0,
-    openAxisAlignment: 0.0,
-    width: isPortrait ? 600 : 500,
-    debounceDelay: const Duration(milliseconds: 500),
-    onQueryChanged: (query) {
-      // Call your model, bloc, controller here.
-    },
-    // Specify a custom transition to be used for
-    // animating between opened and closed stated.
-    transition: CircularFloatingSearchBarTransition(),
-    actions: [
-      FloatingSearchBarAction(
-        showIfOpened: false,
-        child: CircularButton(
-          icon: const Icon(Icons.mic),
-          onPressed: () {},
-        ),
-      ),
-      FloatingSearchBarAction.searchToClear(
-        showIfClosed: false,
-      ),
-    ],
-    builder: (context, transition) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Material(
-          color: Colors.white,
-          elevation: 4.0,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: Colors.accents.map((color) {
-              return Container(height: 112, color: color);
-            }).toList(),
+  return BlocBuilder<MapBloc, MapState>(
+    builder: (context, state) {
+      return FloatingSearchBar(
+        hint: S.of(context).search,
+        clearQueryOnClose: true,
+        debounceDelay: const Duration(milliseconds: 500),
+        progress: state is SearchLoading ? true : false,
+        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+        transitionDuration: const Duration(milliseconds: 800),
+        transitionCurve: Curves.easeInOut,
+        physics: const BouncingScrollPhysics(),
+        axisAlignment: isPortrait ? 0.0 : -1.0,
+        openAxisAlignment: 0.0,
+        width: isPortrait ? 600 : 500,
+        onQueryChanged: (query) {
+          if (query.length >= 3) {
+            mapBloc?.add(SearchEtablissements(query));
+          }
+        },
+        // Specify a custom transition to be used for
+        // animating between opened and closed stated.
+        transition: CircularFloatingSearchBarTransition(),
+        actions: [
+          FloatingSearchBarAction(
+            showIfOpened: false,
+            child: CircularButton(
+              icon: const Icon(Icons.mic),
+              onPressed: () {},
+            ),
           ),
-        ),
+          FloatingSearchBarAction.searchToClear(
+            showIfClosed: false,
+          ),
+        ],
+        builder: (context, transition) {
+          if (state is SearchComplete) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                clipBehavior: Clip.antiAlias,
+                child: ImplicitlyAnimatedList<Datum>(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  items: state.etablissements!,
+                  insertDuration: const Duration(milliseconds: 700),
+                  itemBuilder: (context, animation, item, i) {
+                    return SizeFadeTransition(
+                      animation: animation,
+                      child: buildItem(context, item, state),
+                    );
+                  },
+                  updateItemBuilder: (context, animation, item) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: buildItem(context, item, state),
+                    );
+                  },
+                  areItemsTheSame: (a, b) => a == b,
+                ),
+              ),
+            );
+          }
+          return Container();
+        },
       );
     },
+  );
+}
+
+Widget buildItem(
+    BuildContext context, Datum etablissement, SearchComplete state) {
+  final theme = Theme.of(context);
+  final textTheme = theme.textTheme;
+
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      InkWell(
+        onTap: () {
+          FloatingSearchBar.of(context)?.close();
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 36,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: etablissement.sousCategories!.isNotEmpty
+                      ? Image.network(apiUrl +
+                          etablissement.sousCategories![0].categorie!.logoUrl!)
+                      : const Icon(Icons.place),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      etablissement.nom!,
+                      style: textTheme.subtitle1,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      etablissement.sousCategories!.isNotEmpty
+                          ? etablissement.sousCategories![0].nom! +
+                              "," +
+                              etablissement.sousCategories![0].categorie!.nom!
+                          : "",
+                      style: textTheme.bodyText2
+                          ?.copyWith(color: Colors.grey.shade600),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      if (state.etablissements!.isNotEmpty &&
+          etablissement != state.etablissements!.last)
+        const Divider(height: 0),
+    ],
   );
 }

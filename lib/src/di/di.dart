@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 00:36:41
+ * @Last Modified time: 2022-01-28 00:33:17
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -13,6 +13,8 @@ import 'package:positioncollect/src/api/auth/authApiService.dart';
 import 'package:positioncollect/src/api/auth/authApiServiceFactory.dart';
 import 'package:positioncollect/src/api/position/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/api/position/batiments/batimentsApiServiceFactory.dart';
+import 'package:positioncollect/src/api/position/etablissements/etablissementsApiService.dart';
+import 'package:positioncollect/src/api/position/etablissements/etablissementsApiServiceFactory.dart';
 import 'package:positioncollect/src/api/position/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/api/position/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
@@ -27,6 +29,8 @@ import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 import 'package:positioncollect/src/repositories/auth/authRepositoryImpl.dart';
 import 'package:positioncollect/src/repositories/position/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/position/batiments/batimentsRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/position/etablissements/etablissementsRepository.dart';
+import 'package:positioncollect/src/repositories/position/etablissements/etablissementsRepositoryImpl.dart';
 import 'package:positioncollect/src/repositories/position/tracking/trackingRepository.dart';
 import 'package:positioncollect/src/repositories/position/tracking/trackingRepositoryImpl.dart';
 import 'package:positioncollect/src/utils/config.dart';
@@ -53,6 +57,8 @@ Future<void> init() async {
       () => TrackingApiServiceFactory(apiService: apiService));
   getIt.registerLazySingleton<BatimentsApiService>(
       () => BatimentsApiServiceFactory(apiService: apiService));
+  getIt.registerLazySingleton<EtablissementsApiService>(
+      () => EtablissementsApiServiceFactory(apiService: apiService));
 
   //DataBase
   getIt.registerLazySingleton<BatimentsDao>(() => AppDatabase().batimentsDao);
@@ -87,6 +93,13 @@ Future<void> init() async {
         batimentsDao: getIt()),
   );
 
+  getIt.registerFactory<EtablissementsRepository>(
+    () => EtablissementsRepositoryImpl(
+        etablissementsApiService: getIt(),
+        networkInfoHelper: getIt(),
+        sharedPreferencesHelper: getIt()),
+  );
+
   //Bloc
   getIt.registerFactory<AuthBloc>(() =>
       AuthBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
@@ -94,5 +107,6 @@ Future<void> init() async {
       LoginBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
   getIt.registerFactory<HomeBloc>(() => HomeBloc(trackingRepository: getIt()));
   getIt.registerFactory<GpsBloc>(() => GpsBloc());
-  getIt.registerFactory<MapBloc>(() => MapBloc(batimentsRepository: getIt()));
+  getIt.registerFactory<MapBloc>(() =>
+      MapBloc(batimentsRepository: getIt(), etablissementsRepository: getIt()));
 }

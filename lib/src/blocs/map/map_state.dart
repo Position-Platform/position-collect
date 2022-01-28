@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-24 12:08:07
+ * @Last Modified time: 2022-01-28 00:37:52
  */
 part of 'map_bloc.dart';
 
@@ -34,3 +34,19 @@ class BatimentsLoaded extends MapState {}
 class BatimentsLoading extends MapState {}
 
 class BatimentsLoadingError extends MapState {}
+
+class SearchLoading extends MapState {}
+
+class SearchError extends MapState {}
+
+class SearchComplete extends MapState {
+  final List<Datum>? etablissements;
+
+  const SearchComplete(this.etablissements);
+
+  @override
+  List<Object> get props => [etablissements!];
+
+  @override
+  String toString() => 'Etablissements { Etablissements: $etablissements }';
+}

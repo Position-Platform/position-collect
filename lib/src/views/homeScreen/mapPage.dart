@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-24 13:37:14
+ * @Last Modified time: 2022-01-28 01:42:35
  */
 
 import 'package:flutter/material.dart';
@@ -52,10 +52,11 @@ class _MapPageState extends State<MapPage> {
               backgroundColor: Theme.of(context).primaryColor,
               duration: const Duration(seconds: 1),
             ));*/
-            _mapBloc?.add(GetBatiments());
+
           }
           if (state is UpdateStyle) {
             style = state.style;
+            _mapBloc?.add(GetBatiments());
           }
           if (state is BatimentsLoading) {
             pd.show(
@@ -82,7 +83,7 @@ class _MapPageState extends State<MapPage> {
             return Stack(
               children: [
                 buildMapBoxMap(style, _mapBloc, widget.position!),
-                buildFloatingSearchBar(context),
+                buildFloatingSearchBar(context, _mapBloc),
               ],
             );
           },
