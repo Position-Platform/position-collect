@@ -62,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mot de Passe Invalide"),
         "invalidPhone":
             MessageLookupByLibrary.simpleMessage("Téléphone Invalide"),
+        "loaded": MessageLookupByLibrary.simpleMessage("Batiments Chargés"),
         "loggin": MessageLookupByLibrary.simpleMessage("Connexion..."),
         "login": MessageLookupByLibrary.simpleMessage("CONNECTEZ VOUS"),
         "loginFailed":

@@ -45,5 +45,6 @@
     "getdata" : "Récupération des données en ligne",
     "serverError" : "Une erreur est survenue",
     "tryAgain" : "Reesayez",
-    "noInternet" : "Pas de connexion internet"
+    "noInternet" : "Pas de connexion internet",
+    "loaded" : "Batiments Chargés"
     }

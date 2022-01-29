@@ -29,7 +29,18 @@ class UpdateStyle extends MapState {
 
 class StyleLoaded extends MapState {}
 
-class BatimentsLoaded extends MapState {}
+class BatimentsLoaded extends MapState {
+  final int batimentNumber;
+
+  const BatimentsLoaded(this.batimentNumber);
+
+  @override
+  List<Object> get props => [batimentNumber];
+
+  @override
+  String toString() =>
+      'Nombre de Batiments { Nombre de Batiments: $batimentNumber }';
+}
 
 class BatimentsLoading extends MapState {}
 

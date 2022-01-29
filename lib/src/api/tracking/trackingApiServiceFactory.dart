@@ -9,7 +9,7 @@
 
 import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/api/apiService.dart';
-import 'package:positioncollect/src/api/position/tracking/trackingApiService.dart';
+import 'package:positioncollect/src/api/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/utils/config.dart';
 
 class TrackingApiServiceFactory implements TrackingApiService {

@@ -7,7 +7,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:positioncollect/src/repositories/position/tracking/trackingRepository.dart';
+import 'package:positioncollect/src/repositories/tracking/trackingRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
 part 'home_event.dart';

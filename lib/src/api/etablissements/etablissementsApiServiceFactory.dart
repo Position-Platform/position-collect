@@ -8,7 +8,7 @@
  */
 import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/api/apiService.dart';
-import 'package:positioncollect/src/api/position/etablissements/etablissementsApiService.dart';
+import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
 import 'package:positioncollect/src/utils/config.dart';
 
 class EtablissementsApiServiceFactory implements EtablissementsApiService {

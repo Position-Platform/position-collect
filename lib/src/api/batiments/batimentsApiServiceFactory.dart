@@ -9,7 +9,7 @@
 
 import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/api/apiService.dart';
-import 'package:positioncollect/src/api/position/batiments/batimentsApiService.dart';
+import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/utils/config.dart';
 
 class BatimentsApiServiceFactory implements BatimentsApiService {

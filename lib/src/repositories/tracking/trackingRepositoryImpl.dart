@@ -8,11 +8,11 @@
  */
 
 import 'package:chopper/chopper.dart';
-import 'package:positioncollect/src/api/position/tracking/trackingApiService.dart';
+import 'package:positioncollect/src/api/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/tracking_model/tracking_model.dart';
-import 'package:positioncollect/src/repositories/position/tracking/trackingRepository.dart';
+import 'package:positioncollect/src/repositories/tracking/trackingRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
 class TrackingRepositoryImpl implements TrackingRepository {
