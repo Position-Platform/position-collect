@@ -499,6 +499,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Loaded Buildings`
+  String get loaded {
+    return Intl.message(
+      'Loaded Buildings',
+      name: 'loaded',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

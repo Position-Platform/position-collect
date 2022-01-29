@@ -7,11 +7,11 @@
  * @Last Modified time: 2022-01-28 00:20:59
  */
 import 'package:chopper/chopper.dart';
-import 'package:positioncollect/src/api/position/etablissements/etablissementsApiService.dart';
+import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/search_model/search_model.dart';
-import 'package:positioncollect/src/repositories/position/etablissements/etablissementsRepository.dart';
+import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
 class EtablissementsRepositoryImpl implements EtablissementsRepository {

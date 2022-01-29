@@ -4,11 +4,13 @@
  * @Last Modified by: Boris Gautier
  * @Last Modified time: 2022-01-28 12:27:25
  */
+import 'package:positioncollect/src/api/batiments/batimentsApiServiceFactory.dart';
+import 'package:positioncollect/src/api/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
-import 'package:positioncollect/src/repositories/position/batiments/batimentsRepositoryImpl.dart';
-import 'package:positioncollect/src/repositories/position/tracking/trackingRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/batiments/batimentsRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/tracking/trackingRepositoryImpl.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:chopper/chopper.dart';
@@ -16,9 +18,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/apiService.dart';
-import 'package:positioncollect/src/api/position/batiments/batimentsApiServiceFactory.dart';
-import 'package:positioncollect/src/api/position/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/database/database.dart';
+import 'package:positioncollect/src/utils/geolocator.dart';
 import 'package:workmanager/workmanager.dart';
 
 void callbackDispatcher() {
@@ -90,8 +91,7 @@ void callbackDispatcher() {
 
       return Future.value(true);
     } else {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+      Position position = await determinePosition();
       await trackingRepository.addtracking(
           position.longitude.toString(), position.latitude.toString());
       return Future.value(true);

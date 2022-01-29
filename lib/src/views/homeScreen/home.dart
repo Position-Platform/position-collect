@@ -13,7 +13,7 @@ import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
-import 'package:positioncollect/src/views/homeScreen/mapPage.dart';
+import 'package:positioncollect/src/views/mapScreen/mapPage.dart';
 import 'package:positioncollect/src/widgets/errorWidget.dart';
 
 class HomePage extends StatefulWidget {

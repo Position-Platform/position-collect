@@ -9,7 +9,7 @@
 
 import 'package:chopper/chopper.dart';
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:positioncollect/src/api/position/batiments/batimentsApiService.dart';
+import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/database/batiments/batimentDao.dart';
 import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/network.dart';
@@ -17,7 +17,7 @@ import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
 import 'package:positioncollect/src/models/response_model/response_model.dart';
-import 'package:positioncollect/src/repositories/position/batiments/batimentsRepository.dart';
+import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
 class BatimentsRepositoryImpl implements BatimentsRepository {

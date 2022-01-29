@@ -17,7 +17,6 @@ import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/widgets/drawer.dart';
 import 'package:positioncollect/src/widgets/floatingActionButton.dart';
 import 'package:positioncollect/src/widgets/searchBar.dart';
-import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key, @required this.position}) : super(key: key);
@@ -40,42 +39,30 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    ProgressDialog pd = ProgressDialog(context: context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<MapBloc, MapState>(
         listener: (context, state) {
-          if (state is StyleLoaded) {
-            /*  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: const Text("Style loaded :)"),
-              backgroundColor: Theme.of(context).primaryColor,
-              duration: const Duration(seconds: 1),
-            ));*/
-
-          }
+          if (state is StyleLoaded) {}
           if (state is UpdateStyle) {
             style = state.style;
             _mapBloc?.add(GetBatiments());
           }
-          if (state is BatimentsLoading) {
-            pd.show(
-                max: 100,
-                msg: S.of(context).batimentDownload,
-                progressBgColor: primaryColor,
-                progressType: ProgressType.valuable,
-                progressValueColor: accentPrimaryColor);
-          }
+          if (state is BatimentsLoading) {}
           if (state is BatimentsLoadingError) {
-            pd.close();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: const Text("Error"),
-              backgroundColor: Theme.of(context).errorColor,
-              duration: const Duration(seconds: 5),
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Error"),
+              backgroundColor: red,
+              duration: Duration(seconds: 5),
             ));
           }
           if (state is BatimentsLoaded) {
-            pd.close();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  state.batimentNumber.toString() + " " + S.of(context).loaded),
+              backgroundColor: green,
+              duration: const Duration(seconds: 5),
+            ));
           }
         },
         child: BlocBuilder<MapBloc, MapState>(
