@@ -38,7 +38,7 @@ jobs:
       # Run widget tests for our flutter project.
       # - run: flutter test
 
-       Build apk.
+      # Build apk.
       - run: flutter build apk
 
       #  - name: Create a Release APK
@@ -47,7 +47,7 @@ jobs:
       #     artifacts: "build/app/outputs/apk/debug/*.apk"
       #     token: ${{ secrets.TOKEN }}
 
-       Upload generated apk to the artifacts.
+      # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
