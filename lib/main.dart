@@ -23,16 +23,6 @@ void main() async {
   final storage = await HydratedStorage.build(
     storageDirectory: await getApplicationSupportDirectory(),
   );
-  HydratedBlocOverrides.runZoned(
-    () {},
-    storage: storage,
-  );
-  BlocOverrides.runZoned(
-    () {
-      di.getIt<GpsBloc>();
-    },
-    blocObserver: SimpleBlocObserver(),
-  );
   Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   Workmanager().registerPeriodicTask("1", "updatebatiments",
       frequency: const Duration(minutes: 15),
@@ -41,10 +31,13 @@ void main() async {
   Workmanager().registerPeriodicTask("2", "addtracking",
       frequency: const Duration(minutes: 15),
       constraints: Constraints(networkType: NetworkType.connected));
-  runApp(
-    MultiBlocProvider(providers: [
-      BlocProvider(create: (_) => di.getIt<GpsBloc>()),
-      //  BlocProvider(create: (_) => di.getIt<AuthBloc>()..add(AuthStarted()))
-    ], child: MyApp()),
-  );
+
+  HydratedBlocOverrides.runZoned(() {
+    runApp(
+      BlocProvider(
+        create: (_) => di.getIt<GpsBloc>(),
+        child: MyApp(),
+      ),
+    );
+  }, storage: storage, blocObserver: SimpleBlocObserver());
 }

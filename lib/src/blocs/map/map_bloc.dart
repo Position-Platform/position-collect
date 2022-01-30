@@ -16,6 +16,7 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
+import 'package:positioncollect/src/repositories/tracking/trackingRepository.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
 
 part 'map_event.dart';
@@ -25,11 +26,21 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   MapboxMapController? _mapController;
   BatimentsRepository? batimentsRepository;
   EtablissementsRepository? etablissementsRepository;
+  TrackingRepository? trackingRepository;
 
   late StreamSubscription<bool> keyboardSubscription;
+  late StreamSubscription<Position> positionStream;
   var keyboardVisibilityController = KeyboardVisibilityController();
 
-  MapBloc({this.batimentsRepository, this.etablissementsRepository})
+  final LocationSettings locationSettings = const LocationSettings(
+    accuracy: LocationAccuracy.high,
+    distanceFilter: 100,
+  );
+
+  MapBloc(
+      {this.batimentsRepository,
+      this.etablissementsRepository,
+      this.trackingRepository})
       : super(MapInitial()) {
     on<OnMapInitializedEvent>(_onInitMap);
     on<StyleLoadingEvent>(_styleLoading);
@@ -53,6 +64,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) async {
       add(SetKeyBoardStatus(visible));
+    });
+
+    positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position? position) async {
+      await trackingRepository?.addtracking(
+          position!.longitude.toString(), position.latitude.toString());
     });
 
     onFeatureTapped(_mapController!);

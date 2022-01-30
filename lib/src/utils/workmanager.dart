@@ -11,10 +11,8 @@ import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepositoryImpl.dart';
 import 'package:positioncollect/src/repositories/tracking/trackingRepositoryImpl.dart';
-import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:chopper/chopper.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/apiService.dart';
@@ -51,15 +49,6 @@ void callbackDispatcher() {
 
   Workmanager().executeTask((task, inputData) async {
     if (task == "updatebatiments") {
-      Fluttertoast.showToast(
-          msg: "Get data",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 3,
-          backgroundColor: greyColor,
-          textColor: whiteColor,
-          fontSize: 16.0);
-
       var batimentsBD = await batimentsDao.getBatiments();
       var numberBatimentsBD = batimentsBD.length;
       var batimentsApi = await batimentsRepository.getBatimentsNumber();
@@ -78,15 +67,6 @@ void callbackDispatcher() {
 
           await batimentsDao.insertBatiment(batimentsCompanion);
         }
-
-        Fluttertoast.showToast(
-            msg: "Data Update",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 3,
-            backgroundColor: greyColor,
-            textColor: whiteColor,
-            fontSize: 16.0);
       }
 
       return Future.value(true);
