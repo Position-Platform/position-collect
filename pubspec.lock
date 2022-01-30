@@ -368,6 +368,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_plugin_android_lifecycle:
+    dependency: "direct main"
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -598,9 +605,9 @@ packages:
   mapbox_gl:
     dependency: "direct main"
     description:
-      name: mapbox_gl
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../maps"
+      relative: true
+    source: path
     version: "0.15.0"
   mapbox_gl_dart:
     dependency: transitive
@@ -612,16 +619,20 @@ packages:
   mapbox_gl_platform_interface:
     dependency: transitive
     description:
-      name: mapbox_gl_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: mapbox_gl_platform_interface
+      ref: HEAD
+      resolved-ref: "2824a75d9a2cb007188b1976bd8529b9d32aa1b2"
+      url: "https://github.com/tobrun/flutter-mapbox-gl.git"
+    source: git
     version: "0.15.0"
   mapbox_gl_web:
     dependency: transitive
     description:
-      name: mapbox_gl_web
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: mapbox_gl_web
+      ref: HEAD
+      resolved-ref: "2824a75d9a2cb007188b1976bd8529b9d32aa1b2"
+      url: "https://github.com/tobrun/flutter-mapbox-gl.git"
+    source: git
     version: "0.15.0"
   matcher:
     dependency: transitive

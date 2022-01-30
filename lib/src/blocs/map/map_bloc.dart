@@ -50,9 +50,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       OnMapInitializedEvent event, Emitter<MapState> emit) async {
     _mapController = event.controller;
 
-    addImageInMap(
-        _mapController!, "assets/images/building.png", "markerBatimentImage");
-
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) async {
       add(SetKeyBoardStatus(visible));
@@ -93,7 +90,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     var geojson = createGeoJsonBatiments(batimentsResult!.success!.data!);
 
     try {
-      addGeoJsonInmap(_mapController, geojson);
+      await addGeoJsonInmap(_mapController, geojson);
       return emit(BatimentsLoaded(batimentsResult.success!.data!.length));
     } catch (e) {
       return emit(BatimentsLoadingError());

@@ -10,17 +10,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
+import 'package:positioncollect/src/utils/mapboxUtils.dart';
 import 'package:positioncollect/src/widgets/drawer.dart';
 import 'package:positioncollect/src/widgets/floatingActionButton.dart';
 import 'package:positioncollect/src/widgets/searchBar.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key, @required this.position}) : super(key: key);
+  const MapPage({Key? key, @required this.position, this.user})
+      : super(key: key);
   final Position? position;
+  final User? user;
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -28,13 +31,12 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   MapBloc? _mapBloc;
-  String style = MapboxStyles.MAPBOX_STREETS;
+  String style = mapThemes[1]['style'];
 
   @override
   void initState() {
     super.initState();
     _mapBloc = BlocProvider.of<MapBloc>(context);
-    _mapBloc?.add(GetBatiments());
   }
 
   @override
@@ -43,10 +45,11 @@ class _MapPageState extends State<MapPage> {
       resizeToAvoidBottomInset: false,
       body: BlocListener<MapBloc, MapState>(
         listener: (context, state) {
-          if (state is StyleLoaded) {}
+          if (state is StyleLoaded) {
+            _mapBloc?.add(GetBatiments());
+          }
           if (state is UpdateStyle) {
             style = state.style;
-            _mapBloc?.add(GetBatiments());
           }
           if (state is BatimentsLoading) {}
           if (state is BatimentsLoadingError) {

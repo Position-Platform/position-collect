@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
             create: (context) => getIt<MapBloc>(),
             child: MapPage(
               position: state.position,
+              user: widget.user,
             ),
           );
         }

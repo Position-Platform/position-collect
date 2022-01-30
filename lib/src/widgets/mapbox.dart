@@ -12,7 +12,9 @@ import 'package:positioncollect/src/utils/config.dart';
 
 Widget buildMapBoxMap(String style, MapBloc? _mapBloc, Position position) {
   return MapboxMap(
-    annotationOrder: const [],
+    attributionEnabled: false,
+    logoEnabled: false,
+    annotationOrder: const [AnnotationType.symbol],
     compassViewPosition: CompassViewPosition.TopRight,
     zoomGesturesEnabled: true,
     myLocationEnabled: true,
