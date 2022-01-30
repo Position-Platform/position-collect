@@ -107,6 +107,8 @@ Future<void> init() async {
       LoginBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
   getIt.registerFactory<HomeBloc>(() => HomeBloc(trackingRepository: getIt()));
   getIt.registerFactory<GpsBloc>(() => GpsBloc());
-  getIt.registerFactory<MapBloc>(() =>
-      MapBloc(batimentsRepository: getIt(), etablissementsRepository: getIt()));
+  getIt.registerFactory<MapBloc>(() => MapBloc(
+      batimentsRepository: getIt(),
+      etablissementsRepository: getIt(),
+      trackingRepository: getIt()));
 }
