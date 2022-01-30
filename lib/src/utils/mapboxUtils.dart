@@ -7,10 +7,8 @@
 // ignore_for_file: file_names, constant_identifier_names
 
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
 
@@ -20,17 +18,17 @@ const String UNCLUSTERED_POINTS = "unclustered-points";
 List<dynamic> mapThemes = [
   {
     'name': 'Dark',
-    'style': MapboxStyles.DARK,
+    'style': "mapbox://styles/gauty96/ckz19n3kd005e14nttywbodgs",
     'image': 'assets/images/osm_dark.png'
   },
   {
     'name': 'Street',
-    'style': MapboxStyles.MAPBOX_STREETS,
+    'style': "mapbox://styles/gauty96/ckz194r6x000616o9hq4pcgkz",
     'image': 'assets/images/mapbox_street.png'
   },
   {
     'name': 'Satellite',
-    'style': MapboxStyles.SATELLITE,
+    'style': "mapbox://styles/gauty96/ckz19k4o5000n15p3y8rl29p7",
     'image': 'assets/images/mapbox_satellite.png'
   },
 ];
@@ -75,55 +73,50 @@ Map<String, Object> createGeoJsonBatiments(List<Datum>? data) {
   return geojson;
 }
 
-addGeoJsonInmap(
-    MapboxMapController? mapController, Map<String, Object> geojson) {
-  mapController?.addSource(
+Future<void> addGeoJsonInmap(
+    MapboxMapController? mapController, Map<String, Object> geojson) async {
+  await mapController?.addSource(
       GEOJSON_SOURCE_ID,
       GeojsonSourceProperties(
           data: geojson, cluster: true, clusterMaxZoom: 16, clusterRadius: 50));
-  mapController?.addLayer(
+
+  await mapController?.addLayer(
       GEOJSON_SOURCE_ID,
       UNCLUSTERED_POINTS,
       const SymbolLayerProperties(
-          iconImage: "markerBatimentImage",
-          iconSize: 0.17,
+          iconImage: "building",
+          iconSize: 3,
           iconAllowOverlap: true,
           symbolSortKey: 10.0));
-  mapController?.addLayer(
+  await mapController?.addLayer(
       GEOJSON_SOURCE_ID,
       "batiments-circles",
       const CircleLayerProperties(circleColor: [
         Expressions.step,
         [Expressions.get, 'point_count'],
         '#04bc94',
-        100,
+        20,
         '#04bc94',
-        750,
+        150,
         '#04bc94'
       ], circleRadius: [
         Expressions.step,
         [Expressions.get, 'point_count'],
         20,
-        100,
         20,
-        750,
+        20,
+        150,
         20
       ]));
-  mapController?.addLayer(
+  await mapController?.addLayer(
       GEOJSON_SOURCE_ID,
-      "batiments-count",
+      "property",
       const SymbolLayerProperties(
           textField: [Expressions.get, 'point_count'],
-          textFont: ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
           textSize: 12,
-          textColor: "#ffffff"));
-}
-
-addImageInMap(
-    MapboxMapController mapController, String asset, String imageName) async {
-  final ByteData bytes = await rootBundle.load(asset);
-  final Uint8List list = bytes.buffer.asUint8List();
-  mapController.addImage(imageName, list);
+          textColor: "#ffffff",
+          textIgnorePlacement: true,
+          textAllowOverlap: true));
 }
 
 onFeatureTapped(MapboxMapController mapController) {

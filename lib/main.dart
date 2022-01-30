@@ -35,7 +35,7 @@ void main() async {
   );
   Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   Workmanager().registerPeriodicTask("1", "updatebatiments",
-      frequency: const Duration(hours: 1),
+      frequency: const Duration(minutes: 15),
       constraints: Constraints(
           networkType: NetworkType.connected, requiresStorageNotLow: true));
   Workmanager().registerPeriodicTask("2", "addtracking",
