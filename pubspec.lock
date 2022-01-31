@@ -605,11 +605,9 @@ packages:
   mapbox_gl:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "39cfe659c7cb674b89cd346f434670edf2435ea0"
-      url: "https://github.com/BorisGautier/flutter_mapbox.git"
-    source: git
+      path: maps
+      relative: true
+    source: path
     version: "0.15.0"
   mapbox_gl_dart:
     dependency: transitive
