@@ -46,5 +46,6 @@
     "serverError" : "An error has occurred",
     "tryAgain" : "Try again",
     "noInternet" : "No internet connection",
-    "loaded" : "Loaded Buildings"
+    "loaded" : "Loaded Buildings",
+    "noData" : "No data found"
 }

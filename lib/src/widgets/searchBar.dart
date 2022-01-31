@@ -65,25 +65,30 @@ Widget buildFloatingSearchBar(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 clipBehavior: Clip.antiAlias,
-                child: ImplicitlyAnimatedList<Datum>(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  items: state.etablissements!,
-                  insertDuration: const Duration(milliseconds: 700),
-                  itemBuilder: (context, animation, item, i) {
-                    return SizeFadeTransition(
-                      animation: animation,
-                      child: buildItem(context, item, state),
-                    );
-                  },
-                  updateItemBuilder: (context, animation, item) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: buildItem(context, item, state),
-                    );
-                  },
-                  areItemsTheSame: (a, b) => a == b,
-                ),
+                child: state.etablissements!.isNotEmpty
+                    ? ImplicitlyAnimatedList<Datum>(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        items: state.etablissements!,
+                        insertDuration: const Duration(milliseconds: 700),
+                        itemBuilder: (context, animation, item, i) {
+                          return SizeFadeTransition(
+                            animation: animation,
+                            child: buildItem(context, item, state),
+                          );
+                        },
+                        updateItemBuilder: (context, animation, item) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: buildItem(context, item, state),
+                          );
+                        },
+                        areItemsTheSame: (a, b) => a == b,
+                      )
+                    : Center(
+                        heightFactor: 3,
+                        child: Text(S.of(context).noData),
+                      ),
               ),
             );
           }
