@@ -509,6 +509,16 @@ class S {
       args: [],
     );
   }
+
+  /// `No data found`
+  String get noData {
+    return Intl.message(
+      'No data found',
+      name: 'noData',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

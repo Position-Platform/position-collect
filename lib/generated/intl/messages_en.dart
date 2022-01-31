@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Login successful"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noAccount": MessageLookupByLibrary.simpleMessage("No Account yet?  "),
+        "noData": MessageLookupByLibrary.simpleMessage("No data found"),
         "noInternet":
             MessageLookupByLibrary.simpleMessage("No internet connection"),
         "noLocation":

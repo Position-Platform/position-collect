@@ -46,5 +46,6 @@
     "serverError" : "Une erreur est survenue",
     "tryAgain" : "Reesayez",
     "noInternet" : "Pas de connexion internet",
-    "loaded" : "Batiments Chargés"
+    "loaded" : "Batiments Chargés",
+    "noData" : "Aucune données trouvées"
     }
