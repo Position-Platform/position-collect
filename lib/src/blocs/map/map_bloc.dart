@@ -18,7 +18,6 @@ import 'package:positioncollect/src/repositories/batiments/batimentsRepository.d
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/repositories/nominatim/nominatimRepository.dart';
 import 'package:positioncollect/src/repositories/tracking/trackingRepository.dart';
-import 'package:positioncollect/src/utils/geolocator.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
 
 part 'map_event.dart';
@@ -30,6 +29,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   EtablissementsRepository? etablissementsRepository;
   TrackingRepository? trackingRepository;
   NominatimRepository? nominatimRepository;
+  late Position poso;
 
   late StreamSubscription<bool> keyboardSubscription;
   late StreamSubscription<Position> positionStream;
@@ -37,7 +37,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   final LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
-    distanceFilter: 100,
+    distanceFilter: 10,
   );
 
   MapBloc(
@@ -75,8 +75,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
+      poso = position!;
       await trackingRepository?.addtracking(
-          position!.longitude.toString(), position.latitude.toString());
+          position.longitude.toString(), position.latitude.toString());
     });
 
     onFeatureTapped(_mapController!);
@@ -92,9 +93,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   void _getUserLocation(
       GetUserLocationEvent event, Emitter<MapState> emit) async {
-    Position position = await determinePosition();
     _mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position.latitude, position.longitude), zoom: 15)));
+        target: LatLng(poso.latitude, poso.longitude), zoom: 15)));
   }
 
   void _updateStyle(UpdateStyleEvent event, Emitter<MapState> emit) {
@@ -144,18 +144,19 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   ) async {
     emit(AdressLoading());
     try {
-      Position newposition = await determinePosition();
       final nominatimResult = await nominatimRepository?.reverseNominatim(
-          newposition.latitude.toString(), newposition.longitude.toString());
+          poso.latitude.toString(), poso.longitude.toString());
 
-      emit(UserAdress(nominatimResult!.success!.displayName!, newposition));
+      emit(UserAdress(nominatimResult!.success!.displayName!, poso));
     } catch (e) {
       emit(AdressError());
     }
   }
 
   void _sharePosition(SharePosition event, Emitter<MapState> emit) {
-    try {} catch (e) {}
+    try {} catch (e) {
+      //
+    }
 
     emit(PositionShared());
   }

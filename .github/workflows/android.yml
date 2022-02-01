@@ -26,5 +26,6 @@ jobs:
           java-version: "11"
       - run: flutter pub get
       - run: flutter format .
-      - run: flutter build apk
-      - run: flutter build appbundle
+      - run: flutter analyze .
+      #- run: flutter build apk
+      #- run: flutter build appbundle
