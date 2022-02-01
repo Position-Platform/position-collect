@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 01:47:17
+ * @Last Modified time: 2022-02-01 15:15:17
  */
 import 'dart:async';
 
@@ -16,7 +16,9 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
+import 'package:positioncollect/src/repositories/nominatim/nominatimRepository.dart';
 import 'package:positioncollect/src/repositories/tracking/trackingRepository.dart';
+import 'package:positioncollect/src/utils/geolocator.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
 
 part 'map_event.dart';
@@ -27,6 +29,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   BatimentsRepository? batimentsRepository;
   EtablissementsRepository? etablissementsRepository;
   TrackingRepository? trackingRepository;
+  NominatimRepository? nominatimRepository;
 
   late StreamSubscription<bool> keyboardSubscription;
   late StreamSubscription<Position> positionStream;
@@ -40,7 +43,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc(
       {this.batimentsRepository,
       this.etablissementsRepository,
-      this.trackingRepository})
+      this.trackingRepository,
+      this.nominatimRepository})
       : super(MapInitial()) {
     on<OnMapInitializedEvent>(_onInitMap);
     on<StyleLoadingEvent>(_styleLoading);
@@ -51,6 +55,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<GetBatiments>(_getBatiments);
     on<SearchEtablissements>(_searchEtablissements);
     on<SetKeyBoardStatus>(_setKeyBoardStatus);
+    on<GetUserAdress>(_getUserAdress);
+    on<SharePosition>(_sharePosition);
   }
 
   void _setKeyBoardStatus(SetKeyBoardStatus event, Emitter<MapState> emit) {
@@ -131,9 +137,32 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     }
   }
 
+  void _getUserAdress(
+    GetUserAdress event,
+    Emitter<MapState> emit,
+  ) async {
+    emit(AdressLoading());
+    try {
+      Position newposition = await determinePosition();
+      final nominatimResult = await nominatimRepository?.reverseNominatim(
+          newposition.latitude.toString(), newposition.longitude.toString());
+
+      emit(UserAdress(nominatimResult!.success!.displayName!, newposition));
+    } catch (e) {
+      emit(AdressError());
+    }
+  }
+
+  void _sharePosition(SharePosition event, Emitter<MapState> emit) {
+    try {} catch (e) {}
+
+    emit(PositionShared());
+  }
+
   @override
   Future<void> close() {
     keyboardSubscription.cancel();
+    positionStream.cancel();
     return super.close();
   }
 }

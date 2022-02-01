@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 00:37:52
+ * @Last Modified time: 2022-02-01 15:06:26
  */
 part of 'map_bloc.dart';
 
@@ -73,3 +73,22 @@ class KeyBoardStatus extends MapState {
   @override
   String toString() => 'KeyBoardStatus { KeyBoardStatus: $keyboardStatus }';
 }
+
+class UserAdress extends MapState {
+  final String? adress;
+  final Position? position;
+
+  const UserAdress(this.adress, this.position);
+
+  @override
+  List<Object> get props => [adress!, position!];
+
+  @override
+  String toString() => 'Adress { Adress: $adress , Position: $position }';
+}
+
+class AdressLoading extends MapState {}
+
+class AdressError extends MapState {}
+
+class PositionShared extends MapState {}

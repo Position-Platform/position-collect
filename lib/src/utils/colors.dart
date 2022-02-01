@@ -18,3 +18,5 @@ const transparent = Colors.transparent;
 const green = Colors.green;
 const shadowColor = Color(0x95E9EBF0);
 const viewColor = Color(0XFFDADADA);
+
+Color shadowColorGlobal = Colors.grey.withOpacity(0.2);

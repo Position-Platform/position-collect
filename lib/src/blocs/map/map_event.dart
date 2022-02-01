@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:09 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 00:26:21
+ * @Last Modified time: 2022-02-01 15:04:57
  */
 part of 'map_bloc.dart';
 
@@ -61,4 +61,18 @@ class SetKeyBoardStatus extends MapEvent {
 
   @override
   String toString() => 'KeyBoardStatus { KeyBoardStatus: $keyboardStatus }';
+}
+
+class GetUserAdress extends MapEvent {}
+
+class SharePosition extends MapEvent {
+  final Position? position;
+
+  const SharePosition(this.position);
+
+  @override
+  List<Object> get props => [position!];
+
+  @override
+  String toString() => 'SharePosition { SharePosition: $position }';
 }
