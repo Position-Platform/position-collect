@@ -18,8 +18,7 @@ import 'package:positioncollect/src/utils/mapboxUtils.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/widgets/widgets.dart';
 
-Widget buildFloatingActionButton(
-    BuildContext context, MapBloc? _mapBloc, Position position) {
+Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
   bool keyboardIsOpened = false;
   bool isLoading = false;
   String address = "";
@@ -107,7 +106,7 @@ Widget buildFloatingActionButton(
                               tooltip: "Location",
                               backgroundColor: whiteColor,
                               onPressed: () {
-                                _mapBloc?.add(GetUserLocationEvent(position));
+                                _mapBloc?.add(GetUserLocationEvent());
                               },
                               child: const Icon(
                                 Icons.navigation,

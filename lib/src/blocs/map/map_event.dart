@@ -23,11 +23,7 @@ class ZoomInEvent extends MapEvent {}
 
 class ZoomOutEvent extends MapEvent {}
 
-class GetUserLocationEvent extends MapEvent {
-  final Position position;
-
-  const GetUserLocationEvent(this.position);
-}
+class GetUserLocationEvent extends MapEvent {}
 
 class UpdateStyleEvent extends MapEvent {
   final String style;
