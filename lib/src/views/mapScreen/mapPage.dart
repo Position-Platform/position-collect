@@ -81,8 +81,7 @@ class _MapPageState extends State<MapPage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          buildFloatingActionButton(context, _mapBloc, widget.position!),
+      floatingActionButton: buildFloatingActionButton(context, _mapBloc),
       drawer: buildDrawer(context),
     );
   }

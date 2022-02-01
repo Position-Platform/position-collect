@@ -90,10 +90,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     _mapController?.animateCamera(CameraUpdate.zoomOut());
   }
 
-  void _getUserLocation(GetUserLocationEvent event, Emitter<MapState> emit) {
+  void _getUserLocation(
+      GetUserLocationEvent event, Emitter<MapState> emit) async {
+    Position position = await determinePosition();
     _mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(event.position.latitude, event.position.longitude),
-        zoom: 15)));
+        target: LatLng(position.latitude, position.longitude), zoom: 15)));
   }
 
   void _updateStyle(UpdateStyleEvent event, Emitter<MapState> emit) {
