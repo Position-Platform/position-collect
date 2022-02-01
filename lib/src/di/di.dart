@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 00:33:17
+ * @Last Modified time: 2022-02-01 15:08:41
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -15,6 +15,9 @@ import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/api/batiments/batimentsApiServiceFactory.dart';
 import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
 import 'package:positioncollect/src/api/etablissements/etablissementsApiServiceFactory.dart';
+import 'package:positioncollect/src/api/nominatim/nominatimApiService.dart';
+import 'package:positioncollect/src/api/nominatim/nominatimApiServiceFactory.dart';
+import 'package:positioncollect/src/api/nominatimService.dart';
 import 'package:positioncollect/src/api/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/api/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
@@ -31,6 +34,8 @@ import 'package:positioncollect/src/repositories/batiments/batimentsRepository.d
 import 'package:positioncollect/src/repositories/batiments/batimentsRepositoryImpl.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepositoryImpl.dart';
+import 'package:positioncollect/src/repositories/nominatim/nominatimRepository.dart';
+import 'package:positioncollect/src/repositories/nominatim/nominatimRepositoryImpl.dart';
 import 'package:positioncollect/src/repositories/tracking/trackingRepository.dart';
 import 'package:positioncollect/src/repositories/tracking/trackingRepositoryImpl.dart';
 import 'package:positioncollect/src/utils/config.dart';
@@ -48,7 +53,17 @@ Future<void> init() async {
     converter: const JsonConverter(),
   );
 
+  final chopperNomonatim = ChopperClient(
+    baseUrl: nominatimUrl,
+    services: [
+      // the generated service
+      NominatimService.create()
+    ],
+    converter: const JsonConverter(),
+  );
+
   final apiService = ApiService.create(chopper);
+  final nominatimApiService = NominatimService.create(chopperNomonatim);
 
   //ApiService
   getIt.registerLazySingleton<AuthApiService>(
@@ -59,6 +74,8 @@ Future<void> init() async {
       () => BatimentsApiServiceFactory(apiService: apiService));
   getIt.registerLazySingleton<EtablissementsApiService>(
       () => EtablissementsApiServiceFactory(apiService: apiService));
+  getIt.registerLazySingleton<NominatimApiService>(
+      () => NominatimApiServiceFactory(nominatimService: nominatimApiService));
 
   //DataBase
   getIt.registerLazySingleton<BatimentsDao>(() => AppDatabase().batimentsDao);
@@ -100,6 +117,12 @@ Future<void> init() async {
         sharedPreferencesHelper: getIt()),
   );
 
+  getIt.registerFactory<NominatimRepository>(
+    () => NominatimRepositoryImpl(
+        nominatimApiService: getIt(),
+        networkInfoHelper: getIt(),
+        sharedPreferencesHelper: getIt()),
+  );
   //Bloc
   getIt.registerFactory<AuthBloc>(() =>
       AuthBloc(authRepository: getIt(), sharedPreferencesHelper: getIt()));
@@ -110,5 +133,6 @@ Future<void> init() async {
   getIt.registerFactory<MapBloc>(() => MapBloc(
       batimentsRepository: getIt(),
       etablissementsRepository: getIt(),
-      trackingRepository: getIt()));
+      trackingRepository: getIt(),
+      nominatimRepository: getIt()));
 }
