@@ -85,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLayer": MessageLookupByLibrary.simpleMessage("Select Layer"),
         "serverError":
             MessageLookupByLibrary.simpleMessage("An error has occurred"),
+        "shareContent": MessageLookupByLibrary.simpleMessage(
+            "I use the Position application to guide me. Follow my position on the map"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "username": MessageLookupByLibrary.simpleMessage("User name"),

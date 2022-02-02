@@ -6,6 +6,7 @@
  */
 // ignore_for_file: constant_identifier_names
 
+const appName = "Position Collect";
 const apiUrl = "https://services.position.cm";
 const nominatimUrl = "https://nominatim.openstreetmap.org";
 const apiKey =

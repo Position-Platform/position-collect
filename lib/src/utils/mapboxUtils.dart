@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-24 13:36:42 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 00:31:30
+ * @Last Modified time: 2022-02-02 14:48:32
  */
 // ignore_for_file: file_names, constant_identifier_names
 
@@ -85,7 +85,7 @@ Future<void> addGeoJsonInmap(
       UNCLUSTERED_POINTS,
       const SymbolLayerProperties(
           iconImage: "building",
-          iconSize: 3,
+          iconSize: 2.8,
           iconAllowOverlap: true,
           symbolSortKey: 10.0));
   await mapController?.addLayer(

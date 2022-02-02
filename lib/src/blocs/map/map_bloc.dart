@@ -4,12 +4,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-01 15:15:17
+ * @Last Modified time: 2022-02-02 14:44:02
  */
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -30,6 +31,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   TrackingRepository? trackingRepository;
   NominatimRepository? nominatimRepository;
   late Position poso;
+
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   late StreamSubscription<bool> keyboardSubscription;
   late StreamSubscription<Position> positionStream;
@@ -153,12 +156,30 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     }
   }
 
-  void _sharePosition(SharePosition event, Emitter<MapState> emit) {
-    try {} catch (e) {
+  void _sharePosition(SharePosition event, Emitter<MapState> emit) async {
+    String myposition = event.position!.longitude.toString() +
+        "," +
+        event.position!.latitude.toString();
+    try {
+      final DynamicLinkParameters parameters = DynamicLinkParameters(
+        uriPrefix: 'https://app.position.cm/',
+        link: Uri.parse('https://app.position.cm?friendposition=$myposition'),
+        androidParameters: const AndroidParameters(
+            packageName: 'com.sogefi.position', minimumVersion: 0),
+        iosParameters: const IOSParameters(
+          bundleId: 'com.sogefi.position',
+          minimumVersion: '0',
+        ),
+      );
+
+      final ShortDynamicLink shortLink = await dynamicLinks.buildShortLink(
+          parameters,
+          shortLinkType: ShortDynamicLinkType.unguessable);
+
+      emit(UrlPositionShared(shortLink.shortUrl.toString()));
+    } catch (e) {
       //
     }
-
-    emit(PositionShared());
   }
 
   @override

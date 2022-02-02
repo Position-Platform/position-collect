@@ -47,5 +47,6 @@
     "tryAgain" : "Try again",
     "noInternet" : "No internet connection",
     "loaded" : "Loaded Buildings",
-    "noData" : "No data found"
+    "noData" : "No data found",
+    "shareContent" : "I use the Position application to guide me. Follow my position on the map"
 }

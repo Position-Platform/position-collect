@@ -47,5 +47,6 @@
     "tryAgain" : "Reesayez",
     "noInternet" : "Pas de connexion internet",
     "loaded" : "Batiments Chargés",
-    "noData" : "Aucune données trouvées"
+    "noData" : "Aucune données trouvées",
+    "shareContent" : "J'utilise l'application Position pour me guider. Suivez ma position sur la carte"
     }

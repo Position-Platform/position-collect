@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:47 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-01 17:39:54
+ * @Last Modified time: 2022-02-02 15:09:14
  */
 // ignore_for_file: file_names
 
@@ -14,9 +14,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
+import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/widgets/widgets.dart';
+import 'package:share_plus/share_plus.dart';
 
 Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
   bool keyboardIsOpened = false;
@@ -35,6 +37,9 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
         isLoading = false;
         address = state.adress!;
         bootomSheet(context, address, _mapBloc!, state.position!);
+      }
+      if (state is UrlPositionShared) {
+        Share.share(S.of(context).shareContent + state.url!, subject: appName);
       }
     },
     child: BlocBuilder<MapBloc, MapState>(
@@ -123,7 +128,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                     padding: const EdgeInsets.all(20),
                                     color: Colors.white,
                                     height: MediaQuery.of(context).size.height *
-                                        0.3,
+                                        0.25,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -158,7 +163,8 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                                     width: 100,
                                                     margin:
                                                         const EdgeInsets.only(
-                                                            right: 10),
+                                                            right: 10,
+                                                            left: 10),
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius

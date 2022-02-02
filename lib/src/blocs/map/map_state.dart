@@ -91,4 +91,14 @@ class AdressLoading extends MapState {}
 
 class AdressError extends MapState {}
 
-class PositionShared extends MapState {}
+class UrlPositionShared extends MapState {
+  final String? url;
+
+  const UrlPositionShared(this.url);
+
+  @override
+  List<Object> get props => [url!];
+
+  @override
+  String toString() => 'ShareUrl { ShareUrl: $url }';
+}
