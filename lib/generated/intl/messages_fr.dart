@@ -94,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choisir un fond de carte"),
         "serverError":
             MessageLookupByLibrary.simpleMessage("Une erreur est survenue"),
+        "shareContent": MessageLookupByLibrary.simpleMessage(
+            "J\'utilise l\'application Position pour me guider. Suivez ma position sur la carte"),
         "skip": MessageLookupByLibrary.simpleMessage("Passer"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Reesayez"),
         "username": MessageLookupByLibrary.simpleMessage("Nom d\'utilisateur"),

@@ -20,6 +20,11 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Position Collect</string>
+	<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+</dict>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

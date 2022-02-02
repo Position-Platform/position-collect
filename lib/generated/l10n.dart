@@ -519,6 +519,16 @@ class S {
       args: [],
     );
   }
+
+  /// `I use the Position application to guide me. Follow my position on the map`
+  String get shareContent {
+    return Intl.message(
+      'I use the Position application to guide me. Follow my position on the map',
+      name: 'shareContent',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
