@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 01:42:35
+ * @Last Modified time: 2022-02-08 04:51:11
  */
 
 import 'package:flutter/material.dart';
@@ -82,7 +82,7 @@ class _MapPageState extends State<MapPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: buildFloatingActionButton(context, _mapBloc),
-      drawer: buildDrawer(context),
+      drawer: NavigationDrawer(user: widget.user),
     );
   }
 }
