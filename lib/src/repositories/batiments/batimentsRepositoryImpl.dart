@@ -7,6 +7,8 @@
  * @Last Modified time: 2022-01-27 11:26:25
  */
 
+import 'dart:io';
+
 import 'package:chopper/chopper.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
@@ -14,6 +16,7 @@ import 'package:positioncollect/src/database/batiments/batimentDao.dart';
 import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
+import 'package:positioncollect/src/models/batiments_model/batiments.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
 import 'package:positioncollect/src/models/response_model/response_model.dart';
@@ -87,6 +90,49 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
             await batimentsApiService!.getBatimentsNumber();
 
         var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<Batiments>> addBatiment(
+      String codeBatiment,
+      int nombreNiveau,
+      String longitude,
+      String latitude,
+      String rue,
+      String ville,
+      String commune,
+      String quartier,
+      File file,
+      {String? nom,
+      String? indication}) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper?.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response = await batimentsApiService!.addBatiment(
+            token!,
+            codeBatiment,
+            nombreNiveau,
+            longitude,
+            latitude,
+            rue,
+            ville,
+            commune,
+            quartier,
+            file,
+            nom: nom!,
+            indication: indication!);
+
+        var model = Batiments.fromJson(response.body);
 
         return Result(success: model);
       } catch (e) {

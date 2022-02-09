@@ -55,10 +55,44 @@ abstract class ApiService extends ChopperService {
     @Header('X-Authorization') String apiKey,
   );
 
-//Search
+  @Post(path: '/api/batiments', headers: {'Accept': 'application/json'})
+  Future<Response> addbatiment(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+//Etablissements
   @Get(
       path: '/api/search/etablissements',
       headers: {'Accept': 'application/json'})
   Future<Response> searchetablissement(
       @Header('X-Authorization') String apiKey, @Query('q') String query);
+
+  @Post(path: '/api/etablissements', headers: {'Accept': 'application/json'})
+  Future<Response> addetablissement(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+//Horaires
+  @Post(path: '/api/horaires', headers: {'Accept': 'application/json'})
+  Future<Response> addhoraire(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+//Images
+
+  @Post(path: '/api/images', headers: {'Accept': 'application/json'})
+  Future<Response> addimage(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+//Telephones
+  @Post(path: '/api/telephones', headers: {'Accept': 'application/json'})
+  Future<Response> addtelephone(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
 }
