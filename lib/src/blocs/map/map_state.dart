@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-01 15:06:26
+ * @Last Modified time: 2022-02-08 15:26:08
  */
 part of 'map_bloc.dart';
 
@@ -76,7 +76,7 @@ class KeyBoardStatus extends MapState {
 
 class UserAdress extends MapState {
   final String? adress;
-  final Position? position;
+  final String? position;
 
   const UserAdress(this.adress, this.position);
 
@@ -101,4 +101,18 @@ class UrlPositionShared extends MapState {
 
   @override
   String toString() => 'ShareUrl { ShareUrl: $url }';
+}
+
+class AddMarkerOnMap extends MapState {
+  final String? adress;
+  final String? position;
+
+  const AddMarkerOnMap(this.adress, this.position);
+
+  @override
+  List<Object> get props => [adress!, position!];
+
+  @override
+  String toString() =>
+      'AddMarkerOnMap { Adress: $adress, Position: $position  }';
 }

@@ -48,5 +48,10 @@
     "noInternet" : "No internet connection",
     "loaded" : "Loaded Buildings",
     "noData" : "No data found",
-    "shareContent" : "I use the Position application to guide me. Follow my position on the map"
+    "shareContent" : "I use the Position application to guide me. Follow my position on the map",
+     "myAdress" : "My Adress",
+    "adress" : "Adress",
+    "shareMyPosition" : "Share My Position",
+    "sharePosition" : "Share Position",
+    "delete" : "Delete"
 }

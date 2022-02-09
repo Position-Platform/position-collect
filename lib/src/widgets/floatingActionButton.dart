@@ -10,14 +10,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
-import 'package:positioncollect/src/utils/sizes.dart';
-import 'package:positioncollect/src/widgets/widgets.dart';
+import 'package:positioncollect/src/widgets/bottomSheet.dart';
 import 'package:share_plus/share_plus.dart';
 
 Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
@@ -36,10 +34,11 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
       if (state is UserAdress) {
         isLoading = false;
         address = state.adress!;
-        bootomSheet(context, address, _mapBloc!, state.position!);
+        bottomSheet(context, address, _mapBloc!, state.position!, false);
       }
       if (state is UrlPositionShared) {
-        Share.share(S.of(context).shareContent + state.url!, subject: appName);
+        Share.share(S.of(context).shareContent + "\n" + state.url!,
+            subject: appName);
       }
     },
     child: BlocBuilder<MapBloc, MapState>(
@@ -201,80 +200,4 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
       },
     ),
   );
-}
-
-void bootomSheet(
-    BuildContext context, String address, MapBloc _mapBloc, Position position) {
-  showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (BuildContext context) {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            Container(
-              width: 50,
-              height: 10,
-              decoration: boxDecoration(
-                  color: viewColor, radius: 16, bgColor: greyColor),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
-                  color: greyColor),
-              height: MediaQuery.of(context).size.width - 180,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 16),
-                      Center(
-                        child: text("Mon Adresse",
-                            textColor: blackColor,
-                            fontSize: textSizeLargeMedium),
-                      ),
-                      const SizedBox(height: 16),
-                      Center(
-                        child: Text(address.toUpperCase(),
-                            maxLines: 3,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: secondaryTextStyle(
-                                weight: FontWeight.bold,
-                                color: primaryColor,
-                                size: 15)),
-                      ),
-                      divider(),
-                      Center(
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width - 200,
-                          child: RaisedButton(
-                            onPressed: () {
-                              _mapBloc.add(SharePosition(position));
-                            },
-                            color: accentPrimaryColor,
-                            shape: const StadiumBorder(),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 6),
-                            child: const Text(
-                              "Partager ma position",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-        );
-      });
 }

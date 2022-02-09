@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-08 04:51:11
+ * @Last Modified time: 2022-02-08 16:34:39
  */
 
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
+import 'package:positioncollect/src/widgets/bottomSheet.dart';
 import 'package:positioncollect/src/widgets/drawer.dart';
 import 'package:positioncollect/src/widgets/floatingActionButton.dart';
 import 'package:positioncollect/src/widgets/searchBar.dart';
@@ -66,6 +67,10 @@ class _MapPageState extends State<MapPage> {
               backgroundColor: green,
               duration: const Duration(seconds: 5),
             ));
+          }
+          if (state is AddMarkerOnMap) {
+            bottomSheet(
+                context, state.adress!, _mapBloc!, state.position!, true);
           }
         },
         child: BlocBuilder<MapBloc, MapState>(

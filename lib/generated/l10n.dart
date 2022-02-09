@@ -529,6 +529,56 @@ class S {
       args: [],
     );
   }
+
+  /// `My Adress`
+  String get myAdress {
+    return Intl.message(
+      'My Adress',
+      name: 'myAdress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Adress`
+  String get adress {
+    return Intl.message(
+      'Adress',
+      name: 'adress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share My Position`
+  String get shareMyPosition {
+    return Intl.message(
+      'Share My Position',
+      name: 'shareMyPosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share Position`
+  String get sharePosition {
+    return Intl.message(
+      'Share Position',
+      name: 'sharePosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addEmail":
             MessageLookupByLibrary.simpleMessage("Fill in the email address"),
+        "adress": MessageLookupByLibrary.simpleMessage("Adress"),
         "alreadyAccount":
             MessageLookupByLibrary.simpleMessage("I already have an account"),
         "appname": MessageLookupByLibrary.simpleMessage("Position Collect"),
@@ -35,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createAccount":
             MessageLookupByLibrary.simpleMessage("Create an account"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Home"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "disabledAccount": MessageLookupByLibrary.simpleMessage(
             "Your account has been deactivated"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -63,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginFailed": MessageLookupByLibrary.simpleMessage("Login Failed"),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("Login successful"),
+        "myAdress": MessageLookupByLibrary.simpleMessage("My Adress"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noAccount": MessageLookupByLibrary.simpleMessage("No Account yet?  "),
         "noData": MessageLookupByLibrary.simpleMessage("No data found"),
@@ -87,6 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("An error has occurred"),
         "shareContent": MessageLookupByLibrary.simpleMessage(
             "I use the Position application to guide me. Follow my position on the map"),
+        "shareMyPosition":
+            MessageLookupByLibrary.simpleMessage("Share My Position"),
+        "sharePosition": MessageLookupByLibrary.simpleMessage("Share Position"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "username": MessageLookupByLibrary.simpleMessage("User name"),
