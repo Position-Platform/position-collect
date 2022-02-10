@@ -579,6 +579,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Add a New Company`
+  String get addEtablissement {
+    return Intl.message(
+      'Add a New Company',
+      name: 'addEtablissement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Step`
+  String get step {
+    return Intl.message(
+      'Step',
+      name: 'step',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

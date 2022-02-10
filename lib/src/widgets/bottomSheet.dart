@@ -1,11 +1,16 @@
 // ignore_for_file: file_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
+import 'package:positioncollect/src/views/newBusinessScreen/newBusiness.dart';
 import 'package:positioncollect/src/widgets/widgets.dart';
 import 'package:positioncollect/generated/l10n.dart';
+
+import '../di/di.dart';
 
 void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
     String position, bool batiment) {
@@ -84,7 +89,16 @@ void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
                                     ),
                                     RaisedButton(
                                       onPressed: () {
-                                        //
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  BlocProvider<NewBusinessBloc>(
+                                                    create: (context) => getIt<
+                                                        NewBusinessBloc>(),
+                                                    child: const NewBusiness(),
+                                                  )),
+                                        );
                                       },
                                       color: primaryColor,
                                       shape: const StadiumBorder(),

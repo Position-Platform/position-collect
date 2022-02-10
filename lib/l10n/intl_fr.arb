@@ -53,5 +53,7 @@
     "adress" : "Adresse",
     "shareMyPosition" : "Partager Ma Position",
     "sharePosition" : "Partager La Position",
-    "delete" : "Supprimer"
+    "delete" : "Supprimer",
+    "addEtablissement" : "Ajout d'une Nouvelle Entreprise",
+    "step" : "Etape"
     }

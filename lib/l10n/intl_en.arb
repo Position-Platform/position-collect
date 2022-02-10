@@ -53,5 +53,7 @@
     "adress" : "Adress",
     "shareMyPosition" : "Share My Position",
     "sharePosition" : "Share Position",
-    "delete" : "Delete"
+    "delete" : "Delete",
+    "addEtablissement" : "Add a New Company",
+    "step" : "Step"
 }

@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addEmail":
             MessageLookupByLibrary.simpleMessage("Remplissez l\'adresse mail"),
+        "addEtablissement": MessageLookupByLibrary.simpleMessage(
+            "Ajout d\'une Nouvelle Entreprise"),
         "adress": MessageLookupByLibrary.simpleMessage("Adresse"),
         "alreadyAccount":
             MessageLookupByLibrary.simpleMessage("J\'ai déja un compte"),
@@ -104,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sharePosition":
             MessageLookupByLibrary.simpleMessage("Partager La Position"),
         "skip": MessageLookupByLibrary.simpleMessage("Passer"),
+        "step": MessageLookupByLibrary.simpleMessage("Etape"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Reesayez"),
         "username": MessageLookupByLibrary.simpleMessage("Nom d\'utilisateur"),
         "welcome": MessageLookupByLibrary.simpleMessage("Bienvenue")
