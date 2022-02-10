@@ -55,5 +55,10 @@
     "sharePosition" : "Partager La Position",
     "delete" : "Supprimer",
     "addEtablissement" : "Ajout d'une Nouvelle Entreprise",
-    "step" : "Etape"
+    "step" : "Etape",
+    "chooseTheme" : "Choisir un Thème",
+    "dark" : "Theme Sombre",
+    "light" : "Theme Light",
+    "back" : "Retour",
+    "logout" : "Deconnexion"
     }

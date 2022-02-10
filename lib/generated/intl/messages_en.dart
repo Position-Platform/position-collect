@@ -31,12 +31,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I already have an account"),
         "appname": MessageLookupByLibrary.simpleMessage("Position Collect"),
         "askAccess": MessageLookupByLibrary.simpleMessage("Request access"),
+        "back": MessageLookupByLibrary.simpleMessage("Back"),
         "batimentDownload":
             MessageLookupByLibrary.simpleMessage("Loading of Buildings..."),
+        "chooseTheme": MessageLookupByLibrary.simpleMessage("Choose a Theme"),
         "connexion": MessageLookupByLibrary.simpleMessage("Login"),
         "cpassword": MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "createAccount":
             MessageLookupByLibrary.simpleMessage("Create an account"),
+        "dark": MessageLookupByLibrary.simpleMessage("Dark Theme"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Home"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "disabledAccount": MessageLookupByLibrary.simpleMessage(
@@ -61,12 +64,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidMail": MessageLookupByLibrary.simpleMessage("Invalid Email"),
         "invalidPass": MessageLookupByLibrary.simpleMessage("Invalid Password"),
         "invalidPhone": MessageLookupByLibrary.simpleMessage("Invalid Phone"),
+        "light": MessageLookupByLibrary.simpleMessage("Theme Light"),
         "loaded": MessageLookupByLibrary.simpleMessage("Loaded Buildings"),
         "loggin": MessageLookupByLibrary.simpleMessage("Connection..."),
         "login": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "loginFailed": MessageLookupByLibrary.simpleMessage("Login Failed"),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("Login successful"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "myAdress": MessageLookupByLibrary.simpleMessage("My Adress"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noAccount": MessageLookupByLibrary.simpleMessage("No Account yet?  "),

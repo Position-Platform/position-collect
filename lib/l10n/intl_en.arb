@@ -55,5 +55,10 @@
     "sharePosition" : "Share Position",
     "delete" : "Delete",
     "addEtablissement" : "Add a New Company",
-    "step" : "Step"
+    "step" : "Step",
+    "chooseTheme" : "Choose a Theme",
+    "dark" : "Dark Theme",
+    "light" : "Theme Light",
+    "back" : "Back",
+    "logout" : "Logout"
 }

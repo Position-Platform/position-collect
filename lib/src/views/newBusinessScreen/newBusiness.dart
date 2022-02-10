@@ -1,10 +1,10 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, deprecated_member_use
 
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 12:44:38
+ * @Last Modified time: 2022-02-10 15:29:29
  */
 
 import 'package:flutter/material.dart';
@@ -25,6 +25,53 @@ class NewBusiness extends StatefulWidget {
 class _NewBusinessState extends State<NewBusiness> {
   int currentStep = 0;
   NewBusinessBloc? _newBusinessBloc;
+
+  VoidCallback? _onStepContinue;
+  VoidCallback? _onStepCancel;
+
+  Widget _createEventControlBuilder(
+      BuildContext context, ControlsDetails? controlsDetails) {
+    _onStepContinue = controlsDetails!.onStepContinue;
+    _onStepCancel = controlsDetails.onStepCancel;
+    return const SizedBox.shrink();
+  }
+
+  Widget _bottomBar() {
+    return Center(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RaisedButton(
+              onPressed: () => _onStepContinue!(),
+              color: primaryColor,
+              shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              child: Text(
+                S.of(context).next,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            RaisedButton(
+              onPressed: () => _onStepCancel!(),
+              color: red,
+              shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              child: Text(
+                S.of(context).back,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -77,7 +124,7 @@ class _NewBusinessState extends State<NewBusiness> {
             ),
             Step(
               title: Text(S.of(context).step + " 4"),
-              content: Text("Hello World!"),
+              content: Text("End World!"),
               isActive: currentStep >= 0,
               state: currentStep >= 3
                   ? currentStep == 3
@@ -103,7 +150,8 @@ class _NewBusinessState extends State<NewBusiness> {
                   ),
                   preferredSize: const Size.fromHeight(1.0)),
             ),
-            body: Stepper(
+            body: Stack(children: [
+              Stepper(
                 type: StepperType.horizontal,
                 elevation: 0,
                 physics: const ScrollPhysics(),
@@ -113,7 +161,14 @@ class _NewBusinessState extends State<NewBusiness> {
                     _newBusinessBloc?.add(StepCancelled(currentStep)),
                 onStepContinue: () =>
                     _newBusinessBloc?.add(StepContinue(currentStep)),
-                steps: steps),
+                steps: steps,
+                controlsBuilder: _createEventControlBuilder,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _bottomBar(),
+              )
+            ]),
           );
         },
       ),

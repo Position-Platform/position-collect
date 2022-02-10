@@ -31,13 +31,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("J\'ai déja un compte"),
         "appname": MessageLookupByLibrary.simpleMessage("Position Collect"),
         "askAccess": MessageLookupByLibrary.simpleMessage("Demandez l\'access"),
+        "back": MessageLookupByLibrary.simpleMessage("Retour"),
         "batimentDownload":
             MessageLookupByLibrary.simpleMessage("Chargement des Batiments..."),
+        "chooseTheme": MessageLookupByLibrary.simpleMessage("Choisir un Thème"),
         "connexion": MessageLookupByLibrary.simpleMessage("Connexion"),
         "cpassword":
             MessageLookupByLibrary.simpleMessage("Confirmer le Mot de Passe"),
         "createAccount":
             MessageLookupByLibrary.simpleMessage("Creer un compte"),
+        "dark": MessageLookupByLibrary.simpleMessage("Theme Sombre"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Accueil"),
         "delete": MessageLookupByLibrary.simpleMessage("Supprimer"),
         "disabledAccount": MessageLookupByLibrary.simpleMessage(
@@ -66,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mot de Passe Invalide"),
         "invalidPhone":
             MessageLookupByLibrary.simpleMessage("Téléphone Invalide"),
+        "light": MessageLookupByLibrary.simpleMessage("Theme Light"),
         "loaded": MessageLookupByLibrary.simpleMessage("Batiments Chargés"),
         "loggin": MessageLookupByLibrary.simpleMessage("Connexion..."),
         "login": MessageLookupByLibrary.simpleMessage("CONNECTEZ VOUS"),
@@ -73,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Echec de Connexion"),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("Connexion reussie"),
+        "logout": MessageLookupByLibrary.simpleMessage("Deconnexion"),
         "myAdress": MessageLookupByLibrary.simpleMessage("Mon Adresse"),
         "next": MessageLookupByLibrary.simpleMessage("Suivant"),
         "noAccount":

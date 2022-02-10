@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-08 04:48:04 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-08 05:12:11
+ * @Last Modified time: 2022-02-10 14:27:39
  */
 
 import 'package:flutter/material.dart';
@@ -33,14 +33,16 @@ class DrawerItem extends StatelessWidget {
             Icon(
               icon,
               size: 20,
-              color: blackColor,
+              color: Theme.of(context).backgroundColor == whiteColor
+                  ? blackColor
+                  : whiteColor,
             ),
             const SizedBox(
               width: 40,
             ),
             Text(
               name,
-              style: const TextStyle(fontSize: 16, color: blackColor),
+              style: Theme.of(context).textTheme.bodyText1,
             )
           ],
         ),

@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:47 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-02 15:09:14
+ * @Last Modified time: 2022-02-10 14:43:20
  */
 // ignore_for_file: file_names
 
@@ -51,7 +51,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: FloatingActionButton.extended(
-                      backgroundColor: whiteColor,
+                      backgroundColor: Theme.of(context).backgroundColor,
                       icon: isLoading
                           ? const CircularProgressIndicator(
                               backgroundColor: primaryColor,
@@ -67,7 +67,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                       },
                       label: Text(
                         S.of(context).findPosition,
-                        style: const TextStyle(color: blackColor),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ),
@@ -80,25 +80,32 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                         children: <Widget>[
                           FloatingActionButton(
                               tooltip: "Zoom +",
-                              backgroundColor: whiteColor,
+                              backgroundColor:
+                                  Theme.of(context).backgroundColor,
                               mini: true,
                               onPressed: () {
                                 _mapBloc?.add(ZoomInEvent());
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.zoom_in,
-                                color: blackColor,
+                                color: Theme.of(context).backgroundColor ==
+                                        whiteColor
+                                    ? blackColor
+                                    : whiteColor,
                               )),
                           FloatingActionButton(
                             tooltip: "Zoom -",
-                            backgroundColor: whiteColor,
+                            backgroundColor: Theme.of(context).backgroundColor,
                             mini: true,
                             onPressed: () {
                               _mapBloc?.add(ZoomOutEvent());
                             },
-                            child: const Icon(
+                            child: Icon(
                               Icons.zoom_out,
-                              color: blackColor,
+                              color: Theme.of(context).backgroundColor ==
+                                      whiteColor
+                                  ? blackColor
+                                  : whiteColor,
                             ),
                           ),
                           const Divider(
@@ -108,24 +115,28 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                           FloatingActionButton(
                               mini: true,
                               tooltip: "Location",
-                              backgroundColor: whiteColor,
+                              backgroundColor:
+                                  Theme.of(context).backgroundColor,
                               onPressed: () {
                                 _mapBloc?.add(GetUserLocationEvent());
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.navigation,
-                                color: blackColor,
+                                color: Theme.of(context).backgroundColor ==
+                                        whiteColor
+                                    ? blackColor
+                                    : whiteColor,
                               )),
                           FloatingActionButton(
                             mini: true,
-                            backgroundColor: whiteColor,
+                            backgroundColor: Theme.of(context).backgroundColor,
                             tooltip: "Layers",
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) => Container(
                                     padding: const EdgeInsets.all(20),
-                                    color: Colors.white,
+                                    color: Theme.of(context).backgroundColor,
                                     height: MediaQuery.of(context).size.height *
                                         0.25,
                                     child: Column(
@@ -134,10 +145,9 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                       children: [
                                         Text(
                                           S.of(context).selectLayer,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
                                         ),
                                         const SizedBox(
                                           height: 20,
@@ -182,9 +192,12 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                     )),
                               );
                             },
-                            child: const Icon(
+                            child: Icon(
                               Icons.layers,
-                              color: blackColor,
+                              color: Theme.of(context).backgroundColor ==
+                                      whiteColor
+                                  ? blackColor
+                                  : whiteColor,
                             ),
                           ),
                           const Divider(
