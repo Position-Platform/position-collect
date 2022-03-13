@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 14:54:32
+ * @Last Modified time: 2022-02-10 16:16:44
  */
 
 import 'package:flutter/material.dart';
@@ -70,7 +70,8 @@ class _MapPageState extends State<MapPage> {
           }
           if (state is AddMarkerOnMap) {
             bottomSheet(
-                context, state.adress!, _mapBloc!, state.position!, true);
+                context, state.adress!, _mapBloc!, state.position!, true,
+                latLng: state.latLng);
           }
         },
         child: BlocBuilder<MapBloc, MapState>(

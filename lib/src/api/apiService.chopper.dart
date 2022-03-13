@@ -18,7 +18,7 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> login(String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/auth/login';
+    final $url = 'http://10.0.2.2:8000/api/auth/login';
     final $headers = {
       'X-Authorization': apiKey,
       'Accept': 'application/json',
@@ -32,7 +32,7 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> getuser(String token, String apiKey) {
-    final $url = 'https://services.position.cm/api/user/me';
+    final $url = 'http://10.0.2.2:8000/api/user/me';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -45,7 +45,20 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> forgetPassword(Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/auth/password/forgot';
+    final $url = 'http://10.0.2.2:8000/api/auth/password/forgot';
+    final $headers = {
+      'Accept': 'application/json',
+    };
+
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> resetPassword(Map<String, dynamic> body) {
+    final $url = 'http://10.0.2.2:8000/api/auth/password/reset';
     final $headers = {
       'Accept': 'application/json',
     };
@@ -58,7 +71,7 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> logout(String token, String apiKey) {
-    final $url = 'https://services.position.cm/api/auth/logout';
+    final $url = 'http://10.0.2.2:8000/api/auth/logout';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -72,7 +85,7 @@ class _$ApiService extends ApiService {
   @override
   Future<Response<dynamic>> addtracking(
       String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/tracking';
+    final $url = 'http://10.0.2.2:8000/api/tracking';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -86,21 +99,10 @@ class _$ApiService extends ApiService {
   }
 
   @override
-  Future<Response<dynamic>> getbatiments(String apiKey) {
-    final $url = 'https://services.position.cm/api/batiments';
+  Future<Response<dynamic>> getbatiments(String token, String apiKey) {
+    final $url = 'http://10.0.2.2:8000/api/batiments';
     final $headers = {
-      'X-Authorization': apiKey,
-      'Accept': 'application/json',
-    };
-
-    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> getbatimentsnumber(String apiKey) {
-    final $url = 'https://services.position.cm/api/batimentsnumber';
-    final $headers = {
+      'Authorization': token,
       'X-Authorization': apiKey,
       'Accept': 'application/json',
     };
@@ -112,7 +114,7 @@ class _$ApiService extends ApiService {
   @override
   Future<Response<dynamic>> addbatiment(
       String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/batiments';
+    final $url = 'http://10.0.2.2:8000/api/batiments';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -127,7 +129,7 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> searchetablissement(String apiKey, String query) {
-    final $url = 'https://services.position.cm/api/search/etablissements';
+    final $url = 'http://10.0.2.2:8000/api/search/etablissements';
     final $params = <String, dynamic>{'q': query};
     final $headers = {
       'X-Authorization': apiKey,
@@ -142,7 +144,7 @@ class _$ApiService extends ApiService {
   @override
   Future<Response<dynamic>> addetablissement(
       String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/etablissements';
+    final $url = 'http://10.0.2.2:8000/api/etablissements';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -158,7 +160,7 @@ class _$ApiService extends ApiService {
   @override
   Future<Response<dynamic>> addhoraire(
       String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/horaires';
+    final $url = 'http://10.0.2.2:8000/api/horaires';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -174,23 +176,7 @@ class _$ApiService extends ApiService {
   @override
   Future<Response<dynamic>> addimage(
       String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/images';
-    final $headers = {
-      'Authorization': token,
-      'X-Authorization': apiKey,
-      'Accept': 'application/json',
-    };
-
-    final $body = body;
-    final $request =
-        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> addtelephone(
-      String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://services.position.cm/api/telephones';
+    final $url = 'http://10.0.2.2:8000/api/images';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,

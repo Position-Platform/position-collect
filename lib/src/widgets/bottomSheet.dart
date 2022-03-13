@@ -1,7 +1,14 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-02-10 16:17:18 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-02-10 16:17:18 
+ */
 // ignore_for_file: file_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
@@ -13,7 +20,8 @@ import 'package:positioncollect/generated/l10n.dart';
 import '../di/di.dart';
 
 void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
-    String position, bool batiment) {
+    String position, bool batiment,
+    {LatLng? latLng}) {
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -96,7 +104,8 @@ void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
                                                   BlocProvider<NewBusinessBloc>(
                                                     create: (context) => getIt<
                                                         NewBusinessBloc>(),
-                                                    child: const NewBusiness(),
+                                                    child: NewBusiness(
+                                                        latLng: latLng),
                                                   )),
                                         );
                                       },

@@ -48,6 +48,8 @@ dependencies:
   geolocator: ^8.0.1
   get_it: ^7.2.0
   hydrated_bloc: ^8.0.0
+  image_cropper: ^1.5.0
+  image_picker: ^0.8.4+11
   implicitly_animated_reorderable_list: ^0.4.2
   intl: ^0.17.0
   intl_utils: ^2.6.0
@@ -64,6 +66,7 @@ dependencies:
   share_plus: ^3.0.4
   shared_preferences: ^2.0.11
   sn_progress_dialog: ^1.0.3
+  universal_io: ^2.0.4
   workmanager: ^0.4.1
 
 dev_dependencies:

@@ -4,29 +4,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:35:43 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 11:23:44
+ * @Last Modified time: 2022-03-13 06:57:30
  */
-
-import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 
 abstract class BatimentsApiService {
-  Future<Response> getBatiments();
+  Future<Response> getBatiments(String token);
 
-  Future<Response> getBatimentsNumber();
-
-  Future<Response> addBatiment(
-      String token,
-      String codeBatiment,
-      int nombreNiveau,
-      String longitude,
-      String latitude,
-      String rue,
-      String ville,
-      String commune,
-      String quartier,
-      File file,
-      {String nom,
-      String indication});
+  Future<Response> addBatiment(String token, Map<String, dynamic> body);
 }

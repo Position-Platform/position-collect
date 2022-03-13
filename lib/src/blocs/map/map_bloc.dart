@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-08 18:37:17
+ * @Last Modified time: 2022-03-13 06:46:29
  */
 import 'dart:async';
 import 'dart:typed_data';
@@ -17,6 +17,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
+import 'package:positioncollect/src/models/tracking_model/data.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/repositories/nominatim/nominatimRepository.dart';
@@ -87,8 +88,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
       poso = position!;
-      await trackingRepository?.addtracking(
-          position.longitude.toString(), position.latitude.toString());
+      Data tracking = Data(
+          longitude: position.longitude.toString(),
+          latitude: position.latitude.toString());
+      await trackingRepository?.addtracking(tracking);
     });
 
     onFeatureTapped(_mapController!);
@@ -206,7 +209,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           "," +
           event.latLng!.latitude.toString();
 
-      emit(AddMarkerOnMap(nominatimResult!.success!.displayName!, position));
+      emit(AddMarkerOnMap(nominatimResult!.success!.displayName!, position,
+          LatLng(event.latLng!.latitude, event.latLng!.longitude)));
     } catch (e) {
       emit(AdressError());
     }

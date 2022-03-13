@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-08 15:26:08
+ * @Last Modified time: 2022-02-10 16:14:31
  */
 part of 'map_bloc.dart';
 
@@ -106,11 +106,12 @@ class UrlPositionShared extends MapState {
 class AddMarkerOnMap extends MapState {
   final String? adress;
   final String? position;
+  final LatLng? latLng;
 
-  const AddMarkerOnMap(this.adress, this.position);
+  const AddMarkerOnMap(this.adress, this.position, this.latLng);
 
   @override
-  List<Object> get props => [adress!, position!];
+  List<Object> get props => [adress!, position!, latLng!];
 
   @override
   String toString() =>

@@ -4,22 +4,19 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 11:26:25
+ * @Last Modified time: 2022-03-13 06:50:53
  */
 
-import 'dart:io';
-
 import 'package:chopper/chopper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/database/batiments/batimentDao.dart';
 import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
-import 'package:positioncollect/src/models/batiments_model/batiments.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
-import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
@@ -38,6 +35,7 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
   @override
   Future<Result<BatimentsModel>> getBatiments() async {
     bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper?.getToken();
 
     try {
       var batimentsBD = await batimentsDao!.getBatiments();
@@ -54,7 +52,10 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
       } else {
         if (isConnected) {
           try {
-            final Response response = await batimentsApiService!.getBatiments();
+            final Response response =
+                await batimentsApiService!.getBatiments(token!);
+
+            debugPrint(response.bodyString);
 
             var model = BatimentsModel.fromJson(response.body);
 
@@ -81,58 +82,16 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
   }
 
   @override
-  Future<Result<ResponseModel>> getBatimentsNumber() async {
-    bool isConnected = await networkInfoHelper!.isConnected();
-
-    if (isConnected) {
-      try {
-        final Response response =
-            await batimentsApiService!.getBatimentsNumber();
-
-        var model = ResponseModel.fromJson(response.body);
-
-        return Result(success: model);
-      } catch (e) {
-        return Result(error: ServerError());
-      }
-    } else {
-      return Result(error: NoInternetError());
-    }
-  }
-
-  @override
-  Future<Result<Batiments>> addBatiment(
-      String codeBatiment,
-      int nombreNiveau,
-      String longitude,
-      String latitude,
-      String rue,
-      String ville,
-      String commune,
-      String quartier,
-      File file,
-      {String? nom,
-      String? indication}) async {
+  Future<Result<Datum>> addBatiment(Datum batiment) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     String? token = await sharedPreferencesHelper?.getToken();
 
     if (isConnected) {
       try {
-        final Response response = await batimentsApiService!.addBatiment(
-            token!,
-            codeBatiment,
-            nombreNiveau,
-            longitude,
-            latitude,
-            rue,
-            ville,
-            commune,
-            quartier,
-            file,
-            nom: nom!,
-            indication: indication!);
+        final Response response =
+            await batimentsApiService!.addBatiment(token!, batiment.toJson());
 
-        var model = Batiments.fromJson(response.body);
+        var model = Datum.fromJson(response.body);
 
         return Result(success: model);
       } catch (e) {

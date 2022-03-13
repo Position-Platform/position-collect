@@ -9,8 +9,10 @@ part 'sous_category.g.dart';
 class SousCategory {
   int? id;
   String? nom;
-  int? idCategorie;
-  String? logoUrl;
+  int? idcategorie;
+  dynamic logourl;
+  @JsonKey(name: 'deleted_at')
+  dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
@@ -21,8 +23,9 @@ class SousCategory {
   SousCategory({
     this.id,
     this.nom,
-    this.idCategorie,
-    this.logoUrl,
+    this.idcategorie,
+    this.logourl,
+    this.deletedAt,
     this.createdAt,
     this.updatedAt,
     this.pivot,
@@ -31,7 +34,7 @@ class SousCategory {
 
   @override
   String toString() {
-    return 'SousCategory(id: $id, nom: $nom, idCategorie: $idCategorie, logoUrl: $logoUrl, createdAt: $createdAt, updatedAt: $updatedAt, pivot: $pivot, categorie: $categorie)';
+    return 'SousCategory(id: $id, nom: $nom, idcategorie: $idcategorie, logourl: $logourl, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, pivot: $pivot, categorie: $categorie)';
   }
 
   factory SousCategory.fromJson(Map<String, dynamic> json) {
@@ -43,8 +46,9 @@ class SousCategory {
   SousCategory copyWith({
     int? id,
     String? nom,
-    int? idCategorie,
-    String? logoUrl,
+    int? idcategorie,
+    dynamic logourl,
+    dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
     Pivot? pivot,
@@ -53,8 +57,9 @@ class SousCategory {
     return SousCategory(
       id: id ?? this.id,
       nom: nom ?? this.nom,
-      idCategorie: idCategorie ?? this.idCategorie,
-      logoUrl: logoUrl ?? this.logoUrl,
+      idcategorie: idcategorie ?? this.idcategorie,
+      logourl: logourl ?? this.logourl,
+      deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       pivot: pivot ?? this.pivot,

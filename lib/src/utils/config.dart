@@ -1,16 +1,16 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:02:55 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-09 09:02:55 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-03-13 06:00:14
  */
 // ignore_for_file: constant_identifier_names
 
 const appName = "Position Collect";
-const apiUrl = "https://services.position.cm";
+const apiUrl = "http://10.0.2.2:8000";
 const nominatimUrl = "https://nominatim.openstreetmap.org";
 const apiKey =
-    "ZblqALRIQjtlCqqBEL8DJgi4JnkYzvi4vbcib0n99o1PwbHZlbAna1o20AK9o8UW";
+    "soo7HP58G7nZ1sn4MWnqn8FwEGjjde97bldXLJxos5XM5wp5pEjHDbXqlzwp0jtc";
 const mapbox_access_token =
     "pk.eyJ1IjoiZ2F1dHk5NiIsImEiOiJjanN4aDd2cG8wMmw3NDRwaDc2cnc2OXJwIn0.YRVVo-3FkQtfkMPH4lt2hw";
 String? fontFamilySecondaryGlobal;

@@ -1,9 +1,3 @@
-/*
- * @Author: Boris Gautier 
- * @Date: 2022-01-09 09:02:17 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-09 09:02:17 
- */
 import 'package:json_annotation/json_annotation.dart';
 
 import 'data.dart';

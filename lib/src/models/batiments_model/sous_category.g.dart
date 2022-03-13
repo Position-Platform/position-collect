@@ -9,8 +9,9 @@ part of 'sous_category.dart';
 SousCategory _$SousCategoryFromJson(Map<String, dynamic> json) => SousCategory(
       id: json['id'] as int?,
       nom: json['nom'] as String?,
-      idCategorie: json['idCategorie'] as int?,
-      logoUrl: json['logoUrl'] as String?,
+      idcategorie: json['idcategorie'] as int?,
+      logourl: json['logourl'],
+      deletedAt: json['deleted_at'],
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       pivot: json['pivot'] == null
@@ -25,8 +26,9 @@ Map<String, dynamic> _$SousCategoryToJson(SousCategory instance) =>
     <String, dynamic>{
       'id': instance.id,
       'nom': instance.nom,
-      'idCategorie': instance.idCategorie,
-      'logoUrl': instance.logoUrl,
+      'idcategorie': instance.idcategorie,
+      'logourl': instance.logourl,
+      'deleted_at': instance.deletedAt,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'pivot': instance.pivot,

@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 15:31:55
+ * @Last Modified time: 2022-03-12 22:21:37
  */
 // ignore_for_file: file_names
 
@@ -130,7 +130,7 @@ Widget buildItem(
                       ? Image.network(
                           apiUrl +
                               etablissement
-                                  .sousCategories![0].categorie!.logoUrl!,
+                                  .sousCategories![0].categorie!.logourl!,
                         )
                       : const Icon(
                           Icons.place,

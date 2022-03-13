@@ -10,5 +10,5 @@
 import 'package:chopper/chopper.dart';
 
 abstract class TrackingApiService {
-  Future<Response> addtracking(String token, String longitude, String latitude);
+  Future<Response> addtracking(String token, Map<String, dynamic> body);
 }

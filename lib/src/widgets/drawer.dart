@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 15:44:14
+ * @Last Modified time: 2022-03-12 22:21:25
  */
 
 // ignore_for_file: prefer_const_literals_to_create_immutables
@@ -130,7 +130,7 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   Widget headerWidget(User user) {
-    var url = apiUrl + user.commercial!.imageProfil!;
+    var url = apiUrl + user.imageProfil!;
     return Column(
       children: [
         const SizedBox(

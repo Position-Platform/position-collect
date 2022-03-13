@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:29 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 11:23:17
+ * @Last Modified time: 2022-03-13 06:55:50
  */
 // ignore_for_file: file_names
 
@@ -31,6 +31,10 @@ abstract class ApiService extends ChopperService {
       headers: {'Accept': 'application/json'})
   Future<Response> forgetPassword(@Body() Map<String, dynamic> body);
 
+  @Post(
+      path: '/api/auth/password/reset', headers: {'Accept': 'application/json'})
+  Future<Response> resetPassword(@Body() Map<String, dynamic> body);
+
   @Get(path: '/api/auth/logout', headers: {'Accept': 'application/json'})
   Future<Response> logout(
     @Header('Authorization') String token,
@@ -47,11 +51,7 @@ abstract class ApiService extends ChopperService {
 //Batiment Api
   @Get(path: '/api/batiments', headers: {'Accept': 'application/json'})
   Future<Response> getbatiments(
-    @Header('X-Authorization') String apiKey,
-  );
-
-  @Get(path: '/api/batimentsnumber', headers: {'Accept': 'application/json'})
-  Future<Response> getbatimentsnumber(
+    @Header('Authorization') String token,
     @Header('X-Authorization') String apiKey,
   );
 
@@ -85,13 +85,6 @@ abstract class ApiService extends ChopperService {
 
   @Post(path: '/api/images', headers: {'Accept': 'application/json'})
   Future<Response> addimage(
-      @Header('Authorization') String token,
-      @Header('X-Authorization') String apiKey,
-      @Body() Map<String, dynamic> body);
-
-//Telephones
-  @Post(path: '/api/telephones', headers: {'Accept': 'application/json'})
-  Future<Response> addtelephone(
       @Header('Authorization') String token,
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);

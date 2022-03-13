@@ -6,7 +6,9 @@ part 'categorie.g.dart';
 class Categorie {
   int? id;
   String? nom;
-  String? logoUrl;
+  dynamic logourl;
+  @JsonKey(name: 'deleted_at')
+  dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
@@ -15,14 +17,15 @@ class Categorie {
   Categorie({
     this.id,
     this.nom,
-    this.logoUrl,
+    this.logourl,
+    this.deletedAt,
     this.createdAt,
     this.updatedAt,
   });
 
   @override
   String toString() {
-    return 'Categorie(id: $id, nom: $nom, logoUrl: $logoUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Categorie(id: $id, nom: $nom, logourl: $logourl, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   factory Categorie.fromJson(Map<String, dynamic> json) {
@@ -34,14 +37,16 @@ class Categorie {
   Categorie copyWith({
     int? id,
     String? nom,
-    String? logoUrl,
+    dynamic logourl,
+    dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
   }) {
     return Categorie(
       id: id ?? this.id,
       nom: nom ?? this.nom,
-      logoUrl: logoUrl ?? this.logoUrl,
+      logourl: logourl ?? this.logourl,
+      deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

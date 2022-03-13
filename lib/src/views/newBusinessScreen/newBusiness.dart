@@ -4,20 +4,22 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 15:29:29
+ * @Last Modified time: 2022-03-13 08:07:22
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
+import 'package:positioncollect/src/views/newBusinessScreen/formPage/page1.dart';
 
 class NewBusiness extends StatefulWidget {
-  const NewBusiness({Key? key}) : super(key: key);
-
+  const NewBusiness({Key? key, required this.latLng}) : super(key: key);
+  final LatLng? latLng;
   @override
   _NewBusinessState createState() => _NewBusinessState();
 }
@@ -37,38 +39,36 @@ class _NewBusinessState extends State<NewBusiness> {
   }
 
   Widget _bottomBar() {
-    return Center(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            RaisedButton(
-              onPressed: () => _onStepContinue!(),
-              color: primaryColor,
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              child: Text(
-                S.of(context).next,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
-              ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          RaisedButton(
+            onPressed: () => _onStepContinue!(),
+            color: primaryColor,
+            shape: const StadiumBorder(),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            child: Text(
+              S.of(context).next,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
-            const SizedBox(
-              width: 10,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          RaisedButton(
+            onPressed: () => _onStepCancel!(),
+            color: red,
+            shape: const StadiumBorder(),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            child: Text(
+              S.of(context).back,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
-            RaisedButton(
-              onPressed: () => _onStepCancel!(),
-              color: red,
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              child: Text(
-                S.of(context).back,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -94,7 +94,7 @@ class _NewBusinessState extends State<NewBusiness> {
           final List<Step> steps = [
             Step(
               title: Text(S.of(context).step + " 1"),
-              content: Text("Hello!"),
+              content: Page1(latLng: widget.latLng),
               isActive: currentStep >= 0,
               state: currentStep >= 0
                   ? currentStep == 0
@@ -104,7 +104,7 @@ class _NewBusinessState extends State<NewBusiness> {
             ),
             Step(
               title: Text(S.of(context).step + " 2"),
-              content: Text("World!"),
+              content: const Text("World!"),
               isActive: currentStep >= 0,
               state: currentStep >= 1
                   ? currentStep == 1
@@ -114,7 +114,7 @@ class _NewBusinessState extends State<NewBusiness> {
             ),
             Step(
               title: Text(S.of(context).step + " 3"),
-              content: Text("Hello World!"),
+              content: const Text("Hello World!"),
               isActive: currentStep >= 0,
               state: currentStep >= 2
                   ? currentStep == 2
@@ -124,7 +124,7 @@ class _NewBusinessState extends State<NewBusiness> {
             ),
             Step(
               title: Text(S.of(context).step + " 4"),
-              content: Text("End World!"),
+              content: const Text("End World!"),
               isActive: currentStep >= 0,
               state: currentStep >= 3
                   ? currentStep == 3

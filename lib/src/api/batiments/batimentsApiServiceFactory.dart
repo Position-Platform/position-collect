@@ -4,10 +4,8 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:36:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 11:24:24
+ * @Last Modified time: 2022-03-13 06:57:42
  */
-
-import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/api/apiService.dart';
@@ -20,10 +18,10 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   BatimentsApiServiceFactory({this.apiService});
 
   @override
-  Future<Response> getBatiments() async {
+  Future<Response> getBatiments(String token) async {
     Response response;
     try {
-      response = await apiService!.getbatiments(apiKey);
+      response = await apiService!.getbatiments("Bearer " + token, apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -32,46 +30,10 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   }
 
   @override
-  Future<Response> getBatimentsNumber() async {
+  Future<Response> addBatiment(String token, Map<String, dynamic> body) async {
     Response response;
     try {
-      response = await apiService!.getbatimentsnumber(apiKey);
-    } catch (e) {
-      print('Caught ${e.toString()}');
-      rethrow;
-    }
-    return response;
-  }
-
-  @override
-  Future<Response> addBatiment(
-      String token,
-      String codeBatiment,
-      int nombreNiveau,
-      String longitude,
-      String latitude,
-      String rue,
-      String ville,
-      String commune,
-      String quartier,
-      File file,
-      {String? nom,
-      String? indication}) async {
-    Response response;
-    try {
-      response = await apiService!.addbatiment(token, apiKey, {
-        "nom": nom,
-        "nombreNiveaux": nombreNiveau,
-        "codeBatiment": codeBatiment,
-        "longitude": longitude,
-        "latitude": latitude,
-        "indication": indication,
-        "rue": rue,
-        "ville": ville,
-        "commune": commune,
-        "quartier": quartier,
-        "file": file
-      });
+      response = await apiService!.addbatiment("Bearer " + token, apiKey, body);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

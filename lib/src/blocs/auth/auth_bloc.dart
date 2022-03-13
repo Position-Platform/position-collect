@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:41 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 17:13:56
+ * @Last Modified time: 2022-03-12 21:47:58
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -47,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           } else if (userResult.error is ServerError) {
             return emit(AuthServerError());
           } else {
-            if (userResult.success!.data!.user!.commercial!.actif == 1) {
+            if (userResult.success!.data!.user!.commercial!.actif!) {
               return emit(AuthSuccess(userResult.success!.data!.user!));
             } else {
               return emit(AuthDisableAccount());
@@ -79,7 +79,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else if (userResult.error is ServerError) {
           return emit(AuthServerError());
         } else {
-          if (userResult.success!.data!.user!.commercial!.actif == 1) {
+          if (userResult.success!.data!.user!.commercial!.actif!) {
             return emit(AuthSuccess(userResult.success!.data!.user!));
           } else {
             return emit(AuthDisableAccount());

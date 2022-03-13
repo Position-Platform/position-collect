@@ -10,6 +10,7 @@ import 'package:chopper/chopper.dart';
 import 'package:positioncollect/src/api/auth/authApiService.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
+import 'package:positioncollect/src/models/auth_model/auth_model.dart';
 import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/models/user_model/user_model.dart';
 import 'package:positioncollect/src/repositories/auth/authRepository.dart';
@@ -81,13 +82,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<UserModel>> login(String phone, String password) async {
+  Future<Result<AuthModel>> login(String phone, String password) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     if (isConnected) {
       try {
         final Response response = await authApiService!.login(phone, password);
 
-        var model = UserModel.fromJson(response.body);
+        var model = AuthModel.fromJson(response.body);
 
         return Result(success: model);
       } catch (e) {
@@ -120,5 +121,25 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> saveToken(String token) async {
     bool saveT = await sharedPreferencesHelper!.setToken(token);
     return saveT;
+  }
+
+  @override
+  Future<Result<ResponseModel>> resetpassword(
+      String email, String password, String token) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    if (isConnected) {
+      try {
+        final Response response =
+            await authApiService!.resetPassword(email, password, token);
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
   }
 }

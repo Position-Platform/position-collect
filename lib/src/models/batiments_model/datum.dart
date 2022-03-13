@@ -8,28 +8,29 @@ part 'datum.g.dart';
 class Datum {
   int? id;
   String? nom;
-  int? nombreNiveaux;
+  String? nombreNiveau;
   String? codeBatiment;
-  double? longitude;
-  double? latitude;
+  String? longitude;
+  String? latitude;
   String? image;
-  dynamic indication;
+  String? indication;
   String? rue;
   String? ville;
   String? commune;
   String? quartier;
+  @JsonKey(name: 'deleted_at')
+  dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
-  @JsonKey(name: 'deleted_at')
-  dynamic deletedAt;
+  int? idCommercial;
   List<Etablissement>? etablissements;
 
   Datum({
     this.id,
     this.nom,
-    this.nombreNiveaux,
+    this.nombreNiveau,
     this.codeBatiment,
     this.longitude,
     this.latitude,
@@ -39,15 +40,16 @@ class Datum {
     this.ville,
     this.commune,
     this.quartier,
+    this.deletedAt,
     this.createdAt,
     this.updatedAt,
-    this.deletedAt,
+    this.idCommercial,
     this.etablissements,
   });
 
   @override
   String toString() {
-    return 'Datum(id: $id, nom: $nom, nombreNiveaux: $nombreNiveaux, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, etablissements: $etablissements)';
+    return 'Datum(id: $id, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idCommercial: $idCommercial, etablissements: $etablissements)';
   }
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
@@ -57,25 +59,26 @@ class Datum {
   Datum copyWith({
     int? id,
     String? nom,
-    int? nombreNiveaux,
+    String? nombreNiveau,
     String? codeBatiment,
-    double? longitude,
-    double? latitude,
+    String? longitude,
+    String? latitude,
     String? image,
-    dynamic indication,
+    String? indication,
     String? rue,
     String? ville,
     String? commune,
     String? quartier,
+    dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
-    dynamic deletedAt,
+    int? idCommercial,
     List<Etablissement>? etablissements,
   }) {
     return Datum(
       id: id ?? this.id,
       nom: nom ?? this.nom,
-      nombreNiveaux: nombreNiveaux ?? this.nombreNiveaux,
+      nombreNiveau: nombreNiveau ?? this.nombreNiveau,
       codeBatiment: codeBatiment ?? this.codeBatiment,
       longitude: longitude ?? this.longitude,
       latitude: latitude ?? this.latitude,
@@ -85,9 +88,10 @@ class Datum {
       ville: ville ?? this.ville,
       commune: commune ?? this.commune,
       quartier: quartier ?? this.quartier,
+      deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      deletedAt: deletedAt ?? this.deletedAt,
+      idCommercial: idCommercial ?? this.idCommercial,
       etablissements: etablissements ?? this.etablissements,
     );
   }

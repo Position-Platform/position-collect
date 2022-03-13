@@ -7,31 +7,27 @@ class Horaire {
   int? id;
   int? idEtablissement;
   String? jour;
-  int? ouvert;
-  String? heureOuverture;
-  String? heureFermeture;
+  String? plageHoraire;
+  @JsonKey(name: 'deleted_at')
+  dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
-  @JsonKey(name: 'deleted_at')
-  dynamic deletedAt;
 
   Horaire({
     this.id,
     this.idEtablissement,
     this.jour,
-    this.ouvert,
-    this.heureOuverture,
-    this.heureFermeture,
+    this.plageHoraire,
+    this.deletedAt,
     this.createdAt,
     this.updatedAt,
-    this.deletedAt,
   });
 
   @override
   String toString() {
-    return 'Horaire(id: $id, idEtablissement: $idEtablissement, jour: $jour, ouvert: $ouvert, heureOuverture: $heureOuverture, heureFermeture: $heureFermeture, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Horaire(id: $id, idEtablissement: $idEtablissement, jour: $jour, plageHoraire: $plageHoraire, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   factory Horaire.fromJson(Map<String, dynamic> json) {
@@ -44,23 +40,19 @@ class Horaire {
     int? id,
     int? idEtablissement,
     String? jour,
-    int? ouvert,
-    String? heureOuverture,
-    String? heureFermeture,
+    String? plageHoraire,
+    dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
-    dynamic deletedAt,
   }) {
     return Horaire(
       id: id ?? this.id,
       idEtablissement: idEtablissement ?? this.idEtablissement,
       jour: jour ?? this.jour,
-      ouvert: ouvert ?? this.ouvert,
-      heureOuverture: heureOuverture ?? this.heureOuverture,
-      heureFermeture: heureFermeture ?? this.heureFermeture,
+      plageHoraire: plageHoraire ?? this.plageHoraire,
+      deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      deletedAt: deletedAt ?? this.deletedAt,
     );
   }
 }
