@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 13:52:24
+ * @Last Modified time: 2022-03-13 15:40:36
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -137,7 +137,8 @@ Future<void> init() async {
       etablissementsRepository: getIt(),
       trackingRepository: getIt(),
       nominatimRepository: getIt()));
-  getIt.registerFactory<NewBusinessBloc>(() => NewBusinessBloc());
+  getIt.registerFactory<NewBusinessBloc>(
+      () => NewBusinessBloc(batimentsRepository: getIt()));
 
   getIt.registerFactory<ThemeBloc>(() => ThemeBloc());
 }

@@ -4,47 +4,44 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 15:45:55
+ * @Last Modified time: 2022-03-14 16:05:35
  */
+
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/models/sous_categories_model/commodite.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/widgets/buttonForm.dart';
+import 'package:positioncollect/src/widgets/chip.dart';
 
-class NewBusiness extends StatefulWidget {
-  const NewBusiness({Key? key, required this.latLng}) : super(key: key);
-  final LatLng? latLng;
+class NewBusiness4 extends StatefulWidget {
+  const NewBusiness4({Key? key, required this.commodites}) : super(key: key);
+  final List<Commodite> commodites;
+
   @override
-  _NewBusinessState createState() => _NewBusinessState();
+  _NewBusiness4State createState() => _NewBusiness4State();
 }
 
-class _NewBusinessState extends State<NewBusiness> {
+class _NewBusiness4State extends State<NewBusiness4> {
   NewBusinessBloc? newBusinessBloc;
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController niveauController = TextEditingController();
-  TextEditingController coordonneesController = TextEditingController();
-  TextEditingController quartierController = TextEditingController();
+  TextEditingController postalController = TextEditingController();
+  TextEditingController siteInternetController = TextEditingController();
+  TextEditingController indicationAdresseController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
-  String? ville;
-  final List _villes = [
-    "Yaoundé",
-    "Douala",
-  ];
+  final _random = Random();
 
   @override
   void initState() {
     super.initState();
     newBusinessBloc = BlocProvider.of<NewBusinessBloc>(context);
-    coordonneesController.text = widget.latLng!.longitude.toString() +
-        "," +
-        widget.latLng!.latitude.toString();
   }
 
   next() {}
@@ -66,7 +63,7 @@ class _NewBusinessState extends State<NewBusiness> {
               ),
               systemOverlayStyle: SystemUiOverlayStyle.light,
               centerTitle: true,
-              title: Text(S.of(context).addEtablissement + " (1)",
+              title: Text(S.of(context).addEtablissement + " (4)",
                   style: const TextStyle(fontSize: 18, color: whiteColor)),
               backgroundColor: primaryColor,
               bottom: PreferredSize(
@@ -82,75 +79,52 @@ class _NewBusinessState extends State<NewBusiness> {
                   SizedBox(
                     child: Column(
                       children: [
+                        dynamicChips(),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         TextField(
-                          controller: nameController,
+                          controller: postalController,
                           keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.characters,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Nom du Batiment',
-                              prefixIcon: Icon(Icons.business)),
+                              labelText: 'Code Postal',
+                              prefixIcon:
+                                  Icon(Icons.local_post_office_outlined)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextField(
-                          controller: niveauController,
-                          keyboardType: TextInputType.number,
+                          controller: siteInternetController,
+                          keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Nombre de Niveaux',
-                              prefixIcon: Icon(Icons.business)),
+                              labelText: 'Site Internet',
+                              prefixIcon: Icon(Icons.wifi_password_outlined)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextField(
-                          enabled: false,
-                          controller: coordonneesController,
+                          controller: indicationAdresseController,
                           keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Coordonnées',
-                              prefixIcon: Icon(Icons.location_searching)),
+                              labelText: 'Indication Adresse',
+                              prefixIcon:
+                                  Icon(Icons.not_listed_location_outlined)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextField(
-                          controller: quartierController,
+                          controller: descriptionController,
                           keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.characters,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Quartier',
+                              labelText: 'Description',
                               prefixIcon: Icon(Icons.location_on)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: DropdownButtonFormField<String>(
-                            dropdownColor: whiteColor,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Ville',
-                                prefixIcon: Icon(Icons.location_city)),
-                            hint: const Text("Selectionnez une ville"),
-                            value: ville,
-                            items: _villes.map((value) {
-                              return DropdownMenuItem<String>(
-                                child: Text(value),
-                                value: value,
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                ville = value!;
-                              });
-                            },
-                          ),
                         ),
                       ],
                     ),
@@ -165,6 +139,17 @@ class _NewBusinessState extends State<NewBusiness> {
           );
         },
       ),
+    );
+  }
+
+  dynamicChips() {
+    return Wrap(
+      spacing: 6.0,
+      runSpacing: 6.0,
+      children: List<Widget>.generate(widget.commodites.length, (int index) {
+        var element = colorsChips[_random.nextInt(colorsChips.length)];
+        return chip(widget.commodites[index].nom!, element, () {});
+      }),
     );
   }
 }

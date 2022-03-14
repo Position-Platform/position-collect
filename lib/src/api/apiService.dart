@@ -88,4 +88,10 @@ abstract class ApiService extends ChopperService {
       @Header('Authorization') String token,
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
+
+// SousCategories
+  @Get(path: '/api/souscategories', headers: {'Accept': 'application/json'})
+  Future<Response> getsouscategories(
+    @Header('X-Authorization') String apiKey,
+  );
 }

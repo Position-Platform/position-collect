@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 22:18:19 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-02-09 22:18:19 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-03-13 15:31:47
  */
 part of 'new_business_bloc.dart';
 
@@ -13,35 +13,11 @@ abstract class NewBusinessEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class StepTapped extends NewBusinessEvent {
-  final int step;
-
-  const StepTapped(this.step);
+class GetSousCategories extends NewBusinessEvent {
+  const GetSousCategories();
   @override
-  List<Object> get props => [step];
+  List<Object> get props => [];
 
   @override
-  String toString() => 'StepTapped { step: $step }';
-}
-
-class StepCancelled extends NewBusinessEvent {
-  final int step;
-
-  const StepCancelled(this.step);
-  @override
-  List<Object> get props => [step];
-
-  @override
-  String toString() => 'StepCancelled { step: $step }';
-}
-
-class StepContinue extends NewBusinessEvent {
-  final int step;
-
-  const StepContinue(this.step);
-  @override
-  List<Object> get props => [step];
-
-  @override
-  String toString() => 'StepContinue { step: $step }';
+  String toString() => 'GetSousCategories { }';
 }

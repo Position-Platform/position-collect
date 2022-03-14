@@ -188,4 +188,16 @@ class _$ApiService extends ApiService {
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getsouscategories(String apiKey) {
+    final $url = 'http://10.0.2.2:8000/api/souscategories';
+    final $headers = {
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

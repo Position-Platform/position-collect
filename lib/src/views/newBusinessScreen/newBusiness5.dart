@@ -4,47 +4,40 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 15:45:55
+ * @Last Modified time: 2022-03-14 16:52:21
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/models/sous_categories_model/commodite.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/widgets/buttonForm.dart';
 
-class NewBusiness extends StatefulWidget {
-  const NewBusiness({Key? key, required this.latLng}) : super(key: key);
-  final LatLng? latLng;
+class NewBusiness5 extends StatefulWidget {
+  const NewBusiness5({Key? key, required this.commodites}) : super(key: key);
+  final List<Commodite> commodites;
+
   @override
-  _NewBusinessState createState() => _NewBusinessState();
+  _NewBusiness5State createState() => _NewBusiness5State();
 }
 
-class _NewBusinessState extends State<NewBusiness> {
+class _NewBusiness5State extends State<NewBusiness5> {
   NewBusinessBloc? newBusinessBloc;
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController niveauController = TextEditingController();
-  TextEditingController coordonneesController = TextEditingController();
-  TextEditingController quartierController = TextEditingController();
-
-  String? ville;
-  final List _villes = [
-    "Yaoundé",
-    "Douala",
-  ];
+  TextEditingController servicesController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController whatsapp1Controller = TextEditingController();
+  TextEditingController whatsapp2Controller = TextEditingController();
+  TextEditingController ameliorationController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     newBusinessBloc = BlocProvider.of<NewBusinessBloc>(context);
-    coordonneesController.text = widget.latLng!.longitude.toString() +
-        "," +
-        widget.latLng!.latitude.toString();
   }
 
   next() {}
@@ -66,7 +59,7 @@ class _NewBusinessState extends State<NewBusiness> {
               ),
               systemOverlayStyle: SystemUiOverlayStyle.light,
               centerTitle: true,
-              title: Text(S.of(context).addEtablissement + " (1)",
+              title: Text(S.of(context).addEtablissement + " (5)",
                   style: const TextStyle(fontSize: 18, color: whiteColor)),
               backgroundColor: primaryColor,
               bottom: PreferredSize(
@@ -83,74 +76,56 @@ class _NewBusinessState extends State<NewBusiness> {
                     child: Column(
                       children: [
                         TextField(
-                          controller: nameController,
+                          controller: servicesController,
                           keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.characters,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Nom du Batiment',
-                              prefixIcon: Icon(Icons.business)),
+                              labelText: 'Autres Services',
+                              prefixIcon: Icon(Icons.list_alt)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextField(
-                          controller: niveauController,
+                          controller: phoneController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Nombre de Niveaux',
-                              prefixIcon: Icon(Icons.business)),
+                              labelText: 'Numéro de Téléphone',
+                              prefixIcon: Icon(Icons.phone_android)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextField(
-                          enabled: false,
-                          controller: coordonneesController,
-                          keyboardType: TextInputType.text,
+                          controller: whatsapp1Controller,
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Coordonnées',
-                              prefixIcon: Icon(Icons.location_searching)),
+                              labelText: 'Whatsapp 1',
+                              prefixIcon: Icon(Icons.whatsapp)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextField(
-                          controller: quartierController,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.characters,
+                          controller: whatsapp2Controller,
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Quartier',
+                              labelText: 'Whatsapp 2',
                               prefixIcon: Icon(Icons.location_on)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: DropdownButtonFormField<String>(
-                            dropdownColor: whiteColor,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Ville',
-                                prefixIcon: Icon(Icons.location_city)),
-                            hint: const Text("Selectionnez une ville"),
-                            value: ville,
-                            items: _villes.map((value) {
-                              return DropdownMenuItem<String>(
-                                child: Text(value),
-                                value: value,
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                ville = value!;
-                              });
-                            },
-                          ),
+                        TextField(
+                          controller: ameliorationController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Idées d'amelioration",
+                              prefixIcon: Icon(Icons.list_alt)),
                         ),
                       ],
                     ),
