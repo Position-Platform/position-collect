@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 06:46:29
+ * @Last Modified time: 2022-03-15 10:11:01
  */
 import 'dart:async';
 import 'dart:typed_data';
@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
 import 'package:positioncollect/src/models/tracking_model/data.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
@@ -164,7 +165,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       String position =
           poso.longitude.toString() + "," + poso.latitude.toString();
 
-      emit(UserAdress(nominatimResult!.success!.displayName!, position));
+      emit(UserAdress(nominatimResult!.success!.displayName!, position,
+          nominatimResult.success));
     } catch (e) {
       emit(AdressError());
     }
@@ -209,8 +211,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           "," +
           event.latLng!.latitude.toString();
 
-      emit(AddMarkerOnMap(nominatimResult!.success!.displayName!, position,
-          LatLng(event.latLng!.latitude, event.latLng!.longitude)));
+      emit(AddMarkerOnMap(
+          nominatimResult!.success!.displayName!,
+          position,
+          LatLng(event.latLng!.latitude, event.latLng!.longitude),
+          nominatimResult.success));
     } catch (e) {
       emit(AdressError());
     }

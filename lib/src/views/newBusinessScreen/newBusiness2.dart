@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-14 05:03:25
+ * @Last Modified time: 2022-03-16 06:39:06
  */
 
 import 'dart:io';
@@ -17,21 +17,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/di/di.dart';
+import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
+import 'package:positioncollect/src/views/newBusinessScreen/newBusiness3.dart';
 import 'package:positioncollect/src/widgets/buttonForm.dart';
 import 'package:universal_io/io.dart' as io;
 
 class NewBusiness2 extends StatefulWidget {
-  const NewBusiness2({Key? key}) : super(key: key);
-
+  const NewBusiness2({Key? key, required this.batiment}) : super(key: key);
+  final Data batiment;
   @override
   _NewBusiness2State createState() => _NewBusiness2State();
 }
 
 class _NewBusiness2State extends State<NewBusiness2> {
   NewBusinessBloc? newBusinessBloc;
-  TextEditingController indicationController = TextEditingController();
 
   File? _image;
   final _picker = ImagePicker();
@@ -45,18 +47,60 @@ class _NewBusiness2State extends State<NewBusiness2> {
     newBusinessBloc = BlocProvider.of<NewBusinessBloc>(context);
   }
 
-  next() {}
+  next() async {
+    newBusinessBloc?.add(AddBatiment(widget.batiment, _selectedFile!.path));
+  }
 
-  back() {}
+  back() {
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     changeStatusColor(transparent);
 
     return BlocListener<NewBusinessBloc, NewBusinessState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is PageLoading) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Création du batiment..."),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
+        }
+        if (state is Error) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Echec de création du Batiment..."),
+                    Icon(Icons.error)
+                  ],
+                ),
+                backgroundColor: red,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+        }
+      },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
+          if (state is BatimentAdded) {
+            return BlocProvider<NewBusinessBloc>(
+                create: (context) => getIt<NewBusinessBloc>(),
+                child: NewBusiness3(batiment: state.batiments));
+          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
@@ -80,15 +124,6 @@ class _NewBusiness2State extends State<NewBusiness2> {
                   SizedBox(
                     child: Column(
                       children: [
-                        TextField(
-                          controller: indicationController,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.characters,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Adresse précise du Batiment',
-                              prefixIcon: Icon(Icons.location_on_rounded)),
-                        ),
                         const SizedBox(
                           height: 15,
                         ),

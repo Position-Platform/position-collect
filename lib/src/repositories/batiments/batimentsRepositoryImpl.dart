@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 15:29:52
+ * @Last Modified time: 2022-03-16 22:17:54
  */
 
 import 'package:chopper/chopper.dart';
@@ -14,11 +14,15 @@ import 'package:positioncollect/src/database/batiments/batimentDao.dart';
 import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
+import 'package:positioncollect/src/models/batiment_model/batiment_model.dart';
+import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
 import 'package:positioncollect/src/models/sous_categories_model/sous_categories_model.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
+import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/result.dart';
+import 'package:positioncollect/src/utils/tools.dart';
 
 class BatimentsRepositoryImpl implements BatimentsRepository {
   final NetworkInfoHelper? networkInfoHelper;
@@ -80,7 +84,8 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
   }
 
   @override
-  Future<Result<Datum>> addBatiment(Datum batiment) async {
+  Future<Result<BatimentModel>> addBatiment(
+      Data batiment, String imagePath) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     String? token = await sharedPreferencesHelper?.getToken();
 
@@ -89,9 +94,18 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
         final Response response =
             await batimentsApiService!.addBatiment(token!, batiment.toJson());
 
-        var model = Datum.fromJson(response.body);
+        var model = BatimentModel.fromJson(response.body);
 
-        return Result(success: model);
+        int idBatiment = model.data!.id!;
+
+        int? statusCode = await uploadImage(
+            'image', imagePath, apiUrl + "/api/batiments/$idBatiment", token);
+
+        if (statusCode == 200 || statusCode == 201) {
+          return Result(success: model);
+        } else {
+          return Result(error: UploadError());
+        }
       } catch (e) {
         return Result(error: ServerError());
       }

@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-02-10 16:17:18 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-02-10 16:17:18 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-03-14 20:54:38
  */
 // ignore_for_file: file_names, deprecated_member_use
 
@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness.dart';
@@ -20,7 +21,7 @@ import 'package:positioncollect/generated/l10n.dart';
 import '../di/di.dart';
 
 void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
-    String position, bool batiment,
+    String position, bool batiment, NominatimReverseModel nominatimReverseModel,
     {LatLng? latLng}) {
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -105,7 +106,10 @@ void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
                                                     create: (context) => getIt<
                                                         NewBusinessBloc>(),
                                                     child: NewBusiness(
-                                                        latLng: latLng),
+                                                      latLng: latLng,
+                                                      nominatimReverseModel:
+                                                          nominatimReverseModel,
+                                                    ),
                                                   )),
                                         );
                                       },

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'datum.dart';
+part of 'data.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
+Data _$DataFromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
       nom: json['nom'] as String?,
       nombreNiveau: json['nombreNiveau'] as String?,
@@ -23,12 +23,13 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       idCommercial: json['idCommercial'] as int?,
+      idUser: json['idUser'],
       etablissements: (json['etablissements'] as List<dynamic>?)
           ?.map((e) => Etablissement.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
+Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'id': instance.id,
       'nom': instance.nom,
       'nombreNiveau': instance.nombreNiveau,
@@ -45,5 +46,6 @@ Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'idCommercial': instance.idCommercial,
+      'idUser': instance.idUser,
       'etablissements': instance.etablissements,
     };

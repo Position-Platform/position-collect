@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:47 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-10 14:43:20
+ * @Last Modified time: 2022-03-15 10:11:18
  */
 // ignore_for_file: file_names
 
@@ -34,7 +34,8 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
       if (state is UserAdress) {
         isLoading = false;
         address = state.adress!;
-        bottomSheet(context, address, _mapBloc!, state.position!, false);
+        bottomSheet(context, address, _mapBloc!, state.position!, false,
+            state.nominatimReverseModel!);
       }
       if (state is UrlPositionShared) {
         Share.share(S.of(context).shareContent + "\n" + state.url!,

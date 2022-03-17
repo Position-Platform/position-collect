@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-03-14 04:49:55 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-03-14 04:49:55 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-03-15 10:35:26
  */
 // ignore_for_file: deprecated_member_use, file_names
 
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 
-Widget bottomBar(BuildContext context, Function()? next, Function()? back) {
+Widget bottomBar(BuildContext context, VoidCallback? next, VoidCallback? back) {
   return SizedBox(
     width: MediaQuery.of(context).size.width,
     child: Row(
@@ -18,7 +18,7 @@ Widget bottomBar(BuildContext context, Function()? next, Function()? back) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         RaisedButton(
-          onPressed: () => next,
+          onPressed: next,
           color: primaryColor,
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -31,7 +31,7 @@ Widget bottomBar(BuildContext context, Function()? next, Function()? back) {
           width: 10,
         ),
         RaisedButton(
-          onPressed: () => back,
+          onPressed: back,
           color: red,
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

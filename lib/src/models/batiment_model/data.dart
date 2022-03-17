@@ -2,10 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'etablissement.dart';
 
-part 'datum.g.dart';
+part 'data.g.dart';
 
 @JsonSerializable()
-class Datum {
+class Data {
   int? id;
   String? nom;
   String? nombreNiveau;
@@ -25,9 +25,10 @@ class Datum {
   @JsonKey(name: 'updated_at')
   String? updatedAt;
   int? idCommercial;
+  dynamic idUser;
   List<Etablissement>? etablissements;
 
-  Datum({
+  Data({
     this.id,
     this.nom,
     this.nombreNiveau,
@@ -44,19 +45,20 @@ class Datum {
     this.createdAt,
     this.updatedAt,
     this.idCommercial,
+    this.idUser,
     this.etablissements,
   });
 
   @override
   String toString() {
-    return 'Datum(id: $id, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idCommercial: $idCommercial, etablissements: $etablissements)';
+    return 'Data(id: $id, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idCommercial: $idCommercial, idUser: $idUser, etablissements: $etablissements)';
   }
 
-  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DatumToJson(this);
+  Map<String, dynamic> toJson() => _$DataToJson(this);
 
-  Datum copyWith({
+  Data copyWith({
     int? id,
     String? nom,
     String? nombreNiveau,
@@ -73,9 +75,10 @@ class Datum {
     String? createdAt,
     String? updatedAt,
     int? idCommercial,
+    dynamic idUser,
     List<Etablissement>? etablissements,
   }) {
-    return Datum(
+    return Data(
       id: id ?? this.id,
       nom: nom ?? this.nom,
       nombreNiveau: nombreNiveau ?? this.nombreNiveau,
@@ -92,6 +95,7 @@ class Datum {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       idCommercial: idCommercial ?? this.idCommercial,
+      idUser: idUser ?? this.idUser,
       etablissements: etablissements ?? this.etablissements,
     );
   }

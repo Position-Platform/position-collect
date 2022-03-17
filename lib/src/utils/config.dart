@@ -2,12 +2,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:02:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 06:00:14
+ * @Last Modified time: 2022-03-16 13:36:05
  */
 // ignore_for_file: constant_identifier_names
 
 const appName = "Position Collect";
 const apiUrl = "http://10.0.2.2:8000";
+const assetsUrl = "https://service.geo.sm/var/www";
 const nominatimUrl = "https://nominatim.openstreetmap.org";
 const apiKey =
     "soo7HP58G7nZ1sn4MWnqn8FwEGjjde97bldXLJxos5XM5wp5pEjHDbXqlzwp0jtc";

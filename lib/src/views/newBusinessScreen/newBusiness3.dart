@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-14 15:34:53
+ * @Last Modified time: 2022-03-16 23:18:28
  */
 
 import 'dart:io';
@@ -12,21 +12,28 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/di/di.dart';
+import 'package:positioncollect/src/models/batiment_model/data.dart';
+import 'package:positioncollect/src/models/etablissement_model/data.dart'
+    as etablissement;
 import 'package:positioncollect/src/models/sous_categories_model/datum.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/tools.dart';
-import 'package:positioncollect/src/widgets/buttonForm.dart';
+import 'package:positioncollect/src/views/newBusinessScreen/newBusiness4.dart';
 import 'package:universal_io/io.dart' as io;
 
 class NewBusiness3 extends StatefulWidget {
-  const NewBusiness3({Key? key}) : super(key: key);
+  const NewBusiness3({Key? key, required this.batiment}) : super(key: key);
+  final Data batiment;
   @override
   _NewBusiness3State createState() => _NewBusiness3State();
 }
@@ -49,6 +56,7 @@ class _NewBusiness3State extends State<NewBusiness3> {
   int? idSubCategory;
 
   List<Datum> sousCategories = [];
+  Datum? sousCategory;
 
   @override
   void initState() {
@@ -57,7 +65,21 @@ class _NewBusiness3State extends State<NewBusiness3> {
     _newBusinessBloc?.add(const GetSousCategories());
   }
 
-  next() {}
+  next() {
+    etablissement.Data etablissements = etablissement.Data(
+      idBatiment: widget.batiment.id,
+      indicationAdresse: indicationController.text,
+      nom: nomEntrepriseController.text,
+      etage: etageController.text,
+    );
+
+    if (_selectedFile != null && idSubCategory != null) {
+      _newBusinessBloc
+          ?.add(FormPage3(etablissements, _selectedFile!.path, idSubCategory!));
+    } else {
+      Fluttertoast.showToast(msg: "Remplissez tous les champs");
+    }
+  }
 
   back() {}
 
@@ -70,10 +92,27 @@ class _NewBusiness3State extends State<NewBusiness3> {
         if (state is SousCategoriesLoaded) {
           sousCategories = state.sousCategories;
         }
+        if (state is FormError) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Remplir tous les champs obligatoires"),
+                    Icon(Icons.error)
+                  ],
+                ),
+                backgroundColor: red,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is PageLoading) {
+          if (state is SousCategoriesLoading) {
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(
@@ -82,6 +121,16 @@ class _NewBusiness3State extends State<NewBusiness3> {
                 ),
               ),
             );
+          }
+          if (state is GoToPage4) {
+            return BlocProvider<NewBusinessBloc>(
+                create: (context) => getIt<NewBusinessBloc>(),
+                child: NewBusiness4(
+                  etablissements: state.etablissements,
+                  commodites: sousCategory!.categorie!.commodites!,
+                  cover: File(state.coverPath),
+                  idSousCatgorie: state.idSousCategorie,
+                ));
           }
           return Scaffold(
             appBar: AppBar(
@@ -100,148 +149,203 @@ class _NewBusiness3State extends State<NewBusiness3> {
                   ),
                   preferredSize: const Size.fromHeight(1.0)),
             ),
-            body: Stack(children: [
-              Column(
-                children: [
-                  SizedBox(
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: nomEntrepriseController,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.characters,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Nom de l'entreprise",
-                              prefixIcon: Icon(Icons.location_on_rounded)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          controller: etageController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Numero Etage',
-                              prefixIcon: Icon(Icons.location_on_rounded)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TypeAheadFormField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                                controller: sousCategorieController,
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Choisir une sous catégorie',
-                                    prefixIcon: Icon(Icons.category_outlined))),
-                            suggestionsCallback: (pattern) {
-                              return sousCategories;
-                            },
-                            itemBuilder: (context, Datum suggestion) {
-                              return Container(
-                                color: whiteColor,
-                                child: ListTile(
-                                  leading: Image.network(
-                                      apiUrl + suggestion.categorie!.logourl),
-                                  title: Text(suggestion.nom!),
-                                  subtitle: Text(suggestion.categorie!.nom!),
-                                ),
-                              );
-                            },
-                            transitionBuilder:
-                                (context, suggestionsBox, controller) {
-                              return suggestionsBox;
-                            },
-                            onSuggestionSelected: (Datum suggestion) {
-                              sousCategorieController.text = suggestion.nom!;
-                              selectedSubCategory = suggestion.nom!;
-                              idSubCategory = suggestion.id!;
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please select a Sub Category';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) => {
-                                  selectedSubCategory = value,
-                                }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Center(
-                          child: Text("Image Principale de l'etablissement"),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Column(
-                            children: <Widget>[
-                              _getImageWidget(),
-                              const SizedBox(height: 30),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+            body: SingleChildScrollView(
+              child: Stack(children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            TextField(
+                              controller: nomEntrepriseController,
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.characters,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Nom de l'entreprise",
+                                  prefixIcon: Icon(Icons.location_on_rounded)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: etageController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Numero Etage',
+                                  prefixIcon: Icon(Icons.location_on_rounded)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TypeAheadFormField(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                    controller: sousCategorieController,
+                                    decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Choisir une sous catégorie',
+                                        prefixIcon:
+                                            Icon(Icons.category_outlined))),
+                                suggestionsCallback: (pattern) {
+                                  return sousCategories
+                                      .where((sousCategory) => sousCategory.nom!
+                                          .toLowerCase()
+                                          .contains(pattern.toLowerCase()))
+                                      .toList();
+                                },
+                                itemBuilder: (context, Datum suggestion) {
+                                  return Container(
+                                    color: whiteColor,
+                                    child: ListTile(
+                                      leading: SvgPicture.network(assetsUrl +
+                                          suggestion.categorie!.logourl),
+                                      title: Text(suggestion.nom!),
+                                      subtitle:
+                                          Text(suggestion.categorie!.nom!),
+                                    ),
+                                  );
+                                },
+                                transitionBuilder:
+                                    (context, suggestionsBox, controller) {
+                                  return suggestionsBox;
+                                },
+                                onSuggestionSelected: (Datum suggestion) {
+                                  sousCategorieController.text =
+                                      suggestion.nom!;
+                                  selectedSubCategory = suggestion.nom!;
+                                  idSubCategory = suggestion.id!;
+                                  sousCategory = suggestion;
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please select a Sub Category';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) => {
+                                      selectedSubCategory = value,
+                                    }),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            const Center(
+                              child:
+                                  Text("Image Principale de l'etablissement"),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              child: Column(
                                 children: <Widget>[
-                                  GestureDetector(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const <Widget>[
-                                        Icon(
-                                          Icons.camera_alt,
-                                          color: greyColor,
-                                          size: 40,
+                                  _getImageWidget(),
+                                  const SizedBox(height: 30),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const <Widget>[
+                                            Icon(
+                                              Icons.camera_alt,
+                                              color: greyColor,
+                                              size: 40,
+                                            ),
+                                            SizedBox(width: 10),
+                                            Text('Camera'),
+                                          ],
                                         ),
-                                        SizedBox(width: 10),
-                                        Text('Camera'),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      _askPermissionCamera();
-                                    },
-                                  ),
-                                  Container(
-                                    width: 20,
-                                  ),
-                                  GestureDetector(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const <Widget>[
-                                        Icon(
-                                          Icons.photo,
-                                          color: greyColor,
-                                          size: 40,
+                                        onTap: () {
+                                          _askPermissionCamera();
+                                        },
+                                      ),
+                                      Container(
+                                        width: 20,
+                                      ),
+                                      GestureDetector(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const <Widget>[
+                                            Icon(
+                                              Icons.photo,
+                                              color: greyColor,
+                                              size: 40,
+                                            ),
+                                            SizedBox(width: 10),
+                                            Text('Gallery'),
+                                          ],
                                         ),
-                                        SizedBox(width: 10),
-                                        Text('Gallery'),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      if (io.Platform.isIOS) {
-                                        _askPermissionPhotos();
-                                      } else {
-                                        _askPermissionStorage();
-                                      }
-                                    },
+                                        onTap: () {
+                                          if (io.Platform.isIOS) {
+                                            _askPermissionPhotos();
+                                          } else {
+                                            _askPermissionStorage();
+                                          }
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    RaisedButton(
+                                      onPressed: next,
+                                      color: primaryColor,
+                                      shape: const StadiumBorder(),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 6),
+                                      child: Text(
+                                        S.of(context).next,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    RaisedButton(
+                                      onPressed: back,
+                                      color: red,
+                                      shape: const StadiumBorder(),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 6),
+                                      child: Text(
+                                        S.of(context).back,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: bottomBar(context, next, back),
-              )
-            ]),
+                      )
+                    ],
+                  ),
+                ),
+              ]),
+            ),
           );
         },
       ),

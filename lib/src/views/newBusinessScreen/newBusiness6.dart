@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-14 17:06:06
+ * @Last Modified time: 2022-03-16 13:13:57
  */
 
 import 'package:flutter/material.dart';
@@ -12,18 +12,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/widgets/buttonForm.dart';
 
-class NewBusiness5 extends StatefulWidget {
-  const NewBusiness5({Key? key}) : super(key: key);
+class NewBusiness6 extends StatefulWidget {
+  const NewBusiness6({Key? key, required this.etablissements})
+      : super(key: key);
+  final Data etablissements;
 
   @override
-  _NewBusiness5State createState() => _NewBusiness5State();
+  _NewBusiness6State createState() => _NewBusiness6State();
 }
 
-class _NewBusiness5State extends State<NewBusiness5> {
+class _NewBusiness6State extends State<NewBusiness6> {
   NewBusinessBloc? newBusinessBloc;
 
   @override
