@@ -9,10 +9,15 @@
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
+import 'package:moor_flutter/moor_flutter.dart';
+import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
+import 'package:positioncollect/src/database/batiments/batimentDao.dart';
+import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/batiment_model/horaire.dart';
+import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
 import 'package:positioncollect/src/models/search_model/search_model.dart';
@@ -24,12 +29,16 @@ import 'package:positioncollect/src/utils/tools.dart';
 class EtablissementsRepositoryImpl implements EtablissementsRepository {
   final NetworkInfoHelper? networkInfoHelper;
   final EtablissementsApiService? etablissementsApiService;
+  final BatimentsApiService? batimentsApiService;
   final SharedPreferencesHelper? sharedPreferencesHelper;
+  final BatimentsDao? batimentsDao;
 
   EtablissementsRepositoryImpl(
       {this.networkInfoHelper,
       this.etablissementsApiService,
-      this.sharedPreferencesHelper});
+      this.sharedPreferencesHelper,
+      this.batimentsApiService,
+      this.batimentsDao});
 
   @override
   Future<Result<SearchModel>> searchEtablissements(String query) async {
@@ -117,6 +126,19 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
       try {
         int? statusCode = await postImage('imageUrl', imagePath,
             apiUrl + "/api/images", token, idEtablissement.toString());
+
+        var response = await batimentsApiService!.getBatiments(token!);
+
+        var model = BatimentsModel.fromJson(response.body);
+
+        for (var i = 0; i < model.data!.length; i++) {
+          BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+              id: Value(model.data![i].id!),
+              batiment: Value(model.data![i]),
+              online: const Value(true));
+
+          await batimentsDao!.insertBatiment(batimentsCompanion);
+        }
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: statusCode);
