@@ -114,6 +114,8 @@ Future<void> init() async {
 
   getIt.registerFactory<EtablissementsRepository>(
     () => EtablissementsRepositoryImpl(
+        batimentsApiService: getIt(),
+        batimentsDao: getIt(),
         etablissementsApiService: getIt(),
         networkInfoHelper: getIt(),
         sharedPreferencesHelper: getIt()),
