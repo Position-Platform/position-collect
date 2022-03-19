@@ -6,16 +6,20 @@
  */
 // ignore_for_file: file_names, avoid_print
 
+import 'package:positioncollect/src/models/auth_model/auth_model.dart';
 import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/models/user_model/user_model.dart';
 import 'package:positioncollect/src/utils/result.dart';
 
 abstract class AuthRepository {
-  Future<Result<UserModel>> login(String phone, String password);
+  Future<Result<AuthModel>> login(String phone, String password);
 
   Future<Result<UserModel>> getuser(String token);
 
   Future<Result<ResponseModel>> forgotpassword(String email);
+
+  Future<Result<ResponseModel>> resetpassword(
+      String email, String password, String token);
 
   Future<bool> deleteToken();
 

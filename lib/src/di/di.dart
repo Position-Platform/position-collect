@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-01 15:08:41
+ * @Last Modified time: 2022-03-16 17:48:08
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -25,6 +25,8 @@ import 'package:positioncollect/src/blocs/gps/gps_bloc.dart';
 import 'package:positioncollect/src/blocs/home/home_bloc.dart';
 import 'package:positioncollect/src/blocs/login/login_bloc.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/blocs/theme/theme_bloc.dart';
 import 'package:positioncollect/src/database/batiments/batimentDao.dart';
 import 'package:positioncollect/src/database/database.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
@@ -135,4 +137,10 @@ Future<void> init() async {
       etablissementsRepository: getIt(),
       trackingRepository: getIt(),
       nominatimRepository: getIt()));
+  getIt.registerFactory<NewBusinessBloc>(() => NewBusinessBloc(
+      batimentsRepository: getIt(),
+      sharedPreferencesHelper: getIt(),
+      etablissementsRepository: getIt()));
+
+  getIt.registerFactory<ThemeBloc>(() => ThemeBloc());
 }

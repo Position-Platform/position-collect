@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:29 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 11:23:17
+ * @Last Modified time: 2022-03-16 06:19:48
  */
 // ignore_for_file: file_names
 
@@ -31,6 +31,10 @@ abstract class ApiService extends ChopperService {
       headers: {'Accept': 'application/json'})
   Future<Response> forgetPassword(@Body() Map<String, dynamic> body);
 
+  @Post(
+      path: '/api/auth/password/reset', headers: {'Accept': 'application/json'})
+  Future<Response> resetPassword(@Body() Map<String, dynamic> body);
+
   @Get(path: '/api/auth/logout', headers: {'Accept': 'application/json'})
   Future<Response> logout(
     @Header('Authorization') String token,
@@ -47,18 +51,47 @@ abstract class ApiService extends ChopperService {
 //Batiment Api
   @Get(path: '/api/batiments', headers: {'Accept': 'application/json'})
   Future<Response> getbatiments(
+    @Header('Authorization') String token,
     @Header('X-Authorization') String apiKey,
   );
 
-  @Get(path: '/api/batimentsnumber', headers: {'Accept': 'application/json'})
-  Future<Response> getbatimentsnumber(
-    @Header('X-Authorization') String apiKey,
-  );
+  @Post(path: '/api/batiments', headers: {'Accept': 'application/json'})
+  Future<Response> addbatiment(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
 
-//Search
+//Etablissements
   @Get(
       path: '/api/search/etablissements',
       headers: {'Accept': 'application/json'})
   Future<Response> searchetablissement(
       @Header('X-Authorization') String apiKey, @Query('q') String query);
+
+  @Post(path: '/api/etablissements', headers: {'Accept': 'application/json'})
+  Future<Response> addetablissement(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+//Horaires
+  @Post(path: '/api/horaires', headers: {'Accept': 'application/json'})
+  Future<Response> addhoraire(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+//Images
+
+  @Post(path: '/api/images', headers: {'Accept': 'application/json'})
+  Future<Response> addimage(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body);
+
+// SousCategories
+  @Get(path: '/api/souscategories', headers: {'Accept': 'application/json'})
+  Future<Response> getsouscategories(
+    @Header('X-Authorization') String apiKey,
+  );
 }

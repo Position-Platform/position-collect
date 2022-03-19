@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:36:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 11:24:24
+ * @Last Modified time: 2022-03-15 23:17:38
  */
 
 import 'package:chopper/chopper.dart';
@@ -18,10 +18,10 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   BatimentsApiServiceFactory({this.apiService});
 
   @override
-  Future<Response> getBatiments() async {
+  Future<Response> getBatiments(String token) async {
     Response response;
     try {
-      response = await apiService!.getbatiments(apiKey);
+      response = await apiService!.getbatiments("Bearer " + token, apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -30,10 +30,22 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   }
 
   @override
-  Future<Response> getBatimentsNumber() async {
+  Future<Response> addBatiment(String token, Map<String, dynamic> body) async {
     Response response;
     try {
-      response = await apiService!.getbatimentsnumber(apiKey);
+      response = await apiService!.addbatiment("Bearer " + token, apiKey, body);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> getSousCategories() async {
+    Response response;
+    try {
+      response = await apiService!.getsouscategories(apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

@@ -4,17 +4,21 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-02 14:44:02
+ * @Last Modified time: 2022-03-15 10:11:01
  */
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
+import 'package:positioncollect/src/models/tracking_model/data.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/repositories/nominatim/nominatimRepository.dart';
@@ -60,6 +64,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<SetKeyBoardStatus>(_setKeyBoardStatus);
     on<GetUserAdress>(_getUserAdress);
     on<SharePosition>(_sharePosition);
+    on<NewBatiment>(_newBatiment);
+    on<RemoveMarker>(_removeMarker);
   }
 
   void _setKeyBoardStatus(SetKeyBoardStatus event, Emitter<MapState> emit) {
@@ -70,6 +76,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       OnMapInitializedEvent event, Emitter<MapState> emit) async {
     _mapController = event.controller;
 
+    final ByteData bytes = await rootBundle.load("assets/images/pin.png");
+    final Uint8List list = bytes.buffer.asUint8List();
+    _mapController?.addImage("markerImage", list);
+
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) async {
       add(SetKeyBoardStatus(visible));
@@ -79,8 +89,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
       poso = position!;
-      await trackingRepository?.addtracking(
-          position.longitude.toString(), position.latitude.toString());
+      Data tracking = Data(
+          longitude: position.longitude.toString(),
+          latitude: position.latitude.toString());
+      await trackingRepository?.addtracking(tracking);
     });
 
     onFeatureTapped(_mapController!);
@@ -150,16 +162,18 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       final nominatimResult = await nominatimRepository?.reverseNominatim(
           poso.latitude.toString(), poso.longitude.toString());
 
-      emit(UserAdress(nominatimResult!.success!.displayName!, poso));
+      String position =
+          poso.longitude.toString() + "," + poso.latitude.toString();
+
+      emit(UserAdress(nominatimResult!.success!.displayName!, position,
+          nominatimResult.success));
     } catch (e) {
       emit(AdressError());
     }
   }
 
   void _sharePosition(SharePosition event, Emitter<MapState> emit) async {
-    String myposition = event.position!.longitude.toString() +
-        "," +
-        event.position!.latitude.toString();
+    String myposition = event.position!;
     try {
       final DynamicLinkParameters parameters = DynamicLinkParameters(
         uriPrefix: 'https://app.position.cm/',
@@ -180,6 +194,35 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     } catch (e) {
       //
     }
+  }
+
+  void _newBatiment(NewBatiment event, Emitter<MapState> emit) async {
+    if (_mapController!.symbols.isNotEmpty) {
+      _mapController?.clearSymbols();
+    }
+    _mapController?.addSymbol(SymbolOptions(
+        geometry: event.latLng, iconImage: "markerImage", iconSize: 0.22));
+    try {
+      final nominatimResult = await nominatimRepository?.reverseNominatim(
+          event.latLng!.latitude.toString(),
+          event.latLng!.longitude.toString());
+
+      String position = event.latLng!.longitude.toString() +
+          "," +
+          event.latLng!.latitude.toString();
+
+      emit(AddMarkerOnMap(
+          nominatimResult!.success!.displayName!,
+          position,
+          LatLng(event.latLng!.latitude, event.latLng!.longitude),
+          nominatimResult.success));
+    } catch (e) {
+      emit(AdressError());
+    }
+  }
+
+  void _removeMarker(RemoveMarker event, Emitter<MapState> emit) {
+    _mapController?.clearSymbols();
   }
 
   @override

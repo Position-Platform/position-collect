@@ -1,9 +1,3 @@
-/*
- * @Author: Boris Gautier 
- * @Date: 2022-01-09 09:02:08 
- * @Last Modified by:   Boris Gautier 
- * @Last Modified time: 2022-01-09 09:02:08 
- */
 import 'package:json_annotation/json_annotation.dart';
 
 part 'commercial.g.dart';
@@ -16,9 +10,14 @@ class Commercial {
   int? numeroBadge;
   String? ville;
   String? quartier;
-  String? imageProfil;
-  String? zone;
-  int? actif;
+  bool? actif;
+  String? sexe;
+  int? whatsapp;
+  String? diplome;
+  String? tailleTshirt;
+  int? age;
+  @JsonKey(name: 'deleted_at')
+  dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
@@ -31,16 +30,20 @@ class Commercial {
     this.numeroBadge,
     this.ville,
     this.quartier,
-    this.imageProfil,
-    this.zone,
     this.actif,
+    this.sexe,
+    this.whatsapp,
+    this.diplome,
+    this.tailleTshirt,
+    this.age,
+    this.deletedAt,
     this.createdAt,
     this.updatedAt,
   });
 
   @override
   String toString() {
-    return 'Commercial(id: $id, idUser: $idUser, numeroCni: $numeroCni, numeroBadge: $numeroBadge, ville: $ville, quartier: $quartier, imageProfil: $imageProfil, zone: $zone, actif: $actif, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Commercial(id: $id, idUser: $idUser, numeroCni: $numeroCni, numeroBadge: $numeroBadge, ville: $ville, quartier: $quartier, actif: $actif, sexe: $sexe, whatsapp: $whatsapp, diplome: $diplome, tailleTshirt: $tailleTshirt, age: $age, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   factory Commercial.fromJson(Map<String, dynamic> json) {
@@ -56,9 +59,13 @@ class Commercial {
     int? numeroBadge,
     String? ville,
     String? quartier,
-    String? imageProfil,
-    String? zone,
-    int? actif,
+    bool? actif,
+    String? sexe,
+    int? whatsapp,
+    String? diplome,
+    String? tailleTshirt,
+    int? age,
+    dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -69,9 +76,13 @@ class Commercial {
       numeroBadge: numeroBadge ?? this.numeroBadge,
       ville: ville ?? this.ville,
       quartier: quartier ?? this.quartier,
-      imageProfil: imageProfil ?? this.imageProfil,
-      zone: zone ?? this.zone,
       actif: actif ?? this.actif,
+      sexe: sexe ?? this.sexe,
+      whatsapp: whatsapp ?? this.whatsapp,
+      diplome: diplome ?? this.diplome,
+      tailleTshirt: tailleTshirt ?? this.tailleTshirt,
+      age: age ?? this.age,
+      deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

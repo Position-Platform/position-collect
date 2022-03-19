@@ -15,5 +15,7 @@ abstract class AuthApiService {
 
   Future<Response> forgotPassword(String email);
 
+  Future<Response> resetPassword(String email, String password, String token);
+
   Future<Response> logout(String token);
 }

@@ -9,7 +9,8 @@ part of 'categorie.dart';
 Categorie _$CategorieFromJson(Map<String, dynamic> json) => Categorie(
       id: json['id'] as int?,
       nom: json['nom'] as String?,
-      logoUrl: json['logoUrl'] as String?,
+      logourl: json['logourl'],
+      deletedAt: json['deleted_at'],
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
     );
@@ -17,7 +18,8 @@ Categorie _$CategorieFromJson(Map<String, dynamic> json) => Categorie(
 Map<String, dynamic> _$CategorieToJson(Categorie instance) => <String, dynamic>{
       'id': instance.id,
       'nom': instance.nom,
-      'logoUrl': instance.logoUrl,
+      'logourl': instance.logourl,
+      'deleted_at': instance.deletedAt,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
     };

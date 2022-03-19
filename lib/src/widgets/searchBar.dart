@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 07:31:21
+ * @Last Modified time: 2022-03-12 22:21:37
  */
 // ignore_for_file: file_names
 
@@ -15,6 +15,7 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/models/search_model/datum.dart';
+import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/widgets/mapbox.dart';
 
@@ -25,8 +26,14 @@ Widget buildFloatingSearchBar(
   return BlocBuilder<MapBloc, MapState>(
     builder: (context, state) {
       return FloatingSearchBar(
+        backgroundColor: Theme.of(context).backgroundColor,
         hint: S.of(context).search,
+        hintStyle: Theme.of(context).textTheme.bodyText1,
+        queryStyle: Theme.of(context).textTheme.bodyText1,
         elevation: 80,
+        iconColor: Theme.of(context).backgroundColor == whiteColor
+            ? blackColor
+            : whiteColor,
         clearQueryOnClose: true,
         debounceDelay: const Duration(milliseconds: 500),
         progress: state is SearchLoading ? true : false,
@@ -48,7 +55,10 @@ Widget buildFloatingSearchBar(
           FloatingSearchBarAction(
             showIfOpened: false,
             child: CircularButton(
-              icon: const Icon(Icons.mic),
+              icon: Icon(Icons.mic,
+                  color: Theme.of(context).backgroundColor == whiteColor
+                      ? blackColor
+                      : whiteColor),
               onPressed: () {},
             ),
           ),
@@ -62,7 +72,7 @@ Widget buildFloatingSearchBar(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Material(
                 elevation: 80,
-                color: Colors.white,
+                color: Theme.of(context).backgroundColor,
                 borderRadius: BorderRadius.circular(8),
                 clipBehavior: Clip.antiAlias,
                 child: state.etablissements!.isNotEmpty
@@ -101,9 +111,6 @@ Widget buildFloatingSearchBar(
 
 Widget buildItem(
     BuildContext context, Datum etablissement, SearchComplete state) {
-  final theme = Theme.of(context);
-  final textTheme = theme.textTheme;
-
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -123,9 +130,12 @@ Widget buildItem(
                       ? Image.network(
                           apiUrl +
                               etablissement
-                                  .sousCategories![0].categorie!.logoUrl!,
+                                  .sousCategories![0].categorie!.logourl!,
                         )
-                      : const Icon(Icons.place),
+                      : const Icon(
+                          Icons.place,
+                          color: greyColor,
+                        ),
                 ),
               ),
               const SizedBox(width: 16),
@@ -136,7 +146,7 @@ Widget buildItem(
                   children: [
                     Text(
                       etablissement.nom!,
-                      style: textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     const SizedBox(height: 2),
                     Text(

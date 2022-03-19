@@ -2,13 +2,13 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 08:47:12 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-17 12:32:24
+ * @Last Modified time: 2022-03-12 21:49:54
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
-import 'package:positioncollect/src/models/user_model/user_model.dart';
+import 'package:positioncollect/src/models/auth_model/auth_model.dart';
 import 'package:positioncollect/src/repositories/auth/authRepository.dart';
 import 'package:positioncollect/src/utils/result.dart';
 import 'package:positioncollect/src/utils/validators.dart';
@@ -30,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginPasswordChanged>(_loginPasswordChanged,
         transformer: debounce(const Duration(milliseconds: 300)));
     on<LoginWithCredentialsPressed>(_loginButtonPressed);
-    on<PasswordReset>(_resetButtonPressed);
+    on<PasswordForgot>(_forgotButtonPressed);
   }
 
 // RxDart pour gerer les evenements de facon asynchrone
@@ -65,7 +65,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(LoginState.loading());
     try {
-      Result<UserModel> user =
+      Result<AuthModel> user =
           await authRepository!.login(event.phone!, event.password!);
       if (user.success!.success!) {
         await sharedPreferencesHelper!.setToken(user.success!.data!.token!);
@@ -78,8 +78,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  void _resetButtonPressed(
-    PasswordReset event,
+  void _forgotButtonPressed(
+    PasswordForgot event,
     Emitter<LoginState> emit,
   ) async {
     emit(LoginState.loading());

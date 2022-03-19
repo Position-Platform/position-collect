@@ -18,12 +18,10 @@ class TrackingApiServiceFactory implements TrackingApiService {
   TrackingApiServiceFactory({this.apiService});
 
   @override
-  Future<Response> addtracking(
-      String token, String longitude, String latitude) async {
+  Future<Response> addtracking(String token, Map<String, dynamic> body) async {
     Response response;
     try {
-      response = await apiService!.addtracking("Bearer " + token, apiKey,
-          {"longitude": longitude, "latitude": latitude});
+      response = await apiService!.addtracking("Bearer " + token, apiKey, body);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

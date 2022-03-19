@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-24 13:36:42 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-02 14:48:32
+ * @Last Modified time: 2022-03-12 22:18:38
  */
 // ignore_for_file: file_names, constant_identifier_names
 
@@ -46,7 +46,7 @@ Map<String, Object> createGeoJsonBatiments(List<Datum>? data) {
     var properties = {
       "id": element.id,
       "nom": element.nom,
-      "nombreNiveau": element.nombreNiveaux,
+      "nombreNiveau": element.nombreNiveau,
       "codeBatiment": element.codeBatiment,
       "image": element.image,
       "rue": element.rue,

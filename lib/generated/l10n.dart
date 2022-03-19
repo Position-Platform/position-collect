@@ -529,6 +529,126 @@ class S {
       args: [],
     );
   }
+
+  /// `My Adress`
+  String get myAdress {
+    return Intl.message(
+      'My Adress',
+      name: 'myAdress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Adress`
+  String get adress {
+    return Intl.message(
+      'Adress',
+      name: 'adress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share My Position`
+  String get shareMyPosition {
+    return Intl.message(
+      'Share My Position',
+      name: 'shareMyPosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share Position`
+  String get sharePosition {
+    return Intl.message(
+      'Share Position',
+      name: 'sharePosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a New Company`
+  String get addEtablissement {
+    return Intl.message(
+      'Add a New Company',
+      name: 'addEtablissement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Step`
+  String get step {
+    return Intl.message(
+      'Step',
+      name: 'step',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose a Theme`
+  String get chooseTheme {
+    return Intl.message(
+      'Choose a Theme',
+      name: 'chooseTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark Theme`
+  String get dark {
+    return Intl.message(
+      'Dark Theme',
+      name: 'dark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme Light`
+  String get light {
+    return Intl.message(
+      'Theme Light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back`
+  String get back {
+    return Intl.message(
+      'Back',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

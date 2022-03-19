@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:52 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 06:55:48
+ * @Last Modified time: 2022-02-08 18:06:14
  */
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,6 +22,7 @@ Widget buildMapBoxMap(String style, MapBloc? _mapBloc, Position position) {
     compassEnabled: true,
     styleString: style,
     accessToken: mapbox_access_token,
+    onMapLongClick: (point, latLng) => _mapBloc?.add(NewBatiment(latLng)),
     onMapCreated: (controller) =>
         _mapBloc?.add(OnMapInitializedEvent(controller)),
     doubleClickZoomEnabled: true,

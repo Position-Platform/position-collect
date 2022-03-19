@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-01 15:06:26
+ * @Last Modified time: 2022-03-15 10:10:41
  */
 part of 'map_bloc.dart';
 
@@ -76,12 +76,13 @@ class KeyBoardStatus extends MapState {
 
 class UserAdress extends MapState {
   final String? adress;
-  final Position? position;
+  final String? position;
+  final NominatimReverseModel? nominatimReverseModel;
 
-  const UserAdress(this.adress, this.position);
+  const UserAdress(this.adress, this.position, this.nominatimReverseModel);
 
   @override
-  List<Object> get props => [adress!, position!];
+  List<Object> get props => [adress!, position!, nominatimReverseModel!];
 
   @override
   String toString() => 'Adress { Adress: $adress , Position: $position }';
@@ -101,4 +102,22 @@ class UrlPositionShared extends MapState {
 
   @override
   String toString() => 'ShareUrl { ShareUrl: $url }';
+}
+
+class AddMarkerOnMap extends MapState {
+  final String? adress;
+  final String? position;
+  final LatLng? latLng;
+  final NominatimReverseModel? nominatimReverseModel;
+
+  const AddMarkerOnMap(
+      this.adress, this.position, this.latLng, this.nominatimReverseModel);
+
+  @override
+  List<Object> get props =>
+      [adress!, position!, latLng!, nominatimReverseModel!];
+
+  @override
+  String toString() =>
+      'AddMarkerOnMap { Adress: $adress, Position: $position  }';
 }

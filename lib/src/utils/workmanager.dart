@@ -2,14 +2,14 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 12:26:26 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-28 12:27:25
+ * @Last Modified time: 2022-03-13 07:00:19
  */
 import 'package:positioncollect/src/api/batiments/batimentsApiServiceFactory.dart';
 import 'package:positioncollect/src/api/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
-import 'package:positioncollect/src/repositories/batiments/batimentsRepositoryImpl.dart';
+import 'package:positioncollect/src/models/tracking_model/data.dart';
 import 'package:positioncollect/src/repositories/tracking/trackingRepositoryImpl.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:chopper/chopper.dart';
@@ -37,11 +37,6 @@ void callbackDispatcher() {
   final networkHelper = NetworkInfoHelper();
   final sharedPreferences = SharedPreferencesHelper();
 
-  final batimentsRepository = BatimentsRepositoryImpl(
-      batimentsApiService: batimentsApiService,
-      batimentsDao: batimentsDao,
-      networkInfoHelper: networkHelper,
-      sharedPreferencesHelper: sharedPreferences);
   final trackingRepository = TrackingRepositoryImpl(
       networkInfoHelper: networkHelper,
       sharedPreferencesHelper: sharedPreferences,
@@ -49,31 +44,27 @@ void callbackDispatcher() {
 
   Workmanager().executeTask((task, inputData) async {
     if (task == "updatebatiments") {
-      var batimentsBD = await batimentsDao.getBatiments();
-      var numberBatimentsBD = batimentsBD.length;
-      var batimentsApi = await batimentsRepository.getBatimentsNumber();
-      var numberBatimentApi = int.parse(batimentsApi.success!.data!);
+      String? token = await sharedPreferences.getToken();
+      var response = await batimentsApiService.getBatiments(token!);
 
-      if (numberBatimentApi >= numberBatimentsBD) {
-        var response = await batimentsApiService.getBatiments();
+      var model = BatimentsModel.fromJson(response.body);
 
-        var model = BatimentsModel.fromJson(response.body);
+      for (var i = 0; i < model.data!.length; i++) {
+        BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+            id: Value(model.data![i].id!),
+            batiment: Value(model.data![i]),
+            online: const Value(true));
 
-        for (var i = 0; i < model.data!.length; i++) {
-          BatimentsCompanion batimentsCompanion = BatimentsCompanion(
-              id: Value(model.data![i].id!),
-              batiment: Value(model.data![i]),
-              online: const Value(true));
-
-          await batimentsDao.insertBatiment(batimentsCompanion);
-        }
+        await batimentsDao.insertBatiment(batimentsCompanion);
       }
 
       return Future.value(true);
     } else {
       Position position = await determinePosition();
-      await trackingRepository.addtracking(
-          position.longitude.toString(), position.latitude.toString());
+      Data tracking = Data(
+          longitude: position.longitude.toString(),
+          latitude: position.latitude.toString());
+      await trackingRepository.addtracking(tracking);
       return Future.value(true);
     }
   });

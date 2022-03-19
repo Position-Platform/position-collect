@@ -48,5 +48,17 @@
     "noInternet" : "Pas de connexion internet",
     "loaded" : "Batiments Chargés",
     "noData" : "Aucune données trouvées",
-    "shareContent" : "J'utilise l'application Position pour me guider. Suivez ma position sur la carte"
+    "shareContent" : "J'utilise l'application Position pour me guider. Suivez ma position sur la carte",
+    "myAdress" : "Mon Adresse",
+    "adress" : "Adresse",
+    "shareMyPosition" : "Partager Ma Position",
+    "sharePosition" : "Partager La Position",
+    "delete" : "Supprimer",
+    "addEtablissement" : "Ajout d'une Nouvelle Entreprise",
+    "step" : "Etape",
+    "chooseTheme" : "Choisir un Thème",
+    "dark" : "Theme Sombre",
+    "light" : "Theme Light",
+    "back" : "Retour",
+    "logout" : "Deconnexion"
     }

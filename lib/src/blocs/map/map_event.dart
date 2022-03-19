@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:09 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-01 15:04:57
+ * @Last Modified time: 2022-02-08 11:47:20
  */
 part of 'map_bloc.dart';
 
@@ -62,7 +62,7 @@ class SetKeyBoardStatus extends MapEvent {
 class GetUserAdress extends MapEvent {}
 
 class SharePosition extends MapEvent {
-  final Position? position;
+  final String? position;
 
   const SharePosition(this.position);
 
@@ -72,3 +72,17 @@ class SharePosition extends MapEvent {
   @override
   String toString() => 'SharePosition { SharePosition: $position }';
 }
+
+class NewBatiment extends MapEvent {
+  final LatLng? latLng;
+
+  const NewBatiment(this.latLng);
+
+  @override
+  List<Object> get props => [latLng!];
+
+  @override
+  String toString() => 'NewBatiment { NewBatiment: $latLng }';
+}
+
+class RemoveMarker extends MapEvent {}

@@ -66,4 +66,23 @@ class AuthApiServiceFactory implements AuthApiService {
     }
     return response;
   }
+
+  @override
+  Future<Response> resetPassword(
+      String email, String password, String token) async {
+    Response response;
+
+    try {
+      response = await apiService!.resetPassword({
+        "email": email,
+        "password": password,
+        "password_confirmation": password,
+        "token": token
+      });
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
 }

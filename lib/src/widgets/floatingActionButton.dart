@@ -4,20 +4,18 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:47 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-02 15:09:14
+ * @Last Modified time: 2022-03-15 10:11:18
  */
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
-import 'package:positioncollect/src/utils/sizes.dart';
-import 'package:positioncollect/src/widgets/widgets.dart';
+import 'package:positioncollect/src/widgets/bottomSheet.dart';
 import 'package:share_plus/share_plus.dart';
 
 Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
@@ -36,10 +34,12 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
       if (state is UserAdress) {
         isLoading = false;
         address = state.adress!;
-        bootomSheet(context, address, _mapBloc!, state.position!);
+        bottomSheet(context, address, _mapBloc!, state.position!, false,
+            state.nominatimReverseModel!);
       }
       if (state is UrlPositionShared) {
-        Share.share(S.of(context).shareContent + state.url!, subject: appName);
+        Share.share(S.of(context).shareContent + "\n" + state.url!,
+            subject: appName);
       }
     },
     child: BlocBuilder<MapBloc, MapState>(
@@ -52,7 +52,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: FloatingActionButton.extended(
-                      backgroundColor: whiteColor,
+                      backgroundColor: Theme.of(context).backgroundColor,
                       icon: isLoading
                           ? const CircularProgressIndicator(
                               backgroundColor: primaryColor,
@@ -68,7 +68,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                       },
                       label: Text(
                         S.of(context).findPosition,
-                        style: const TextStyle(color: blackColor),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ),
@@ -81,25 +81,32 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                         children: <Widget>[
                           FloatingActionButton(
                               tooltip: "Zoom +",
-                              backgroundColor: whiteColor,
+                              backgroundColor:
+                                  Theme.of(context).backgroundColor,
                               mini: true,
                               onPressed: () {
                                 _mapBloc?.add(ZoomInEvent());
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.zoom_in,
-                                color: blackColor,
+                                color: Theme.of(context).backgroundColor ==
+                                        whiteColor
+                                    ? blackColor
+                                    : whiteColor,
                               )),
                           FloatingActionButton(
                             tooltip: "Zoom -",
-                            backgroundColor: whiteColor,
+                            backgroundColor: Theme.of(context).backgroundColor,
                             mini: true,
                             onPressed: () {
                               _mapBloc?.add(ZoomOutEvent());
                             },
-                            child: const Icon(
+                            child: Icon(
                               Icons.zoom_out,
-                              color: blackColor,
+                              color: Theme.of(context).backgroundColor ==
+                                      whiteColor
+                                  ? blackColor
+                                  : whiteColor,
                             ),
                           ),
                           const Divider(
@@ -109,24 +116,28 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                           FloatingActionButton(
                               mini: true,
                               tooltip: "Location",
-                              backgroundColor: whiteColor,
+                              backgroundColor:
+                                  Theme.of(context).backgroundColor,
                               onPressed: () {
                                 _mapBloc?.add(GetUserLocationEvent());
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.navigation,
-                                color: blackColor,
+                                color: Theme.of(context).backgroundColor ==
+                                        whiteColor
+                                    ? blackColor
+                                    : whiteColor,
                               )),
                           FloatingActionButton(
                             mini: true,
-                            backgroundColor: whiteColor,
+                            backgroundColor: Theme.of(context).backgroundColor,
                             tooltip: "Layers",
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) => Container(
                                     padding: const EdgeInsets.all(20),
-                                    color: Colors.white,
+                                    color: Theme.of(context).backgroundColor,
                                     height: MediaQuery.of(context).size.height *
                                         0.25,
                                     child: Column(
@@ -135,10 +146,9 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                       children: [
                                         Text(
                                           S.of(context).selectLayer,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
                                         ),
                                         const SizedBox(
                                           height: 20,
@@ -183,9 +193,12 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                     )),
                               );
                             },
-                            child: const Icon(
+                            child: Icon(
                               Icons.layers,
-                              color: blackColor,
+                              color: Theme.of(context).backgroundColor ==
+                                      whiteColor
+                                  ? blackColor
+                                  : whiteColor,
                             ),
                           ),
                           const Divider(
@@ -201,80 +214,4 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
       },
     ),
   );
-}
-
-void bootomSheet(
-    BuildContext context, String address, MapBloc _mapBloc, Position position) {
-  showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (BuildContext context) {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            Container(
-              width: 50,
-              height: 10,
-              decoration: boxDecoration(
-                  color: viewColor, radius: 16, bgColor: greyColor),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
-                  color: greyColor),
-              height: MediaQuery.of(context).size.width - 180,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 16),
-                      Center(
-                        child: text("Mon Adresse",
-                            textColor: blackColor,
-                            fontSize: textSizeLargeMedium),
-                      ),
-                      const SizedBox(height: 16),
-                      Center(
-                        child: Text(address.toUpperCase(),
-                            maxLines: 3,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: secondaryTextStyle(
-                                weight: FontWeight.bold,
-                                color: primaryColor,
-                                size: 15)),
-                      ),
-                      divider(),
-                      Center(
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width - 200,
-                          child: RaisedButton(
-                            onPressed: () {
-                              _mapBloc.add(SharePosition(position));
-                            },
-                            color: accentPrimaryColor,
-                            shape: const StadiumBorder(),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 6),
-                            child: const Text(
-                              "Partager ma position",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-        );
-      });
 }

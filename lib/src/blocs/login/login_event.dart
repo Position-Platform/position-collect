@@ -37,10 +37,10 @@ class LoginPasswordChanged extends LoginEvent {
   String toString() => 'LoginPasswordChanged { password: $password }';
 }
 
-class PasswordReset extends LoginEvent {
+class PasswordForgot extends LoginEvent {
   final String? email;
 
-  const PasswordReset({@required this.email});
+  const PasswordForgot({@required this.email});
 
   @override
   List<Object> get props => [email!];
