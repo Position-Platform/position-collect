@@ -70,7 +70,9 @@ dependencies:
   share_plus: ^3.0.4
   shared_preferences: ^2.0.11
   sn_progress_dialog: ^1.0.3
+  time_interval_picker: ^0.0.2
   universal_io: ^2.0.4
+  weekday_selector: ^1.0.0
   workmanager: ^0.4.1
 
 dev_dependencies:

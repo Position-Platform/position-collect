@@ -12,8 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
 import 'package:positioncollect/src/helpers/network.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
-import 'package:positioncollect/src/models/batiments_model/horaire.dart';
-import 'package:positioncollect/src/models/batiments_model/image.dart';
+import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
 import 'package:positioncollect/src/models/search_model/search_model.dart';
@@ -110,18 +109,20 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
   }
 
   @override
-  Future<Result<Image>> addImage(Image image) async {
+  Future<Result<int>> addImage(String imagePath, int idEtablissement) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     String? token = await sharedPreferencesHelper?.getToken();
 
     if (isConnected) {
       try {
-        final Response response =
-            await etablissementsApiService!.addImage(token!, image.toJson());
+        int? statusCode = await postImage('imageUrl', imagePath,
+            apiUrl + "/api/images", token, idEtablissement.toString());
 
-        var model = Image.fromJson(response.body);
-
-        return Result(success: model);
+        if (statusCode == 200 || statusCode == 201) {
+          return Result(success: statusCode);
+        } else {
+          return Result(error: UploadError());
+        }
       } catch (e) {
         return Result(error: ServerError());
       }

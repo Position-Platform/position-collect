@@ -30,3 +30,16 @@ Future<int?> uploadImage(path, filepath, url, token) async {
   var res = await request.send();
   return res.statusCode;
 }
+
+Future<int?> postImage(
+    path, filepath, url, token, String idEtablissement) async {
+  var request = MultipartRequest('POST', Uri.parse(url));
+  request.headers
+      .addAll({'X-Authorization': apiKey, 'Authorization': "Bearer " + token});
+  request.files.add(await MultipartFile.fromPath(path, filepath));
+  request.fields['idEtablissement'] = idEtablissement;
+  print(request.files);
+  var res = await request.send();
+
+  return res.statusCode;
+}

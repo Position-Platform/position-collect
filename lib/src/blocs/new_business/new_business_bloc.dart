@@ -8,6 +8,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:positioncollect/src/helpers/sharedPreferences.dart';
+import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/sous_categories_model/datum.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart'
     as batiment;
@@ -35,6 +36,8 @@ class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
     on<AddEtablissement>(_addEtablissement);
     on<FormPage3>(_goToPage4);
     on<FormPage4>(_goToPage5);
+    on<AddHoraires>(_addHoraires);
+    on<AddImage>(_addImage);
   }
 
   void _getSousCategories(
@@ -125,6 +128,40 @@ class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
         emit(EtablissementAdded(etablissementResult.success!.data!));
       } else if (etablissementResult.error! is UploadError) {
         emit(const Error("Upload Error"));
+      }
+    } catch (e) {
+      emit(Error(e.toString()));
+    }
+  }
+
+  void _addHoraires(
+    AddHoraires event,
+    Emitter<NewBusinessState> emit,
+  ) async {
+    emit(PageLoading());
+    try {
+      for (var i = 0; i < event.horaires.length; i++) {
+        await etablissementsRepository!.addHoraire(event.horaires[i]);
+      }
+      emit(HorairesAdded());
+    } catch (e) {
+      emit(Error(e.toString()));
+    }
+  }
+
+  void _addImage(
+    AddImage event,
+    Emitter<NewBusinessState> emit,
+  ) async {
+    emit(PageLoading());
+    try {
+      var imageResult = await etablissementsRepository!
+          .addImage(event.imagePath, event.idEtablissement);
+
+      if (imageResult.success == 201 || imageResult.success == 200) {
+        emit(ImageAdded());
+      } else {
+        emit(const Error("Error Upload"));
       }
     } catch (e) {
       emit(Error(e.toString()));

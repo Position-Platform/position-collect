@@ -17,19 +17,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
-import 'package:positioncollect/src/widgets/buttonForm.dart';
 import 'package:universal_io/io.dart' as io;
 
-class NewBusiness5 extends StatefulWidget {
-  const NewBusiness5({Key? key}) : super(key: key);
-
+class NewBusiness7 extends StatefulWidget {
+  const NewBusiness7({Key? key, required this.etablissements})
+      : super(key: key);
+  final Data etablissements;
   @override
-  _NewBusiness5State createState() => _NewBusiness5State();
+  _NewBusiness7State createState() => _NewBusiness7State();
 }
 
-class _NewBusiness5State extends State<NewBusiness5> {
+class _NewBusiness7State extends State<NewBusiness7> {
   NewBusinessBloc? newBusinessBloc;
 
   @override
@@ -41,10 +42,12 @@ class _NewBusiness5State extends State<NewBusiness5> {
   File? _image;
   final _picker = ImagePicker();
   final _cropper = ImageCropper();
-
   File? _selectedFile;
 
-  next() {}
+  next() {
+    newBusinessBloc
+        ?.add(AddImage(_selectedFile!.path, widget.etablissements.id!));
+  }
 
   back() {}
 
@@ -53,9 +56,47 @@ class _NewBusiness5State extends State<NewBusiness5> {
     changeStatusColor(transparent);
 
     return BlocListener<NewBusinessBloc, NewBusinessState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is PageLoading) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Ajout de l'image..."),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
+        }
+        if (state is Error) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Echec lors de l'ajout de l'image..."),
+                    Icon(Icons.error)
+                  ],
+                ),
+                backgroundColor: red,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+        }
+      },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
+          if (state is ImageAdded) {
+            Future.delayed(Duration.zero, () async {
+              Navigator.of(context).pop();
+            });
+          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
@@ -137,15 +178,53 @@ class _NewBusiness5State extends State<NewBusiness5> {
                             ],
                           ),
                         ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                RaisedButton(
+                                  onPressed: next,
+                                  color: primaryColor,
+                                  shape: const StadiumBorder(),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 6),
+                                  child: Text(
+                                    S.of(context).next,
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                RaisedButton(
+                                  onPressed: back,
+                                  color: red,
+                                  shape: const StadiumBorder(),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 6),
+                                  child: Text(
+                                    S.of(context).back,
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   )
                 ],
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: bottomBar(context, next, back),
-              )
             ]),
           );
         },

@@ -88,3 +88,25 @@ class FormPage4 extends NewBusinessEvent {
   String toString() =>
       'FormPage4 { Etablissement :$etablissements,,coverPath: $coverPath,idSousCategorie:$idSousCategorie,idCommodite:$idCommodite}';
 }
+
+class AddHoraires extends NewBusinessEvent {
+  final List<Horaire> horaires;
+  const AddHoraires(this.horaires);
+  @override
+  List<Object> get props => [horaires];
+
+  @override
+  String toString() => 'AddHoraire { Horaires : $horaires}';
+}
+
+class AddImage extends NewBusinessEvent {
+  final String imagePath;
+  final int idEtablissement;
+  const AddImage(this.imagePath, this.idEtablissement);
+  @override
+  List<Object> get props => [imagePath, idEtablissement];
+
+  @override
+  String toString() =>
+      'AddImage { Image : $imagePath,idEtablissement:$idEtablissement}';
+}

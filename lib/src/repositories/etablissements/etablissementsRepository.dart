@@ -7,8 +7,7 @@
  * @Last Modified time: 2022-03-12 22:06:47
  */
 
-import 'package:positioncollect/src/models/batiments_model/horaire.dart';
-import 'package:positioncollect/src/models/batiments_model/image.dart';
+import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
 import 'package:positioncollect/src/models/search_model/search_model.dart';
@@ -22,5 +21,5 @@ abstract class EtablissementsRepository {
 
   Future<Result<Horaire>> addHoraire(Horaire horaire);
 
-  Future<Result<Image>> addImage(Image image);
+  Future<Result<int>> addImage(String imagePath, int idEtablissement);
 }

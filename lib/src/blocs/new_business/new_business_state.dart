@@ -105,3 +105,7 @@ class GoToPage5 extends NewBusinessState {
   String toString() =>
       'GoToPage4 { etablissement: $etablissements ,coverPath: $coverPath,idSousCategorie:$idSousCategorie,idCommodite:$idCommodite}';
 }
+
+class HorairesAdded extends NewBusinessState {}
+
+class ImageAdded extends NewBusinessState {}
