@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:41 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-15 11:19:41
+ * @Last Modified time: 2022-03-20 14:31:37
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -42,9 +42,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (isSignedIn) {
         try {
           final userResult = await authRepository!.getuser(token!);
-
-          await sharedPreferencesHelper!
-              .setIdCommercial(userResult.success!.data!.user!.commercial!.id!);
           if (userResult.error is NoInternetError) {
             return emit(AuthNoInternet());
           } else if (userResult.error is ServerError) {
@@ -77,9 +74,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       try {
         final userResult = await authRepository!.getuser(token!);
-
-        await sharedPreferencesHelper!
-            .setIdCommercial(userResult.success!.data!.user!.commercial!.id!);
         if (userResult.error is NoInternetError) {
           return emit(AuthNoInternet());
         } else if (userResult.error is ServerError) {

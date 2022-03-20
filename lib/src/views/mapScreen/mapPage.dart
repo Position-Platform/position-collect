@@ -70,7 +70,7 @@ class _MapPageState extends State<MapPage> {
           }
           if (state is AddMarkerOnMap) {
             bottomSheet(context, state.adress!, _mapBloc!, state.position!,
-                true, state.nominatimReverseModel!,
+                true, state.nominatimReverseModel!, widget.user!,
                 latLng: state.latLng);
           }
         },
@@ -87,7 +87,8 @@ class _MapPageState extends State<MapPage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: buildFloatingActionButton(context, _mapBloc),
+      floatingActionButton:
+          buildFloatingActionButton(context, _mapBloc, widget.user!),
       drawer: NavigationDrawer(user: widget.user, mapBloc: _mapBloc),
     );
   }

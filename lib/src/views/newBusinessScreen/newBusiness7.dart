@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-14 16:53:33
+ * @Last Modified time: 2022-03-20 15:04:39
  */
 
 import 'dart:io';
@@ -16,16 +16,22 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:positioncollect/generated/l10n.dart';
+import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
+import 'package:positioncollect/src/views/mapScreen/mapPage.dart';
 import 'package:universal_io/io.dart' as io;
 
 class NewBusiness7 extends StatefulWidget {
-  const NewBusiness7({Key? key, required this.etablissements})
+  const NewBusiness7(
+      {Key? key, required this.etablissements, required this.user})
       : super(key: key);
   final Data etablissements;
+  final User? user;
   @override
   _NewBusiness7State createState() => _NewBusiness7State();
 }
@@ -49,7 +55,11 @@ class _NewBusiness7State extends State<NewBusiness7> {
         ?.add(AddImage(_selectedFile!.path, widget.etablissements.id!));
   }
 
-  back() {}
+  back() {
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,14 +99,24 @@ class _NewBusiness7State extends State<NewBusiness7> {
               ),
             );
         }
+        if (state is ImageAdded) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<MapBloc>(
+                        create: (context) => getIt<MapBloc>(),
+                        child: MapPage(
+                          position: state.position,
+                          user: widget.user,
+                        ),
+                      )),
+            );
+          });
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is ImageAdded) {
-            Future.delayed(Duration.zero, () async {
-              Navigator.of(context).pop();
-            });
-          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
@@ -121,7 +141,7 @@ class _NewBusiness7State extends State<NewBusiness7> {
                     child: Column(
                       children: [
                         const Center(
-                          child: Text("Image l'etablissement"),
+                          child: Text("Image de l'etablissement"),
                         ),
                         Container(
                           alignment: Alignment.center,
