@@ -17,6 +17,7 @@ import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness6.dart';
@@ -27,12 +28,14 @@ class NewBusiness5 extends StatefulWidget {
       required this.idCommodite,
       required this.etablissements,
       required this.cover,
-      required this.idSousCatgorie})
+      required this.idSousCatgorie,
+      required this.user})
       : super(key: key);
   final String idCommodite;
   final Data etablissements;
   final File cover;
   final int idSousCatgorie;
+  final User? user;
 
   @override
   _NewBusiness5State createState() => _NewBusiness5State();
@@ -70,7 +73,11 @@ class _NewBusiness5State extends State<NewBusiness5> {
     }
   }
 
-  back() {}
+  back() {
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,16 +117,22 @@ class _NewBusiness5State extends State<NewBusiness5> {
               ),
             );
         }
+        if (state is EtablissementAdded) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<NewBusinessBloc>(
+                      create: (context) => getIt<NewBusinessBloc>(),
+                      child: NewBusiness6(
+                          etablissements: state.etablissements,
+                          user: widget.user))),
+            );
+          });
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is EtablissementAdded) {
-            return BlocProvider<NewBusinessBloc>(
-                create: (context) => getIt<NewBusinessBloc>(),
-                child: NewBusiness6(
-                  etablissements: state.etablissements,
-                ));
-          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(

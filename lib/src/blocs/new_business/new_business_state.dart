@@ -108,4 +108,14 @@ class GoToPage5 extends NewBusinessState {
 
 class HorairesAdded extends NewBusinessState {}
 
-class ImageAdded extends NewBusinessState {}
+class ImageAdded extends NewBusinessState {
+  final Position position;
+
+  const ImageAdded(this.position);
+
+  @override
+  List<Object> get props => [position];
+
+  @override
+  String toString() => 'ImageAdded { Location: $position }';
+}

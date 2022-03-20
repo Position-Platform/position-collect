@@ -2,12 +2,12 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 22:18:25 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 22:39:27
+ * @Last Modified time: 2022-03-20 14:59:28
  */
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:positioncollect/src/helpers/sharedPreferences.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/sous_categories_model/datum.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart'
@@ -24,11 +24,7 @@ part 'new_business_state.dart';
 class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
   BatimentsRepository? batimentsRepository;
   EtablissementsRepository? etablissementsRepository;
-  SharedPreferencesHelper? sharedPreferencesHelper;
-  NewBusinessBloc(
-      {this.batimentsRepository,
-      this.sharedPreferencesHelper,
-      this.etablissementsRepository})
+  NewBusinessBloc({this.batimentsRepository, this.etablissementsRepository})
       : super(NewBusinessInitial()) {
     on<GetSousCategories>(_getSousCategories);
     on<FormPage1>(_goToPage2);
@@ -66,8 +62,6 @@ class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
         event.batiments.rue!.isEmpty) {
       emit(FormError());
     } else {
-      final idCommercial = await sharedPreferencesHelper!.getIdCommercial();
-      event.batiments.idCommercial = idCommercial;
       emit(GoToPage2(event.batiments));
     }
   }
@@ -99,8 +93,6 @@ class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
         event.etablissements.etage!.isEmpty) {
       emit(FormError());
     } else {
-      final idCommercial = await sharedPreferencesHelper!.getIdCommercial();
-      event.etablissements.idCommercial = idCommercial;
       emit(GoToPage4(
           event.etablissements, event.coverPath, event.idSousCategorie));
     }
@@ -158,8 +150,11 @@ class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
       var imageResult = await etablissementsRepository!
           .addImage(event.imagePath, event.idEtablissement);
 
-      if (imageResult.success == 201 || imageResult.success == 200) {
-        emit(ImageAdded());
+      Position? position = await Geolocator.getLastKnownPosition();
+
+      if (imageResult.success == 201 ||
+          imageResult.success == 200 && position != null) {
+        emit(ImageAdded(position!));
       } else {
         emit(const Error("Error Upload"));
       }

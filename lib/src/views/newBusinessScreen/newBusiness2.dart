@@ -19,6 +19,7 @@ import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness3.dart';
@@ -26,8 +27,10 @@ import 'package:positioncollect/src/widgets/buttonForm.dart';
 import 'package:universal_io/io.dart' as io;
 
 class NewBusiness2 extends StatefulWidget {
-  const NewBusiness2({Key? key, required this.batiment}) : super(key: key);
+  const NewBusiness2({Key? key, required this.batiment, required this.user})
+      : super(key: key);
   final Data batiment;
+  final User? user;
   @override
   _NewBusiness2State createState() => _NewBusiness2State();
 }
@@ -52,7 +55,9 @@ class _NewBusiness2State extends State<NewBusiness2> {
   }
 
   back() {
-    Navigator.pop(context);
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
   }
 
   @override
@@ -93,14 +98,21 @@ class _NewBusiness2State extends State<NewBusiness2> {
               ),
             );
         }
+        if (state is BatimentAdded) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<NewBusinessBloc>(
+                      create: (context) => getIt<NewBusinessBloc>(),
+                      child: NewBusiness3(
+                          batiment: state.batiments, user: widget.user))),
+            );
+          });
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is BatimentAdded) {
-            return BlocProvider<NewBusinessBloc>(
-                create: (context) => getIt<NewBusinessBloc>(),
-                child: NewBusiness3(batiment: state.batiments));
-          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(

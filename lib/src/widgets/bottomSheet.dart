@@ -12,6 +12,7 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness.dart';
@@ -20,8 +21,14 @@ import 'package:positioncollect/generated/l10n.dart';
 
 import '../di/di.dart';
 
-void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
-    String position, bool batiment, NominatimReverseModel nominatimReverseModel,
+void bottomSheet(
+    BuildContext context,
+    String address,
+    MapBloc _mapBloc,
+    String position,
+    bool batiment,
+    NominatimReverseModel nominatimReverseModel,
+    User user,
     {LatLng? latLng}) {
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -109,6 +116,7 @@ void bottomSheet(BuildContext context, String address, MapBloc _mapBloc,
                                                       latLng: latLng,
                                                       nominatimReverseModel:
                                                           nominatimReverseModel,
+                                                      user: user,
                                                     ),
                                                   )),
                                         );

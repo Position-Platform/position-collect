@@ -18,6 +18,7 @@ import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/sous_categories_model/commodite.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness5.dart';
@@ -28,12 +29,14 @@ class NewBusiness4 extends StatefulWidget {
       required this.commodites,
       required this.etablissements,
       required this.cover,
-      required this.idSousCatgorie})
+      required this.idSousCatgorie,
+      required this.user})
       : super(key: key);
   final List<Commodite> commodites;
   final Data etablissements;
   final File cover;
   final int idSousCatgorie;
+  final User? user;
 
   @override
   _NewBusiness4State createState() => _NewBusiness4State();
@@ -68,26 +71,37 @@ class _NewBusiness4State extends State<NewBusiness4> {
         widget.idSousCatgorie, idCommodite));
   }
 
-  back() {}
+  back() {
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     changeStatusColor(transparent);
 
     return BlocListener<NewBusinessBloc, NewBusinessState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is GoToPage5) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<NewBusinessBloc>(
+                      create: (context) => getIt<NewBusinessBloc>(),
+                      child: NewBusiness5(
+                          etablissements: state.etablissements,
+                          idCommodite: state.idCommodite,
+                          cover: File(state.coverPath),
+                          idSousCatgorie: state.idSousCategorie,
+                          user: widget.user))),
+            );
+          });
+        }
+      },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is GoToPage5) {
-            return BlocProvider<NewBusinessBloc>(
-                create: (context) => getIt<NewBusinessBloc>(),
-                child: NewBusiness5(
-                  etablissements: state.etablissements,
-                  idCommodite: state.idCommodite,
-                  cover: File(state.coverPath),
-                  idSousCatgorie: state.idSousCategorie,
-                ));
-          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(

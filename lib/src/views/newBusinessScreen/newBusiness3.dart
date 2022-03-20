@@ -25,6 +25,7 @@ import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart'
     as etablissement;
 import 'package:positioncollect/src/models/sous_categories_model/datum.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/tools.dart';
@@ -32,8 +33,10 @@ import 'package:positioncollect/src/views/newBusinessScreen/newBusiness4.dart';
 import 'package:universal_io/io.dart' as io;
 
 class NewBusiness3 extends StatefulWidget {
-  const NewBusiness3({Key? key, required this.batiment}) : super(key: key);
+  const NewBusiness3({Key? key, required this.batiment, required this.user})
+      : super(key: key);
   final Data batiment;
+  final User? user;
   @override
   _NewBusiness3State createState() => _NewBusiness3State();
 }
@@ -67,6 +70,7 @@ class _NewBusiness3State extends State<NewBusiness3> {
 
   next() {
     etablissement.Data etablissements = etablissement.Data(
+      idCommercial: widget.user!.commercial!.id,
       idBatiment: widget.batiment.id,
       indicationAdresse: indicationController.text,
       nom: nomEntrepriseController.text,
@@ -81,7 +85,11 @@ class _NewBusiness3State extends State<NewBusiness3> {
     }
   }
 
-  back() {}
+  back() {
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +117,22 @@ class _NewBusiness3State extends State<NewBusiness3> {
               ),
             );
         }
+        if (state is GoToPage4) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<NewBusinessBloc>(
+                      create: (context) => getIt<NewBusinessBloc>(),
+                      child: NewBusiness4(
+                          etablissements: state.etablissements,
+                          commodites: sousCategory!.categorie!.commodites!,
+                          cover: File(state.coverPath),
+                          idSousCatgorie: state.idSousCategorie,
+                          user: widget.user))),
+            );
+          });
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
@@ -122,16 +146,7 @@ class _NewBusiness3State extends State<NewBusiness3> {
               ),
             );
           }
-          if (state is GoToPage4) {
-            return BlocProvider<NewBusinessBloc>(
-                create: (context) => getIt<NewBusinessBloc>(),
-                child: NewBusiness4(
-                  etablissements: state.etablissements,
-                  commodites: sousCategory!.categorie!.commodites!,
-                  cover: File(state.coverPath),
-                  idSousCatgorie: state.idSousCategorie,
-                ));
-          }
+
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
