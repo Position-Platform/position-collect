@@ -20,7 +20,7 @@ import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
-import 'package:positioncollect/src/models/search_model/search_model.dart';
+import 'package:positioncollect/src/models/etablissements_model/etablissements_model.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/result.dart';
@@ -41,7 +41,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
       this.batimentsDao});
 
   @override
-  Future<Result<SearchModel>> searchEtablissements(String query) async {
+  Future<Result<EtablissementsModel>> searchEtablissements(String query) async {
     bool isConnected = await networkInfoHelper!.isConnected();
 
     if (isConnected) {
@@ -49,7 +49,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         final Response response =
             await etablissementsApiService!.searchEtablissements(query);
 
-        var model = SearchModel.fromJson(response.body);
+        var model = EtablissementsModel.fromJson(response.body);
 
         return Result(success: model);
       } catch (e) {
