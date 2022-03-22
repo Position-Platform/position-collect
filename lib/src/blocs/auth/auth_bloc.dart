@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:41 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-20 14:31:37
+ * @Last Modified time: 2022-03-22 15:10:27
  */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
