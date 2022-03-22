@@ -689,7 +689,7 @@ packages:
   mapbox_gl:
     dependency: "direct main"
     description:
-      path: "../maps"
+      path: maps
       relative: true
     source: path
     version: "0.15.0"
