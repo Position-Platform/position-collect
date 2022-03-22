@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-20 15:04:39
+ * @Last Modified time: 2022-03-22 19:13:06
  */
 
 import 'dart:io';
@@ -101,17 +101,16 @@ class _NewBusiness7State extends State<NewBusiness7> {
         }
         if (state is ImageAdded) {
           Future.delayed(Duration.zero, () async {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlocProvider<MapBloc>(
-                        create: (context) => getIt<MapBloc>(),
-                        child: MapPage(
-                          position: state.position,
-                          user: widget.user,
-                        ),
-                      )),
-            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => BlocProvider<MapBloc>(
+                          create: (context) => getIt<MapBloc>(),
+                          child: MapPage(
+                            position: state.position,
+                            user: widget.user,
+                          ),
+                        )),
+                (Route<dynamic> route) => false);
           });
         }
       },

@@ -4,11 +4,10 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:18:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-17 01:26:32
+ * @Last Modified time: 2022-03-22 19:16:55
  */
 
 import 'package:chopper/chopper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
@@ -73,8 +72,6 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         etab.addAll({'idCommodite': idCommodite});
         final Response response =
             await etablissementsApiService!.addEtablissement(token!, etab);
-
-        debugPrint(response.error.toString());
 
         var model = EtablissementModel.fromJson(response.body);
 
