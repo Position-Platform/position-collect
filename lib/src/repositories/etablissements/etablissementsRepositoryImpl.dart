@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:18:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-22 19:16:55
+ * @Last Modified time: 2022-03-22 19:41:19
  */
 
 import 'package:chopper/chopper.dart';

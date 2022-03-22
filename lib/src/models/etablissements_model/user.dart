@@ -12,6 +12,8 @@ class User {
   String? phone;
   dynamic fcmToken;
   String? imageProfil;
+  dynamic token;
+  dynamic tokenSecret;
   @JsonKey(name: 'deleted_at')
   dynamic deletedAt;
   @JsonKey(name: 'created_at')
@@ -27,6 +29,8 @@ class User {
     this.phone,
     this.fcmToken,
     this.imageProfil,
+    this.token,
+    this.tokenSecret,
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
@@ -34,7 +38,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, emailVerifiedAt: $emailVerifiedAt, phone: $phone, fcmToken: $fcmToken, imageProfil: $imageProfil, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'User(id: $id, name: $name, email: $email, emailVerifiedAt: $emailVerifiedAt, phone: $phone, fcmToken: $fcmToken, imageProfil: $imageProfil, token: $token, tokenSecret: $tokenSecret, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -49,6 +53,8 @@ class User {
     String? phone,
     dynamic fcmToken,
     String? imageProfil,
+    dynamic token,
+    dynamic tokenSecret,
     dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
@@ -61,6 +67,8 @@ class User {
       phone: phone ?? this.phone,
       fcmToken: fcmToken ?? this.fcmToken,
       imageProfil: imageProfil ?? this.imageProfil,
+      token: token ?? this.token,
+      tokenSecret: tokenSecret ?? this.tokenSecret,
       deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

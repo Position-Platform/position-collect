@@ -1,28 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'categorie.dart';
+part of 'horaire.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Categorie _$CategorieFromJson(Map<String, dynamic> json) => Categorie(
+Horaire _$HoraireFromJson(Map<String, dynamic> json) => Horaire(
       id: json['id'] as int?,
-      nom: json['nom'] as String?,
-      shortname: json['shortname'] as String?,
-      logourl: json['logourl'] as String?,
-      vues: json['vues'] as int?,
+      idEtablissement: json['idEtablissement'] as int?,
+      jour: json['jour'] as String?,
+      plageHoraire: json['plageHoraire'] as String?,
       deletedAt: json['deleted_at'],
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
     );
 
-Map<String, dynamic> _$CategorieToJson(Categorie instance) => <String, dynamic>{
+Map<String, dynamic> _$HoraireToJson(Horaire instance) => <String, dynamic>{
       'id': instance.id,
-      'nom': instance.nom,
-      'shortname': instance.shortname,
-      'logourl': instance.logourl,
-      'vues': instance.vues,
+      'idEtablissement': instance.idEtablissement,
+      'jour': instance.jour,
+      'plageHoraire': instance.plageHoraire,
       'deleted_at': instance.deletedAt,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,

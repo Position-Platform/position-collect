@@ -2,7 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'batiment.dart';
 import 'commercial.dart';
-import 'commodite.dart';
+import 'horaire.dart';
+import 'image.dart';
 import 'sous_category.dart';
 
 part 'datum.g.dart';
@@ -17,34 +18,34 @@ class Datum {
   String? siteInternet;
   String? idCommercial;
   dynamic idManager;
+  String? idUser;
   String? etage;
   String? cover;
   String? vues;
   String? phone;
   String? whatsapp1;
-  dynamic whatsapp2;
+  String? whatsapp2;
   String? description;
   dynamic osmId;
   bool? updated;
   String? revoir;
   String? valide;
   String? services;
-  dynamic ameliorations;
+  String? ameliorations;
   int? avis;
+  dynamic logo;
   @JsonKey(name: 'deleted_at')
   dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
-  int? idUser;
-  dynamic logo;
   Batiment? batiment;
   @JsonKey(name: 'sous_categories')
   List<SousCategory>? sousCategories;
-  List<Commodite>? commodites;
-  List<dynamic>? images;
-  List<dynamic>? horaires;
+  List<dynamic>? commodites;
+  List<Image>? images;
+  List<Horaire>? horaires;
   List<dynamic>? commentaires;
   Commercial? commercial;
   dynamic manager;
@@ -58,6 +59,7 @@ class Datum {
     this.siteInternet,
     this.idCommercial,
     this.idManager,
+    this.idUser,
     this.etage,
     this.cover,
     this.vues,
@@ -72,11 +74,10 @@ class Datum {
     this.services,
     this.ameliorations,
     this.avis,
+    this.logo,
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
-    this.idUser,
-    this.logo,
     this.batiment,
     this.sousCategories,
     this.commodites,
@@ -89,7 +90,7 @@ class Datum {
 
   @override
   String toString() {
-    return 'Datum(id: $id, nom: $nom, idBatiment: $idBatiment, indicationAdresse: $indicationAdresse, codePostal: $codePostal, siteInternet: $siteInternet, idCommercial: $idCommercial, idManager: $idManager, etage: $etage, cover: $cover, vues: $vues, phone: $phone, whatsapp1: $whatsapp1, whatsapp2: $whatsapp2, description: $description, osmId: $osmId, updated: $updated, revoir: $revoir, valide: $valide, services: $services, ameliorations: $ameliorations, avis: $avis, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idUser: $idUser, logo: $logo, batiment: $batiment, sousCategories: $sousCategories, commodites: $commodites, images: $images, horaires: $horaires, commentaires: $commentaires, commercial: $commercial, manager: $manager)';
+    return 'Datum(id: $id, nom: $nom, idBatiment: $idBatiment, indicationAdresse: $indicationAdresse, codePostal: $codePostal, siteInternet: $siteInternet, idCommercial: $idCommercial, idManager: $idManager, idUser: $idUser, etage: $etage, cover: $cover, vues: $vues, phone: $phone, whatsapp1: $whatsapp1, whatsapp2: $whatsapp2, description: $description, osmId: $osmId, updated: $updated, revoir: $revoir, valide: $valide, services: $services, ameliorations: $ameliorations, avis: $avis, logo: $logo, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, batiment: $batiment, sousCategories: $sousCategories, commodites: $commodites, images: $images, horaires: $horaires, commentaires: $commentaires, commercial: $commercial, manager: $manager)';
   }
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
@@ -105,30 +106,30 @@ class Datum {
     String? siteInternet,
     String? idCommercial,
     dynamic idManager,
+    String? idUser,
     String? etage,
     String? cover,
     String? vues,
     String? phone,
     String? whatsapp1,
-    dynamic whatsapp2,
+    String? whatsapp2,
     String? description,
     dynamic osmId,
     bool? updated,
     String? revoir,
     String? valide,
     String? services,
-    dynamic ameliorations,
+    String? ameliorations,
     int? avis,
+    dynamic logo,
     dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
-    int? idUser,
-    dynamic logo,
     Batiment? batiment,
     List<SousCategory>? sousCategories,
-    List<Commodite>? commodites,
-    List<dynamic>? images,
-    List<dynamic>? horaires,
+    List<dynamic>? commodites,
+    List<Image>? images,
+    List<Horaire>? horaires,
     List<dynamic>? commentaires,
     Commercial? commercial,
     dynamic manager,
@@ -142,6 +143,7 @@ class Datum {
       siteInternet: siteInternet ?? this.siteInternet,
       idCommercial: idCommercial ?? this.idCommercial,
       idManager: idManager ?? this.idManager,
+      idUser: idUser ?? this.idUser,
       etage: etage ?? this.etage,
       cover: cover ?? this.cover,
       vues: vues ?? this.vues,
@@ -156,11 +158,10 @@ class Datum {
       services: services ?? this.services,
       ameliorations: ameliorations ?? this.ameliorations,
       avis: avis ?? this.avis,
+      logo: logo ?? this.logo,
       deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      idUser: idUser ?? this.idUser,
-      logo: logo ?? this.logo,
       batiment: batiment ?? this.batiment,
       sousCategories: sousCategories ?? this.sousCategories,
       commodites: commodites ?? this.commodites,

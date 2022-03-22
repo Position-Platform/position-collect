@@ -6,30 +6,30 @@ part 'categorie.g.dart';
 class Categorie {
   int? id;
   String? nom;
+  String? shortname;
   String? logourl;
+  int? vues;
   @JsonKey(name: 'deleted_at')
   dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
-  String? shortname;
-  int? vues;
 
   Categorie({
     this.id,
     this.nom,
+    this.shortname,
     this.logourl,
+    this.vues,
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
-    this.shortname,
-    this.vues,
   });
 
   @override
   String toString() {
-    return 'Categorie(id: $id, nom: $nom, logourl: $logourl, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, shortname: $shortname, vues: $vues)';
+    return 'Categorie(id: $id, nom: $nom, shortname: $shortname, logourl: $logourl, vues: $vues, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   factory Categorie.fromJson(Map<String, dynamic> json) {
@@ -41,22 +41,22 @@ class Categorie {
   Categorie copyWith({
     int? id,
     String? nom,
+    String? shortname,
     String? logourl,
+    int? vues,
     dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
-    String? shortname,
-    int? vues,
   }) {
     return Categorie(
       id: id ?? this.id,
       nom: nom ?? this.nom,
+      shortname: shortname ?? this.shortname,
       logourl: logourl ?? this.logourl,
+      vues: vues ?? this.vues,
       deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      shortname: shortname ?? this.shortname,
-      vues: vues ?? this.vues,
     );
   }
 }
