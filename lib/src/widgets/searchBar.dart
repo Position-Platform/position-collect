@@ -2,19 +2,20 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-12 22:21:37
+ * @Last Modified time: 2022-03-20 18:55:56
  */
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
-import 'package:positioncollect/src/models/search_model/datum.dart';
+import 'package:positioncollect/src/models/etablissements_model/datum.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/widgets/mapbox.dart';
@@ -127,7 +128,7 @@ Widget buildItem(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
                   child: etablissement.sousCategories!.isNotEmpty
-                      ? Image.network(
+                      ? SvgPicture.network(
                           apiUrl +
                               etablissement
                                   .sousCategories![0].categorie!.logourl!,
@@ -155,7 +156,8 @@ Widget buildItem(
                               "," +
                               etablissement.sousCategories![0].categorie!.nom!
                           : "",
-                      style: const TextStyle(fontStyle: FontStyle.italic)
+                      style: const TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14)
                           .copyWith(color: Colors.grey.shade600),
                     ),
                   ],

@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'user.dart';
+
 part 'commercial.g.dart';
 
 @JsonSerializable()
@@ -10,18 +12,19 @@ class Commercial {
   int? numeroBadge;
   String? ville;
   String? quartier;
-  String? imageProfil;
-  int? idZone;
-  int? actif;
+  bool? actif;
   String? sexe;
-  String? whatsapp;
+  int? whatsapp;
   String? diplome;
   String? tailleTshirt;
   int? age;
+  @JsonKey(name: 'deleted_at')
+  dynamic deletedAt;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
+  User? user;
 
   Commercial({
     this.id,
@@ -30,21 +33,21 @@ class Commercial {
     this.numeroBadge,
     this.ville,
     this.quartier,
-    this.imageProfil,
-    this.idZone,
     this.actif,
     this.sexe,
     this.whatsapp,
     this.diplome,
     this.tailleTshirt,
     this.age,
+    this.deletedAt,
     this.createdAt,
     this.updatedAt,
+    this.user,
   });
 
   @override
   String toString() {
-    return 'Commercial(id: $id, idUser: $idUser, numeroCni: $numeroCni, numeroBadge: $numeroBadge, ville: $ville, quartier: $quartier, imageProfil: $imageProfil, idZone: $idZone, actif: $actif, sexe: $sexe, whatsapp: $whatsapp, diplome: $diplome, tailleTshirt: $tailleTshirt, age: $age, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Commercial(id: $id, idUser: $idUser, numeroCni: $numeroCni, numeroBadge: $numeroBadge, ville: $ville, quartier: $quartier, actif: $actif, sexe: $sexe, whatsapp: $whatsapp, diplome: $diplome, tailleTshirt: $tailleTshirt, age: $age, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user)';
   }
 
   factory Commercial.fromJson(Map<String, dynamic> json) {
@@ -60,16 +63,16 @@ class Commercial {
     int? numeroBadge,
     String? ville,
     String? quartier,
-    String? imageProfil,
-    int? idZone,
-    int? actif,
+    bool? actif,
     String? sexe,
-    String? whatsapp,
+    int? whatsapp,
     String? diplome,
     String? tailleTshirt,
     int? age,
+    dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
+    User? user,
   }) {
     return Commercial(
       id: id ?? this.id,
@@ -78,16 +81,16 @@ class Commercial {
       numeroBadge: numeroBadge ?? this.numeroBadge,
       ville: ville ?? this.ville,
       quartier: quartier ?? this.quartier,
-      imageProfil: imageProfil ?? this.imageProfil,
-      idZone: idZone ?? this.idZone,
       actif: actif ?? this.actif,
       sexe: sexe ?? this.sexe,
       whatsapp: whatsapp ?? this.whatsapp,
       diplome: diplome ?? this.diplome,
       tailleTshirt: tailleTshirt ?? this.tailleTshirt,
       age: age ?? this.age,
+      deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      user: user ?? this.user,
     );
   }
 }

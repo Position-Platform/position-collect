@@ -7,11 +7,11 @@
 // ignore_for_file: constant_identifier_names
 
 const appName = "Position Collect";
-const apiUrl = "http://10.0.2.2:8000";
+const apiUrl = "https://servicesdev.position.cm";
 const assetsUrl = "https://service.geo.sm/var/www";
 const nominatimUrl = "https://nominatim.openstreetmap.org";
 const apiKey =
-    "soo7HP58G7nZ1sn4MWnqn8FwEGjjde97bldXLJxos5XM5wp5pEjHDbXqlzwp0jtc";
+    "KAJwm1CGJsKb33bxDaTHARdv1nC9BGoIgUzaAjp4IuGwOMK1KbQZyxO4wtUo1pes";
 const mapbox_access_token =
     "pk.eyJ1IjoiZ2F1dHk5NiIsImEiOiJjanN4aDd2cG8wMmw3NDRwaDc2cnc2OXJwIn0.YRVVo-3FkQtfkMPH4lt2hw";
 String? fontFamilySecondaryGlobal;

@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesHelper {
   final String _isFirstOpen = "firstOpen";
   final String _token = "token";
-  final String _idCommercial = "idcommercial";
 
   Future<bool> setIsFirstOpen(String first) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -24,20 +23,6 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String res = prefs.getString(_isFirstOpen) ?? 'oui';
     print('First Open ' + res.toString());
-    return res;
-  }
-
-  Future<bool> setIdCommercial(int idCommercial) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool res = await prefs.setInt(_idCommercial, idCommercial);
-    print('IdCommercial ' + res.toString());
-    return res;
-  }
-
-  Future<int> getIdCommercial() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int res = prefs.getInt(_idCommercial) ?? 1000;
-    print('IdCommercial ' + res.toString());
     return res;
   }
 

@@ -140,9 +140,7 @@ Future<void> init() async {
       trackingRepository: getIt(),
       nominatimRepository: getIt()));
   getIt.registerFactory<NewBusinessBloc>(() => NewBusinessBloc(
-      batimentsRepository: getIt(),
-      sharedPreferencesHelper: getIt(),
-      etablissementsRepository: getIt()));
+      batimentsRepository: getIt(), etablissementsRepository: getIt()));
 
   getIt.registerFactory<ThemeBloc>(() => ThemeBloc());
 }

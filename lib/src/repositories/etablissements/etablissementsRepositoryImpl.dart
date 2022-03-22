@@ -4,11 +4,10 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:18:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-17 01:26:32
+ * @Last Modified time: 2022-03-22 19:41:19
  */
 
 import 'package:chopper/chopper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:positioncollect/src/api/batiments/batimentsApiService.dart';
 import 'package:positioncollect/src/api/etablissements/etablissementsApiService.dart';
@@ -20,7 +19,7 @@ import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
-import 'package:positioncollect/src/models/search_model/search_model.dart';
+import 'package:positioncollect/src/models/etablissements_model/etablissements_model.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/result.dart';
@@ -41,7 +40,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
       this.batimentsDao});
 
   @override
-  Future<Result<SearchModel>> searchEtablissements(String query) async {
+  Future<Result<EtablissementsModel>> searchEtablissements(String query) async {
     bool isConnected = await networkInfoHelper!.isConnected();
 
     if (isConnected) {
@@ -49,7 +48,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         final Response response =
             await etablissementsApiService!.searchEtablissements(query);
 
-        var model = SearchModel.fromJson(response.body);
+        var model = EtablissementsModel.fromJson(response.body);
 
         return Result(success: model);
       } catch (e) {
@@ -73,8 +72,6 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         etab.addAll({'idCommodite': idCommodite});
         final Response response =
             await etablissementsApiService!.addEtablissement(token!, etab);
-
-        debugPrint(response.error.toString());
 
         var model = EtablissementModel.fromJson(response.body);
 

@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:47 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-15 10:11:18
+ * @Last Modified time: 2022-03-20 15:03:38
  */
 // ignore_for_file: file_names
 
@@ -12,13 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
 import 'package:positioncollect/src/widgets/bottomSheet.dart';
 import 'package:share_plus/share_plus.dart';
 
-Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
+Widget buildFloatingActionButton(
+    BuildContext context, MapBloc? _mapBloc, User user) {
   bool keyboardIsOpened = false;
   bool isLoading = false;
   String address = "";
@@ -35,7 +37,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
         isLoading = false;
         address = state.adress!;
         bottomSheet(context, address, _mapBloc!, state.position!, false,
-            state.nominatimReverseModel!);
+            state.nominatimReverseModel!, user);
       }
       if (state is UrlPositionShared) {
         Share.share(S.of(context).shareContent + "\n" + state.url!,
@@ -52,6 +54,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: FloatingActionButton.extended(
+                      heroTag: "btn1",
                       backgroundColor: Theme.of(context).backgroundColor,
                       icon: isLoading
                           ? const CircularProgressIndicator(
@@ -80,6 +83,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                         direction: Axis.vertical,
                         children: <Widget>[
                           FloatingActionButton(
+                              heroTag: "btn2",
                               tooltip: "Zoom +",
                               backgroundColor:
                                   Theme.of(context).backgroundColor,
@@ -95,6 +99,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                     : whiteColor,
                               )),
                           FloatingActionButton(
+                            heroTag: "btn3",
                             tooltip: "Zoom -",
                             backgroundColor: Theme.of(context).backgroundColor,
                             mini: true,
@@ -114,6 +119,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                             color: transparent,
                           ),
                           FloatingActionButton(
+                              heroTag: "btn4",
                               mini: true,
                               tooltip: "Location",
                               backgroundColor:
@@ -129,6 +135,7 @@ Widget buildFloatingActionButton(BuildContext context, MapBloc? _mapBloc) {
                                     : whiteColor,
                               )),
                           FloatingActionButton(
+                            heroTag: "btn5",
                             mini: true,
                             backgroundColor: Theme.of(context).backgroundColor,
                             tooltip: "Layers",

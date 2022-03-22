@@ -17,6 +17,7 @@ import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness7.dart';
@@ -24,9 +25,11 @@ import 'package:time_interval_picker/time_interval_picker.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 
 class NewBusiness6 extends StatefulWidget {
-  const NewBusiness6({Key? key, required this.etablissements})
+  const NewBusiness6(
+      {Key? key, required this.etablissements, required this.user})
       : super(key: key);
   final Data etablissements;
+  final User? user;
 
   @override
   _NewBusiness6State createState() => _NewBusiness6State();
@@ -84,7 +87,11 @@ class _NewBusiness6State extends State<NewBusiness6> {
     }
   }
 
-  back() {}
+  back() {
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
+  }
 
   bool? selectedSamedi = false;
   bool? selectedDimanche = false;
@@ -134,16 +141,22 @@ class _NewBusiness6State extends State<NewBusiness6> {
               ),
             );
         }
+        if (state is HorairesAdded) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<NewBusinessBloc>(
+                      create: (context) => getIt<NewBusinessBloc>(),
+                      child: NewBusiness7(
+                          etablissements: widget.etablissements,
+                          user: widget.user))),
+            );
+          });
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is HorairesAdded) {
-            return BlocProvider<NewBusinessBloc>(
-                create: (context) => getIt<NewBusinessBloc>(),
-                child: NewBusiness7(
-                  etablissements: widget.etablissements,
-                ));
-          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(

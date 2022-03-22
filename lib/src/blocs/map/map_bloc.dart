@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-15 10:11:01
+ * @Last Modified time: 2022-03-20 18:49:16
  */
 import 'dart:async';
 import 'dart:typed_data';
@@ -16,8 +16,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:positioncollect/src/models/etablissements_model/datum.dart';
 import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
-import 'package:positioncollect/src/models/search_model/datum.dart';
 import 'package:positioncollect/src/models/tracking_model/data.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';

@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-02-09 14:10:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-15 15:56:51
+ * @Last Modified time: 2022-03-20 14:41:48
  */
 
 import 'dart:math';
@@ -18,16 +18,21 @@ import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness2.dart';
 
 class NewBusiness extends StatefulWidget {
   const NewBusiness(
-      {Key? key, required this.latLng, required this.nominatimReverseModel})
+      {Key? key,
+      required this.latLng,
+      required this.nominatimReverseModel,
+      required this.user})
       : super(key: key);
   final LatLng? latLng;
   final NominatimReverseModel nominatimReverseModel;
+  final User? user;
   @override
   _NewBusinessState createState() => _NewBusinessState();
 }
@@ -62,6 +67,7 @@ class _NewBusinessState extends State<NewBusiness> {
     String codeBatiment =
         "BATIMENT_" + quartierController.text + "_" + randomNumber.toString();
     Data batiment = Data(
+        idCommercial: widget.user!.commercial!.id,
         codeBatiment: codeBatiment,
         commune:
             widget.nominatimReverseModel.address!.cityDistrict ?? "COMMUNE",
@@ -78,7 +84,9 @@ class _NewBusinessState extends State<NewBusiness> {
   }
 
   back() {
-    Navigator.pop(context);
+    Future.delayed(Duration.zero, () async {
+      Navigator.of(context).pop();
+    });
   }
 
   @override
@@ -104,14 +112,23 @@ class _NewBusinessState extends State<NewBusiness> {
               ),
             );
         }
+        if (state is GoToPage2) {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<NewBusinessBloc>(
+                      create: (context) => getIt<NewBusinessBloc>(),
+                      child: NewBusiness2(
+                        batiment: state.batiments,
+                        user: widget.user,
+                      ))),
+            );
+          });
+        }
       },
       child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
         builder: (context, state) {
-          if (state is GoToPage2) {
-            return BlocProvider<NewBusinessBloc>(
-                create: (context) => getIt<NewBusinessBloc>(),
-                child: NewBusiness2(batiment: state.batiments));
-          }
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
