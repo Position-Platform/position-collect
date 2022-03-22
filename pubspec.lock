@@ -689,11 +689,9 @@ packages:
   mapbox_gl:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: f4542c76e3d06e18d9423df8bb4b991eacade42e
-      url: "https://github.com/BorisGautier/maps.git"
-    source: git
+      path: "../maps"
+      relative: true
+    source: path
     version: "0.15.0"
   mapbox_gl_dart:
     dependency: transitive
