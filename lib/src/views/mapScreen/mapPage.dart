@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-14 20:55:04
+ * @Last Modified time: 2022-03-29 00:39:49
  */
 
 import 'package:flutter/material.dart';
@@ -53,6 +53,7 @@ class _MapPageState extends State<MapPage> {
             style = state.style;
           }
           if (state is BatimentsLoading) {}
+          if (state is BatimentLoaded) {}
           if (state is BatimentsLoadingError) {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Error"),

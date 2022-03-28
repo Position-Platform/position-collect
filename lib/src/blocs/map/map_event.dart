@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:09 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-02-08 11:47:20
+ * @Last Modified time: 2022-03-28 21:39:20
  */
 part of 'map_bloc.dart';
 
@@ -86,3 +86,15 @@ class NewBatiment extends MapEvent {
 }
 
 class RemoveMarker extends MapEvent {}
+
+class GetBatiment extends MapEvent {
+  final batiment.Data? bati;
+
+  const GetBatiment(this.bati);
+
+  @override
+  List<Object> get props => [bati!];
+
+  @override
+  String toString() => 'GetBatiment { GetBatiment: $bati }';
+}

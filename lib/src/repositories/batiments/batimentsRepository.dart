@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:40:24 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 15:27:44
+ * @Last Modified time: 2022-03-28 21:35:30
  */
 
 import 'package:positioncollect/src/models/batiment_model/batiment_model.dart';
@@ -15,6 +15,8 @@ import 'package:positioncollect/src/utils/result.dart';
 
 abstract class BatimentsRepository {
   Future<Result<BatimentsModel>> getBatiments();
+
+  Future<Result<BatimentModel>> getBatimentsById(int idBatiment);
 
   Future<Result<BatimentModel>> addBatiment(Data batiment, String imagePath);
 

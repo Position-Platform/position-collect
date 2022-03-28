@@ -25,6 +25,7 @@ class Datum {
   @JsonKey(name: 'updated_at')
   String? updatedAt;
   int? idCommercial;
+  dynamic idUser;
   List<Etablissement>? etablissements;
 
   Datum({
@@ -44,12 +45,13 @@ class Datum {
     this.createdAt,
     this.updatedAt,
     this.idCommercial,
+    this.idUser,
     this.etablissements,
   });
 
   @override
   String toString() {
-    return 'Datum(id: $id, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idCommercial: $idCommercial, etablissements: $etablissements)';
+    return 'Datum(id: $id, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idCommercial: $idCommercial, idUser: $idUser, etablissements: $etablissements)';
   }
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
@@ -73,6 +75,7 @@ class Datum {
     String? createdAt,
     String? updatedAt,
     int? idCommercial,
+    dynamic idUser,
     List<Etablissement>? etablissements,
   }) {
     return Datum(
@@ -92,6 +95,7 @@ class Datum {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       idCommercial: idCommercial ?? this.idCommercial,
+      idUser: idUser ?? this.idUser,
       etablissements: etablissements ?? this.etablissements,
     );
   }
