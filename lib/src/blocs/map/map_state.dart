@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-15 10:10:41
+ * @Last Modified time: 2022-03-29 00:37:52
  */
 part of 'map_bloc.dart';
 
@@ -120,4 +120,16 @@ class AddMarkerOnMap extends MapState {
   @override
   String toString() =>
       'AddMarkerOnMap { Adress: $adress, Position: $position  }';
+}
+
+class BatimentLoaded extends MapState {
+  final batiment.Data? bati;
+
+  const BatimentLoaded(this.bati);
+
+  @override
+  List<Object> get props => [bati!];
+
+  @override
+  String toString() => 'BatimentLoaded { BatimentLoaded: $bati}';
 }

@@ -55,6 +55,10 @@ abstract class ApiService extends ChopperService {
     @Header('X-Authorization') String apiKey,
   );
 
+  @Get(path: '/api/batiments/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> getbatimentsbyId(@Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey, @Path('id') int idBatiment);
+
   @Post(path: '/api/batiments', headers: {'Accept': 'application/json'})
   Future<Response> addbatiment(
       @Header('Authorization') String token,

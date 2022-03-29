@@ -355,8 +355,8 @@ class _MapboxMapOptions {
       rotateGesturesEnabled: map.rotateGesturesEnabled,
       scrollGesturesEnabled: map.scrollGesturesEnabled,
       tiltGesturesEnabled: map.tiltGesturesEnabled,
-      attributionEnabled : map.attributionEnabled,
-      logoEnabled : map.logoEnabled,
+      attributionEnabled: map.attributionEnabled,
+      logoEnabled: map.logoEnabled,
       trackCameraPosition: map.trackCameraPosition,
       zoomGesturesEnabled: map.zoomGesturesEnabled,
       doubleClickZoomEnabled:

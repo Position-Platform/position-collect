@@ -2,11 +2,12 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-12 22:21:25
+ * @Last Modified time: 2022-03-29 16:28:15
  */
 
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:positioncollect/generated/l10n.dart';
@@ -143,7 +144,7 @@ class NavigationDrawer extends StatelessWidget {
             ),
             CircleAvatar(
               radius: 40,
-              backgroundImage: NetworkImage(url),
+              backgroundImage: CachedNetworkImageProvider(url),
             ),
             const SizedBox(
               width: 20,

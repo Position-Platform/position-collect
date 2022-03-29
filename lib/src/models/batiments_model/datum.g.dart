@@ -23,6 +23,7 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       idCommercial: json['idCommercial'] as int?,
+      idUser: json['idUser'],
       etablissements: (json['etablissements'] as List<dynamic>?)
           ?.map((e) => Etablissement.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -45,5 +46,6 @@ Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'idCommercial': instance.idCommercial,
+      'idUser': instance.idUser,
       'etablissements': instance.etablissements,
     };
