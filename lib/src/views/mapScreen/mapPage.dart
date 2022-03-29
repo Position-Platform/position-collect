@@ -4,17 +4,20 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-29 00:39:49
+ * @Last Modified time: 2022-03-29 17:59:57
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:positioncollect/generated/l10n.dart';
+import 'package:positioncollect/src/blocs/batiment/batiment_bloc.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/mapboxUtils.dart';
+import 'package:positioncollect/src/views/batimentDetailsScreen/batimentDetail.dart';
 import 'package:positioncollect/src/widgets/bottomSheet.dart';
 import 'package:positioncollect/src/widgets/drawer.dart';
 import 'package:positioncollect/src/widgets/floatingActionButton.dart';
@@ -53,7 +56,19 @@ class _MapPageState extends State<MapPage> {
             style = state.style;
           }
           if (state is BatimentsLoading) {}
-          if (state is BatimentLoaded) {}
+          if (state is BatimentLoaded) {
+            Future.delayed(Duration.zero, () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BlocProvider<BatimentBloc>(
+                        create: (context) => getIt<BatimentBloc>(),
+                        child: BatimentDetail(
+                          batiment: state.bati!,
+                        ))),
+              );
+            });
+          }
           if (state is BatimentsLoadingError) {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Error"),

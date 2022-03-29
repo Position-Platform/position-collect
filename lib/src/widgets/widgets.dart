@@ -1,11 +1,20 @@
+/*
+ * @Author: Boris Gautier 
+ * @Date: 2022-03-29 19:46:50 
+ * @Last Modified by: Boris Gautier
+ * @Last Modified time: 2022-03-29 19:47:19
+ */
 import 'package:flutter/material.dart';
+import 'package:positioncollect/src/models/batiment_model/etablissement.dart';
+import 'package:positioncollect/src/utils/cache_image_network.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
+import 'package:positioncollect/src/models/batiment_model/data.dart';
 
 BoxDecoration boxDecoration(
     {double radius = 2,
-    Color color = Colors.transparent,
+    Color color = transparent,
     Color? bgColor,
     var showShadow = false}) {
   return BoxDecoration(
@@ -103,5 +112,264 @@ Widget divider() {
       color: viewColor,
       height: 0.5,
     ),
+  );
+}
+
+Widget buildMerchantTop(Data batiment) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        margin: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Batiment',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12)),
+            GestureDetector(
+                onTap: () {},
+                child:
+                    const Icon(Icons.info_outline, size: 20, color: greyColor)),
+          ],
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(batiment.nom ?? batiment.codeBatiment!,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Nombre de Niveaux : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(batiment.nombreNiveau!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Commune : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(batiment.commune!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Ville : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(batiment.ville!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Rue : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(batiment.rue!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Quartier : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(batiment.quartier!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Ajouté Par : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(batiment.etablissements![0].commercial!.user!.name!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget divider1() {
+  return Container(
+    height: 8,
+    color: Colors.grey[100],
+  );
+}
+
+Widget buildNewMenu(Data batiment) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+        child: const Text('Liste des Entreprises',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: blackColor)),
+      ),
+      ListView.builder(
+        primary: false,
+        shrinkWrap: true,
+        itemCount: batiment.etablissements!.length,
+        padding: const EdgeInsets.symmetric(vertical: 0),
+        itemBuilder: (BuildContext context, int index) {
+          return buildEtablissementDetailList(
+              context, index, batiment.etablissements!);
+        },
+      )
+    ],
+  );
+}
+
+Widget buildViewCartButton() {
+  return Positioned(
+    bottom: 0,
+    left: 0,
+    right: 0,
+    child: Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border(
+            top: BorderSide(
+          color: Colors.grey[100]!,
+        )),
+      ),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: kToolbarHeight - 10,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+            color: accentPrimaryColor,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Modifier ce batiment',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget buildEtablissementDetailList(context, index, List<Etablissement> data) {
+  final double boxImageSize = (MediaQuery.of(context).size.width / 4);
+  return Column(
+    children: [
+      GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {},
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  child: buildCacheNetworkImage(
+                      width: boxImageSize,
+                      height: boxImageSize,
+                      url: apiUrl + data[index].cover!)),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(data[index].nom!,
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(data[index].description ?? "",
+                        style: const TextStyle(fontSize: 14, color: greyAccent),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 8),
+                    int.parse(data[index].etage!) != 0
+                        ? Text("Numéro étage :" + data[index].etage!,
+                            style: const TextStyle(
+                                fontSize: 14, color: accentPrimaryColor),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis)
+                        : const Text("Rez de Chaussée",
+                            style: TextStyle(
+                                fontSize: 14, color: accentPrimaryColor),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis)
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      (index == data.length - 1)
+          ? Wrap()
+          : Divider(
+              height: 0,
+              color: Colors.grey[400],
+            )
+    ],
   );
 }
