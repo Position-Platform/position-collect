@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 22:17:54
+ * @Last Modified time: 2022-03-28 21:37:38
  */
 
 import 'package:chopper/chopper.dart';
@@ -124,6 +124,27 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
             await batimentsApiService!.getSousCategories();
 
         var model = SousCategoriesModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<BatimentModel>> getBatimentsById(int idBatiment) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response =
+            await batimentsApiService!.getBatimentsById(token!, idBatiment);
+
+        var model = BatimentModel.fromJson(response.body);
 
         return Result(success: model);
       } catch (e) {

@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-24 13:36:42 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-12 22:18:38
+ * @Last Modified time: 2022-03-29 00:24:33
  */
 // ignore_for_file: file_names, constant_identifier_names
 
@@ -10,6 +10,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:positioncollect/src/blocs/map/map_bloc.dart';
+import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
 
 const String GEOJSON_SOURCE_ID = "geojson-source-id";
@@ -48,6 +50,11 @@ Map<String, Object> createGeoJsonBatiments(List<Datum>? data) {
       "nom": element.nom,
       "nombreNiveau": element.nombreNiveau,
       "codeBatiment": element.codeBatiment,
+      "longitude": element.longitude,
+      "latitude": element.latitude,
+      "indication": element.indication,
+      "idCommercial": element.idCommercial,
+      "idUser": element.idUser,
       "image": element.image,
       "rue": element.rue,
       "ville": element.ville,
@@ -119,13 +126,13 @@ Future<void> addGeoJsonInmap(
           textAllowOverlap: true));
 }
 
-onFeatureTapped(MapboxMapController mapController) {
+onFeatureTapped(MapboxMapController mapController, MapBloc mapBloc) {
   mapController.onFeatureTapped.add((id, point, coordinates) async {
     if (id == "") {
       List<dynamic>? features = await mapController.queryRenderedFeatures(
           point, ["batiments-circles", UNCLUSTERED_POINTS], null);
       if (features.isNotEmpty) {
-        onClusterClick(features[0], Offset(point.x, point.y));
+        onClusterClick(features[0], Offset(point.x, point.y), mapBloc);
       }
     } else {
       mapController.animateCamera(CameraUpdate.zoomIn());
@@ -133,6 +140,15 @@ onFeatureTapped(MapboxMapController mapController) {
   });
 }
 
-onClusterClick(dynamic cluster, Offset point) {
-  debugPrint(cluster.toString());
+onClusterClick(dynamic cluster, Offset point, MapBloc mapBloc) {
+  cluster["properties"]["id"] = cluster["properties"]["id"].toInt();
+  cluster["properties"]["idCommercial"] =
+      cluster["properties"]["idCommercial"].toInt();
+  cluster["properties"]["idUser"] = cluster["properties"]["idUser"].toInt();
+  cluster["properties"]["etablissements"] =
+      json.decode(cluster["properties"]["etablissements"].toString());
+
+  var batiment = Data.fromJson(cluster['properties']);
+
+  mapBloc.add(GetBatiment(batiment));
 }

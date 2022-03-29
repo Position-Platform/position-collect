@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-20 18:49:16
+ * @Last Modified time: 2022-03-29 00:25:01
  */
 import 'dart:async';
 import 'dart:typed_data';
@@ -19,6 +19,8 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:positioncollect/src/models/etablissements_model/datum.dart';
 import 'package:positioncollect/src/models/nominatim_reverse_model/nominatim_reverse_model.dart';
 import 'package:positioncollect/src/models/tracking_model/data.dart';
+import 'package:positioncollect/src/models/batiment_model/data.dart'
+    as batiment;
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/repositories/nominatim/nominatimRepository.dart';
@@ -66,6 +68,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<SharePosition>(_sharePosition);
     on<NewBatiment>(_newBatiment);
     on<RemoveMarker>(_removeMarker);
+    on<GetBatiment>(_getBatiment);
   }
 
   void _setKeyBoardStatus(SetKeyBoardStatus event, Emitter<MapState> emit) {
@@ -95,7 +98,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       await trackingRepository?.addtracking(tracking);
     });
 
-    onFeatureTapped(_mapController!);
+    onFeatureTapped(_mapController!, this);
   }
 
   void _zoomIn(ZoomInEvent event, Emitter<MapState> emit) {
@@ -223,6 +226,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   void _removeMarker(RemoveMarker event, Emitter<MapState> emit) {
     _mapController?.clearSymbols();
+  }
+
+  void _getBatiment(
+    GetBatiment event,
+    Emitter<MapState> emit,
+  ) {
+    return emit(BatimentLoaded(event.bati));
   }
 
   @override
