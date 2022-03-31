@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-03-29 19:46:50 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-29 19:47:19
+ * @Last Modified time: 2022-03-31 17:23:45
  */
 import 'package:flutter/material.dart';
 import 'package:positioncollect/src/models/batiment_model/etablissement.dart';
@@ -11,6 +11,7 @@ import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
+import 'package:positioncollect/src/views/batimentDetailsScreen/restaurantDetail.dart';
 
 BoxDecoration boxDecoration(
     {double radius = 2,
@@ -115,7 +116,17 @@ Widget divider() {
   );
 }
 
-Widget buildMerchantTop(Data batiment) {
+Widget divider2() {
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 16),
+    child: Divider(
+      height: 32,
+      color: Colors.grey[400],
+    ),
+  );
+}
+
+Widget buildBatimentTop(Data batiment) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -123,16 +134,12 @@ Widget buildMerchantTop(Data batiment) {
         margin: const EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Batiment',
+          children: const [
+            Text('Batiment',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 12)),
-            GestureDetector(
-                onTap: () {},
-                child:
-                    const Icon(Icons.info_outline, size: 20, color: greyColor)),
           ],
         ),
       ),
@@ -262,7 +269,7 @@ Widget buildNewMenu(Data batiment) {
   );
 }
 
-Widget buildViewCartButton() {
+Widget editBatimentButton() {
   return Positioned(
     bottom: 0,
     left: 0,
@@ -300,13 +307,60 @@ Widget buildViewCartButton() {
   );
 }
 
+Widget editEtablissementButton() {
+  return Positioned(
+    bottom: 0,
+    left: 0,
+    right: 0,
+    child: Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border(
+            top: BorderSide(
+          color: Colors.grey[100]!,
+        )),
+      ),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: kToolbarHeight - 10,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+            color: accentPrimaryColor,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Modifier cette entreprise',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 Widget buildEtablissementDetailList(context, index, List<Etablissement> data) {
   final double boxImageSize = (MediaQuery.of(context).size.width / 4);
   return Column(
     children: [
       GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RestaurantDetail(
+                etablissement: data[index],
+              ),
+            ),
+          );
+        },
         child: Container(
           margin: const EdgeInsets.fromLTRB(16, 14, 16, 14),
           child: Row(
@@ -341,10 +395,13 @@ Widget buildEtablissementDetailList(context, index, List<Etablissement> data) {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Text(data[index].description ?? "",
-                        style: const TextStyle(fontSize: 14, color: greyAccent),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis),
+                    data[index].description != null
+                        ? Text(data[index].description,
+                            style: const TextStyle(
+                                fontSize: 14, color: greyAccent),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis)
+                        : const SizedBox(),
                     const SizedBox(height: 8),
                     int.parse(data[index].etage!) != 0
                         ? Text("Numéro étage :" + data[index].etage!,
@@ -370,6 +427,207 @@ Widget buildEtablissementDetailList(context, index, List<Etablissement> data) {
               height: 0,
               color: Colors.grey[400],
             )
+    ],
+  );
+}
+
+Widget buildEtablissementTop(Etablissement etablissement) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        margin: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text('Etablissement',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12)),
+          ],
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(etablissement.nom!,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis),
+      ),
+      const SizedBox(height: 8),
+      etablissement.codePostal != null
+          ? Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Text(
+                    "Code Postal : ",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  Text(etablissement.codePostal!,
+                      style: const TextStyle(color: greyAccent, fontSize: 13)),
+                ],
+              ),
+            )
+          : const SizedBox(),
+      const SizedBox(height: 8),
+      etablissement.siteInternet != null
+          ? Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Text(
+                    "Site Internet : ",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  Text(etablissement.siteInternet!,
+                      style: const TextStyle(color: greyAccent, fontSize: 13)),
+                ],
+              ),
+            )
+          : const SizedBox(),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Phone : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(etablissement.phone!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      etablissement.whatsapp2 != null
+          ? Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Text(
+                    "Whatsapp : ",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                      etablissement.whatsapp1! + "/" + etablissement.whatsapp2!,
+                      style: const TextStyle(color: greyAccent, fontSize: 13)),
+                ],
+              ),
+            )
+          : Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Text(
+                    "Whatsapp : ",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  Text(etablissement.whatsapp1!,
+                      style: const TextStyle(color: greyAccent, fontSize: 13)),
+                ],
+              ),
+            ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Services : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(etablissement.services!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const Text(
+              "Ajouté Par : ",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            ),
+            Text(etablissement.commercial!.user!.name!,
+                style: const TextStyle(color: greyAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildAddressDetail(String description) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: const Text('Description',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+                fontWeight: FontWeight.bold)),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(description,
+            style: const TextStyle(fontSize: 13, color: greyAccent)),
+      )
+    ],
+  );
+}
+
+Widget buildOpeningHours(Etablissement etablissement) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: const Text("Heures d'ouverture",
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+                fontWeight: FontWeight.bold)),
+      ),
+      const SizedBox(height: 8),
+      ListView.builder(
+        primary: false,
+        shrinkWrap: true,
+        itemCount: etablissement.horaires!.length,
+        padding: const EdgeInsets.symmetric(vertical: 0),
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(etablissement.horaires![index].jour!,
+                        style: const TextStyle(
+                            fontSize: 13,
+                            color: greyAccent,
+                            fontWeight: FontWeight.w600)),
+                    Text(etablissement.horaires![index].plageHoraire!,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: greyAccent,
+                        )),
+                  ],
+                ),
+                const SizedBox(height: 6),
+              ],
+            ),
+          );
+        },
+      )
     ],
   );
 }
