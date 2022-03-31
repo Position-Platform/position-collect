@@ -78,7 +78,7 @@ class _BatimentDetailState extends State<BatimentDetail> {
                     width: bannerWidth,
                     height: bannerHeight,
                     url: apiUrl + widget.batiment.image),
-                buildMerchantTop(widget.batiment),
+                buildBatimentTop(widget.batiment),
                 divider1(),
                 buildNewMenu(widget.batiment),
               ],
@@ -100,7 +100,7 @@ class _BatimentDetailState extends State<BatimentDetail> {
               ),
             ),
           ),
-          buildViewCartButton(),
+          editBatimentButton(),
         ],
       ),
     );
