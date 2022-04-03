@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:36:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-28 21:34:31
+ * @Last Modified time: 2022-04-03 00:19:43
  */
 
 import 'package:chopper/chopper.dart';
@@ -59,6 +59,33 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
     try {
       response = await apiService!
           .getbatimentsbyId("Bearer " + token, apiKey, idBatiment);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> deleteBatiment(String token, int idBatiment) async {
+    Response response;
+    try {
+      response = await apiService!
+          .deletebatiment("Bearer " + token, apiKey, idBatiment);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> updateBatiment(
+      String token, Map<String, dynamic> body, int idBatiment) async {
+    Response response;
+    try {
+      response = await apiService!
+          .updatebatiment("Bearer " + token, apiKey, body, idBatiment);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-28 21:37:38
+ * @Last Modified time: 2022-04-03 01:17:37
  */
 
 import 'package:chopper/chopper.dart';
@@ -18,6 +18,7 @@ import 'package:positioncollect/src/models/batiment_model/batiment_model.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
+import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/models/sous_categories_model/sous_categories_model.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/utils/config.dart';
@@ -143,6 +144,50 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
       try {
         final Response response =
             await batimentsApiService!.getBatimentsById(token!, idBatiment);
+
+        var model = BatimentModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<ResponseModel>> deleteBatiment(int idBatiment) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response =
+            await batimentsApiService!.deleteBatiment(token!, idBatiment);
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<BatimentModel>> updateBatiment(
+      Data batiment, int idBatiment) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        batiment.toJson().addAll({'_method': 'PUT'});
+        final Response response = await batimentsApiService!
+            .updateBatiment(token!, batiment.toJson(), idBatiment);
 
         var model = BatimentModel.fromJson(response.body);
 

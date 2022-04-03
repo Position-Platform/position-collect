@@ -126,9 +126,39 @@ class _$ApiService extends ApiService {
   }
 
   @override
+  Future<Response<dynamic>> deletebatiment(
+      String token, String apiKey, int idBatiment) {
+    final $url = 'https://servicesdev.position.cm/api/batiments/$idBatiment';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('DELETE', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> addbatiment(
       String token, String apiKey, Map<String, dynamic> body) {
     final $url = 'https://servicesdev.position.cm/api/batiments';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updatebatiment(
+      String token, String apiKey, Map<String, dynamic> body, int idBatiment) {
+    final $url = 'https://servicesdev.position.cm/api/batiments/$idBatiment';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -172,6 +202,38 @@ class _$ApiService extends ApiService {
   }
 
   @override
+  Future<Response<dynamic>> updateetablissement(String token, String apiKey,
+      Map<String, dynamic> body, int idEtablissement) {
+    final $url =
+        'https://servicesdev.position.cm/api/etablissements/$idEtablissement';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteetablissement(
+      String token, String apiKey, int idEtablissement) {
+    final $url =
+        'https://servicesdev.position.cm/api/etablissements/$idEtablissement';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('DELETE', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> addhoraire(
       String token, String apiKey, Map<String, dynamic> body) {
     final $url = 'https://servicesdev.position.cm/api/horaires';
@@ -188,9 +250,9 @@ class _$ApiService extends ApiService {
   }
 
   @override
-  Future<Response<dynamic>> addimage(
-      String token, String apiKey, Map<String, dynamic> body) {
-    final $url = 'https://servicesdev.position.cm/api/images';
+  Future<Response<dynamic>> updatehoraire(
+      String token, String apiKey, Map<String, dynamic> body, int idHoraire) {
+    final $url = 'https://servicesdev.position.cm/api/horaires/$idHoraire';
     final $headers = {
       'Authorization': token,
       'X-Authorization': apiKey,
@@ -200,6 +262,34 @@ class _$ApiService extends ApiService {
     final $body = body;
     final $request =
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deletehoraire(
+      String token, String apiKey, int idHoraire) {
+    final $url = 'https://servicesdev.position.cm/api/horaires/$idHoraire';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('DELETE', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteimage(
+      String token, String apiKey, int idImage) {
+    final $url = 'https://servicesdev.position.cm/api/images/$idImage';
+    final $headers = {
+      'Authorization': token,
+      'X-Authorization': apiKey,
+      'Accept': 'application/json',
+    };
+
+    final $request = Request('DELETE', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 
