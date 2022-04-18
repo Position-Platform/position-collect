@@ -25,6 +25,7 @@ import 'package:positioncollect/src/utils/tools.dart';
 import 'package:positioncollect/src/views/newBusinessScreen/newBusiness3.dart';
 import 'package:positioncollect/src/widgets/buttonForm.dart';
 import 'package:universal_io/io.dart' as io;
+import 'package:confirm_dialog/confirm_dialog.dart';
 
 class NewBusiness2 extends StatefulWidget {
   const NewBusiness2({Key? key, required this.batiment, required this.user})
@@ -51,7 +52,16 @@ class _NewBusiness2State extends State<NewBusiness2> {
   }
 
   next() async {
-    newBusinessBloc?.add(AddBatiment(widget.batiment, _selectedFile!.path));
+    if (await confirm(
+      context,
+      title: const Text('Confirmation'),
+      content: const Text(
+          'Tous les paramètres du batiment sont corrects ? (vous ne pourrez pas revenir en arrière)'),
+      textOK: const Text('Oui'),
+      textCancel: const Text('Annuler'),
+    )) {
+      newBusinessBloc?.add(AddBatiment(widget.batiment, _selectedFile!.path));
+    }
   }
 
   back() {
@@ -100,14 +110,13 @@ class _NewBusiness2State extends State<NewBusiness2> {
         }
         if (state is BatimentAdded) {
           Future.delayed(Duration.zero, () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlocProvider<NewBusinessBloc>(
-                      create: (context) => getIt<NewBusinessBloc>(),
-                      child: NewBusiness3(
-                          batiment: state.batiments, user: widget.user))),
-            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => BlocProvider<NewBusinessBloc>(
+                        create: (context) => getIt<NewBusinessBloc>(),
+                        child: NewBusiness3(
+                            batiment: state.batiments, user: widget.user))),
+                (Route<dynamic> route) => false);
           });
         }
       },
@@ -221,7 +230,6 @@ class _NewBusiness2State extends State<NewBusiness2> {
       return Image.file(
         _selectedFile!,
         width: MediaQuery.of(context).size.width - 16,
-        height: 150,
         fit: BoxFit.fill,
       );
     } else {

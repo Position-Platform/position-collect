@@ -9,6 +9,7 @@
 
 import 'dart:io';
 
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,9 +51,17 @@ class _NewBusiness7State extends State<NewBusiness7> {
   final _cropper = ImageCropper();
   File? _selectedFile;
 
-  next() {
-    newBusinessBloc
-        ?.add(AddImage(_selectedFile!.path, widget.etablissements.id!));
+  next() async {
+    if (await confirm(
+      context,
+      title: const Text('Confirmation'),
+      content: const Text("Voulez vous confirmer et terminer la création?"),
+      textOK: const Text('Oui'),
+      textCancel: const Text('Annuler'),
+    )) {
+      return newBusinessBloc
+          ?.add(AddImage(_selectedFile!.path, widget.etablissements.id!));
+    }
   }
 
   back() {
@@ -256,7 +265,6 @@ class _NewBusiness7State extends State<NewBusiness7> {
       return Image.file(
         _selectedFile!,
         width: MediaQuery.of(context).size.width - 16,
-        height: 150,
         fit: BoxFit.fill,
       );
     } else {

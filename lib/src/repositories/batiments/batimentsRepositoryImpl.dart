@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-03 01:17:37
+ * @Last Modified time: 2022-04-18 19:19:11
  */
 
 import 'package:chopper/chopper.dart';
@@ -178,20 +178,56 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
   }
 
   @override
-  Future<Result<BatimentModel>> updateBatiment(
-      Data batiment, int idBatiment) async {
+  Future<Result<BatimentModel>> updateBatiment(Data batiment, int idBatiment,
+      {String? imagePath}) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     String? token = await sharedPreferencesHelper!.getToken();
 
     if (isConnected) {
       try {
-        batiment.toJson().addAll({'_method': 'PUT'});
         final Response response = await batimentsApiService!
             .updateBatiment(token!, batiment.toJson(), idBatiment);
 
         var model = BatimentModel.fromJson(response.body);
 
-        return Result(success: model);
+        if (imagePath != null) {
+          int? statusCode = await uploadImage(
+              'image', imagePath, apiUrl + "/api/batiments/$idBatiment", token);
+
+          if (statusCode == 200 || statusCode == 201) {
+            final Response responseB =
+                await batimentsApiService!.getBatiments(token);
+
+            var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+            for (var i = 0; i < modelBatiment.data!.length; i++) {
+              BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                  id: Value(modelBatiment.data![i].id!),
+                  batiment: Value(modelBatiment.data![i]),
+                  online: const Value(true));
+
+              await batimentsDao!.insertBatiment(batimentsCompanion);
+            }
+            return Result(success: model);
+          } else {
+            return Result(error: UploadError());
+          }
+        } else {
+          final Response responseB =
+              await batimentsApiService!.getBatiments(token);
+
+          var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+          for (var i = 0; i < modelBatiment.data!.length; i++) {
+            BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                id: Value(modelBatiment.data![i].id!),
+                batiment: Value(modelBatiment.data![i]),
+                online: const Value(true));
+
+            await batimentsDao!.insertBatiment(batimentsCompanion);
+          }
+          return Result(success: model);
+        }
       } catch (e) {
         return Result(error: ServerError());
       }

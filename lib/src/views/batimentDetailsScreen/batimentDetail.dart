@@ -4,21 +4,29 @@
  * @Author: Boris Gautier 
  * @Date: 2022-03-29 00:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-29 19:41:22
+ * @Last Modified time: 2022-04-18 16:34:53
  */
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/cache_image_network.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/widgets/widgets.dart';
 
 class BatimentDetail extends StatefulWidget {
-  const BatimentDetail({Key? key, required this.batiment}) : super(key: key);
+  const BatimentDetail(
+      {Key? key,
+      required this.batiment,
+      required this.user,
+      required this.position})
+      : super(key: key);
   final Data batiment;
-
+  final User user;
+  final Position position;
   @override
   State<BatimentDetail> createState() => _BatimentDetailState();
 }
@@ -100,7 +108,8 @@ class _BatimentDetailState extends State<BatimentDetail> {
               ),
             ),
           ),
-          editBatimentButton(),
+          editBatimentButton(
+              context, widget.batiment, widget.user, widget.position),
         ],
       ),
     );

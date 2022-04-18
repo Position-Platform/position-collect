@@ -2,16 +2,22 @@
  * @Author: Boris Gautier 
  * @Date: 2022-03-29 19:46:50 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-31 17:23:45
+ * @Last Modified time: 2022-04-18 19:22:46
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:positioncollect/src/blocs/edit_business/edit_business_bloc.dart';
+import 'package:positioncollect/src/di/di.dart';
 import 'package:positioncollect/src/models/batiment_model/etablissement.dart';
+import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/cache_image_network.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/views/batimentDetailsScreen/restaurantDetail.dart';
+import 'package:positioncollect/src/views/editBusinessScreen/editBatiment.dart';
 
 BoxDecoration boxDecoration(
     {double radius = 2,
@@ -269,7 +275,8 @@ Widget buildNewMenu(Data batiment) {
   );
 }
 
-Widget editBatimentButton() {
+Widget editBatimentButton(
+    BuildContext context, Data batiment, User user, Position position) {
   return Positioned(
     bottom: 0,
     left: 0,
@@ -283,7 +290,21 @@ Widget editBatimentButton() {
         )),
       ),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<EditBusinessBloc>(
+                      create: (context) => getIt<EditBusinessBloc>(),
+                      child: EditBatiment(
+                        batiment: batiment,
+                        user: user,
+                        position: position,
+                      ))),
+            );
+          });
+        },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           height: kToolbarHeight - 10,

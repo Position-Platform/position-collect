@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-27 00:24:37 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-01-27 00:35:27
+ * @Last Modified time: 2022-04-18 18:22:45
  */
 
 import 'package:moor_flutter/moor_flutter.dart';
@@ -25,10 +25,13 @@ class BatimentsDao extends DatabaseAccessor<AppDatabase>
   Future insertBatiment(Insertable<Batiment> batiment) =>
       into(batiments).insertOnConflictUpdate(batiment);
 
+  Future updateBatiment(Insertable<Batiment> batiment) =>
+      update(batiments).replace(batiment);
+
   Future deleteBatiment(Batiment batiment) =>
       delete(batiments).delete(batiment);
 
-  Future<Batiment> getHousebyId(int id) {
+  Future<Batiment> getBatimentById(int id) {
     return (select(batiments)..where((t) => t.id.equals(id))).getSingle();
   }
 }
