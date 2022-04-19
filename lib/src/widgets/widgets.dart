@@ -1,8 +1,10 @@
+// ignore_for_file: library_prefixes
+
 /*
  * @Author: Boris Gautier 
  * @Date: 2022-03-29 19:46:50 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-18 19:22:46
+ * @Last Modified time: 2022-04-19 17:52:30
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +18,11 @@ import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/sizes.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
+import 'package:positioncollect/src/models/etablissement_model/data.dart'
+    as etablissementData;
 import 'package:positioncollect/src/views/batimentDetailsScreen/restaurantDetail.dart';
 import 'package:positioncollect/src/views/editBusinessScreen/editBatiment.dart';
+import 'package:positioncollect/src/views/editBusinessScreen/editEtablissement.dart';
 
 BoxDecoration boxDecoration(
     {double radius = 2,
@@ -251,7 +256,7 @@ Widget divider1() {
   );
 }
 
-Widget buildNewMenu(Data batiment) {
+Widget buildNewMenu(Data batiment, User user, Position position) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -268,7 +273,7 @@ Widget buildNewMenu(Data batiment) {
         padding: const EdgeInsets.symmetric(vertical: 0),
         itemBuilder: (BuildContext context, int index) {
           return buildEtablissementDetailList(
-              context, index, batiment.etablissements!);
+              context, index, batiment.etablissements!, user, position);
         },
       )
     ],
@@ -328,7 +333,8 @@ Widget editBatimentButton(
   );
 }
 
-Widget editEtablissementButton() {
+Widget editEtablissementButton(BuildContext context,
+    etablissementData.Data etablissement, User user, Position position) {
   return Positioned(
     bottom: 0,
     left: 0,
@@ -342,7 +348,21 @@ Widget editEtablissementButton() {
         )),
       ),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Future.delayed(Duration.zero, () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<EditBusinessBloc>(
+                      create: (context) => getIt<EditBusinessBloc>(),
+                      child: EditEtablissement(
+                        etablissement: etablissement,
+                        user: user,
+                        position: position,
+                      ))),
+            );
+          });
+        },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           height: kToolbarHeight - 10,
@@ -366,7 +386,8 @@ Widget editEtablissementButton() {
   );
 }
 
-Widget buildEtablissementDetailList(context, index, List<Etablissement> data) {
+Widget buildEtablissementDetailList(
+    context, index, List<Etablissement> data, User user, Position position) {
   final double boxImageSize = (MediaQuery.of(context).size.width / 4);
   return Column(
     children: [
@@ -378,6 +399,8 @@ Widget buildEtablissementDetailList(context, index, List<Etablissement> data) {
             MaterialPageRoute(
               builder: (context) => RestaurantDetail(
                 etablissement: data[index],
+                position: position,
+                user: user,
               ),
             ),
           );

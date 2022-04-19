@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-03-29 00:45:06 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-18 16:34:53
+ * @Last Modified time: 2022-04-19 16:42:27
  */
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -88,7 +88,7 @@ class _BatimentDetailState extends State<BatimentDetail> {
                     url: apiUrl + widget.batiment.image),
                 buildBatimentTop(widget.batiment),
                 divider1(),
-                buildNewMenu(widget.batiment),
+                buildNewMenu(widget.batiment, widget.user, widget.position),
               ],
             ),
           ),

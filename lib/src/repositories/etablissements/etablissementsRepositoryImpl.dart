@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:18:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-03 01:18:36
+ * @Last Modified time: 2022-04-19 17:49:27
  */
 
 import 'package:chopper/chopper.dart';
@@ -217,20 +217,57 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
 
   @override
   Future<Result<EtablissementModel>> updateEtablissement(
-      Data etablissement, int idEtablissement) async {
+      Data etablissement, int idEtablissement,
+      {String? coverPath}) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     String? token = await sharedPreferencesHelper!.getToken();
 
     if (isConnected) {
       try {
-        etablissement.toJson().addAll({'_method': 'PUT'});
         final Response response = await etablissementsApiService!
             .updateEtablissement(
                 token!, etablissement.toJson(), idEtablissement);
 
         var model = EtablissementModel.fromJson(response.body);
 
-        return Result(success: model);
+        if (coverPath != null) {
+          int? statusCode = await uploadImage('cover', coverPath,
+              apiUrl + "/api/etablissements/$idEtablissement", token);
+
+          if (statusCode == 200 || statusCode == 201) {
+            final Response responseB =
+                await batimentsApiService!.getBatiments(token);
+
+            var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+            for (var i = 0; i < modelBatiment.data!.length; i++) {
+              BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                  id: Value(modelBatiment.data![i].id!),
+                  batiment: Value(modelBatiment.data![i]),
+                  online: const Value(true));
+
+              await batimentsDao!.insertBatiment(batimentsCompanion);
+            }
+            return Result(success: model);
+          } else {
+            return Result(error: UploadError());
+          }
+        } else {
+          final Response responseB =
+              await batimentsApiService!.getBatiments(token);
+
+          var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+          for (var i = 0; i < modelBatiment.data!.length; i++) {
+            BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                id: Value(modelBatiment.data![i].id!),
+                batiment: Value(modelBatiment.data![i]),
+                online: const Value(true));
+
+            await batimentsDao!.insertBatiment(batimentsCompanion);
+          }
+          return Result(success: model);
+        }
       } catch (e) {
         return Result(error: ServerError());
       }
@@ -247,7 +284,6 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
 
     if (isConnected) {
       try {
-        horaire.toJson().addAll({'_method': 'PUT'});
         final Response response = await etablissementsApiService!
             .updateHoraire(token!, horaire.toJson(), idHoraire);
 

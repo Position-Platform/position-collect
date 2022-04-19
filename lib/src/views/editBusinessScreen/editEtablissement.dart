@@ -1,53 +1,56 @@
-// ignore_for_file: file_names, deprecated_member_use
-
-/*
- * @Author: Boris Gautier 
- * @Date: 2022-02-09 14:10:40 
- * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 23:18:28
- */
+// ignore_for_file: file_names, must_be_immutable, deprecated_member_use
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:positioncollect/generated/l10n.dart';
-import 'package:positioncollect/src/blocs/new_business/new_business_bloc.dart';
+import 'package:positioncollect/src/blocs/edit_business/edit_business_bloc.dart';
+import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/di/di.dart';
-import 'package:positioncollect/src/models/batiment_model/data.dart';
-import 'package:positioncollect/src/models/etablissement_model/data.dart'
-    as etablissement;
-import 'package:positioncollect/src/models/sous_categories_model/datum.dart';
+import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/tools.dart';
-import 'package:positioncollect/src/views/newBusinessScreen/newBusiness4.dart';
+import 'package:positioncollect/src/views/mapScreen/mapPage.dart';
 import 'package:universal_io/io.dart' as io;
 
-class NewBusiness3 extends StatefulWidget {
-  const NewBusiness3({Key? key, required this.batiment, required this.user})
+class EditEtablissement extends StatefulWidget {
+  EditEtablissement(
+      {Key? key,
+      required this.etablissement,
+      required this.user,
+      required this.position})
       : super(key: key);
-  final Data batiment;
-  final User? user;
+
+  Data etablissement;
+  User user;
+  Position position;
+
   @override
-  _NewBusiness3State createState() => _NewBusiness3State();
+  State<EditEtablissement> createState() => _EditEtablissementState();
 }
 
-class _NewBusiness3State extends State<NewBusiness3> {
-  NewBusinessBloc? _newBusinessBloc;
+class _EditEtablissementState extends State<EditEtablissement> {
+  EditBusinessBloc? editBusinessBloc;
 
-  TextEditingController indicationController = TextEditingController();
   TextEditingController nomEntrepriseController = TextEditingController();
   TextEditingController etageController = TextEditingController();
-  TextEditingController sousCategorieController = TextEditingController();
+  TextEditingController postalController = TextEditingController();
+  TextEditingController siteInternetController = TextEditingController();
+  TextEditingController indicationAdresseController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController servicesController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController whatsapp1Controller = TextEditingController();
+  TextEditingController whatsapp2Controller = TextEditingController();
+  TextEditingController ameliorationController = TextEditingController();
 
   File? _image;
   final _picker = ImagePicker();
@@ -55,33 +58,42 @@ class _NewBusiness3State extends State<NewBusiness3> {
 
   File? _selectedFile;
 
-  String? selectedSubCategory;
-  int? idSubCategory;
-
-  List<Datum> sousCategories = [];
-  Datum? sousCategory;
-
   @override
   void initState() {
     super.initState();
-    _newBusinessBloc = BlocProvider.of<NewBusinessBloc>(context);
-    _newBusinessBloc?.add(const GetSousCategories());
+    editBusinessBloc = BlocProvider.of<EditBusinessBloc>(context);
+    nomEntrepriseController.text = widget.etablissement.nom!;
+    etageController.text = widget.etablissement.etage!;
+    postalController.text = widget.etablissement.codePostal ?? '';
+    siteInternetController.text = widget.etablissement.siteInternet ?? '';
+    indicationAdresseController.text =
+        widget.etablissement.indicationAdresse ?? '';
+    descriptionController.text = widget.etablissement.description ?? '';
+    servicesController.text = widget.etablissement.services!;
+    phoneController.text = widget.etablissement.phone!;
+    whatsapp1Controller.text = widget.etablissement.whatsapp1!;
+    whatsapp2Controller.text = widget.etablissement.whatsapp2 ?? '';
+    ameliorationController.text = widget.etablissement.ameliorations ?? '';
   }
 
   next() {
-    etablissement.Data etablissements = etablissement.Data(
-      idCommercial: widget.user!.commercial!.id.toString(),
-      idBatiment: widget.batiment.id.toString(),
-      indicationAdresse: indicationController.text,
-      nom: nomEntrepriseController.text,
-      etage: etageController.text,
-    );
+    widget.etablissement.nom = nomEntrepriseController.text;
+    widget.etablissement.etage = etageController.text;
+    widget.etablissement.codePostal = postalController.text;
+    widget.etablissement.siteInternet = siteInternetController.text;
+    widget.etablissement.indicationAdresse = indicationAdresseController.text;
+    widget.etablissement.description = descriptionController.text;
+    widget.etablissement.services = servicesController.text;
+    widget.etablissement.phone = phoneController.text;
+    widget.etablissement.whatsapp1 = whatsapp1Controller.text;
+    widget.etablissement.whatsapp2 = whatsapp2Controller.text;
+    widget.etablissement.ameliorations = ameliorationController.text;
 
-    if (_selectedFile != null && idSubCategory != null) {
-      _newBusinessBloc
-          ?.add(FormPage3(etablissements, _selectedFile!.path, idSubCategory!));
+    if (_selectedFile != null) {
+      editBusinessBloc!.add(UpdateEtablissement(widget.etablissement,
+          coverPath: _selectedFile!.path));
     } else {
-      Fluttertoast.showToast(msg: "Remplissez tous les champs");
+      editBusinessBloc!.add(UpdateEtablissement(widget.etablissement));
     }
   }
 
@@ -94,13 +106,9 @@ class _NewBusiness3State extends State<NewBusiness3> {
   @override
   Widget build(BuildContext context) {
     changeStatusColor(transparent);
-
-    return BlocListener<NewBusinessBloc, NewBusinessState>(
+    return BlocListener<EditBusinessBloc, EditBusinessState>(
       listener: (context, state) {
-        if (state is SousCategoriesLoaded) {
-          sousCategories = state.sousCategories;
-        }
-        if (state is FormError) {
+        if (state is EditBusinessLoading) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -108,45 +116,44 @@ class _NewBusiness3State extends State<NewBusiness3> {
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text("Remplir tous les champs obligatoires"),
-                    Icon(Icons.error)
+                    Text("Mise à jour de l'etablissement..."),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
+        }
+        if (state is EditBusinessError) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Erreur lors de la mise à jour de l'etablissement"),
+                    Icon(Icons.error),
                   ],
                 ),
                 backgroundColor: red,
-                duration: const Duration(seconds: 4),
               ),
             );
         }
-        if (state is GoToPage4) {
-          Future.delayed(Duration.zero, () async {
-            Navigator.push(
-              context,
+        if (state is EtablissementUpdated) {
+          Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (context) => BlocProvider<NewBusinessBloc>(
-                      create: (context) => getIt<NewBusinessBloc>(),
-                      child: NewBusiness4(
-                          etablissements: state.etablissements,
-                          commodites: sousCategory!.categorie!.commodites!,
-                          cover: File(state.coverPath),
-                          idSousCatgorie: state.idSousCategorie,
-                          user: widget.user))),
-            );
-          });
+                  builder: (context) => BlocProvider<MapBloc>(
+                        create: (context) => getIt<MapBloc>(),
+                        child: MapPage(
+                          position: widget.position,
+                          user: widget.user,
+                        ),
+                      )),
+              (Route<dynamic> route) => false);
         }
       },
-      child: BlocBuilder<NewBusinessBloc, NewBusinessState>(
+      child: BlocBuilder<EditBusinessBloc, EditBusinessState>(
         builder: (context, state) {
-          if (state is SousCategoriesLoading) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: primaryColor,
-                  valueColor: AlwaysStoppedAnimation<Color>(accentPrimaryColor),
-                ),
-              ),
-            );
-          }
-
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
@@ -154,7 +161,7 @@ class _NewBusiness3State extends State<NewBusiness3> {
               ),
               systemOverlayStyle: SystemUiOverlayStyle.light,
               centerTitle: true,
-              title: Text(S.of(context).addEtablissement + " (3)",
+              title: Text(S.of(context).editEtablissement,
                   style: const TextStyle(fontSize: 18, color: whiteColor)),
               backgroundColor: primaryColor,
               bottom: PreferredSize(
@@ -199,55 +206,108 @@ class _NewBusiness3State extends State<NewBusiness3> {
                             const SizedBox(
                               height: 15,
                             ),
-                            TypeAheadFormField(
-                                textFieldConfiguration: TextFieldConfiguration(
-                                    controller: sousCategorieController,
-                                    decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Choisir une sous catégorie',
-                                        prefixIcon:
-                                            Icon(Icons.category_outlined))),
-                                suggestionsCallback: (pattern) {
-                                  return sousCategories
-                                      .where((sousCategory) => sousCategory.nom!
-                                          .toLowerCase()
-                                          .contains(pattern.toLowerCase()))
-                                      .toList();
-                                },
-                                itemBuilder: (context, Datum suggestion) {
-                                  return Container(
-                                    color: whiteColor,
-                                    child: ListTile(
-                                      leading: SvgPicture.network(assetsUrl +
-                                          suggestion.categorie!.logourl),
-                                      title: Text(suggestion.nom!),
-                                      subtitle:
-                                          Text(suggestion.categorie!.nom!),
-                                    ),
-                                  );
-                                },
-                                transitionBuilder:
-                                    (context, suggestionsBox, controller) {
-                                  return suggestionsBox;
-                                },
-                                onSuggestionSelected: (Datum suggestion) {
-                                  sousCategorieController.text =
-                                      suggestion.nom!;
-                                  selectedSubCategory = suggestion.nom!;
-                                  idSubCategory = suggestion.id!;
-                                  sousCategory = suggestion;
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please select a Sub Category';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) => {
-                                      selectedSubCategory = value,
-                                    }),
+                            TextField(
+                              controller: postalController,
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Code Postal',
+                                  prefixIcon:
+                                      Icon(Icons.local_post_office_outlined)),
+                            ),
                             const SizedBox(
                               height: 15,
+                            ),
+                            TextField(
+                              controller: siteInternetController,
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Site Internet',
+                                  prefixIcon:
+                                      Icon(Icons.wifi_password_outlined)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: indicationAdresseController,
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Indication Adresse',
+                                  prefixIcon:
+                                      Icon(Icons.not_listed_location_outlined)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: descriptionController,
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Description',
+                                  prefixIcon: Icon(Icons.location_on)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: servicesController,
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.characters,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Autres Services',
+                                  prefixIcon: Icon(Icons.list_alt)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: phoneController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Numéro de Téléphone',
+                                  prefixIcon: Icon(Icons.phone_android)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: whatsapp1Controller,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Whatsapp 1',
+                                  prefixIcon: Icon(Icons.whatsapp)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: whatsapp2Controller,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Whatsapp 2',
+                                  prefixIcon: Icon(Icons.whatsapp)),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: ameliorationController,
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Idées d'amelioration",
+                                  prefixIcon: Icon(Icons.list_alt)),
+                            ),
+                            const SizedBox(
+                              height: 25,
                             ),
                             const Center(
                               child:
@@ -328,9 +388,9 @@ class _NewBusiness3State extends State<NewBusiness3> {
                                       shape: const StadiumBorder(),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 6),
-                                      child: Text(
-                                        S.of(context).next,
-                                        style: const TextStyle(
+                                      child: const Text(
+                                        "Valider",
+                                        style: TextStyle(
                                             color: Colors.white, fontSize: 16),
                                       ),
                                     ),
@@ -371,6 +431,12 @@ class _NewBusiness3State extends State<NewBusiness3> {
     if (_selectedFile != null) {
       return Image.file(
         _selectedFile!,
+        width: MediaQuery.of(context).size.width - 16,
+        fit: BoxFit.fill,
+      );
+    } else if (widget.etablissement.cover != null) {
+      return Image.network(
+        apiUrl + widget.etablissement.cover!,
         width: MediaQuery.of(context).size.width - 16,
         fit: BoxFit.fill,
       );

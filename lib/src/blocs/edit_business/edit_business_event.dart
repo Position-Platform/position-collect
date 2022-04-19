@@ -18,3 +18,15 @@ class UpdateBatiment extends EditBusinessEvent {
   String toString() =>
       'UpdateBatiment { Batiment :$batiment,ImagePath: $imagePath}';
 }
+
+class UpdateEtablissement extends EditBusinessEvent {
+  final etablissement.Data etab;
+  final String? coverPath;
+  const UpdateEtablissement(this.etab, {this.coverPath});
+  @override
+  List<Object> get props => [etab, coverPath!];
+
+  @override
+  String toString() =>
+      'UpdateEtablissement { Etablissement :$etab,CoverPath: $coverPath}';
+}

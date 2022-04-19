@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:16:52 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-03 01:14:56
+ * @Last Modified time: 2022-04-19 14:48:49
  */
 
 import 'package:positioncollect/src/models/batiment_model/horaire.dart';
@@ -22,7 +22,8 @@ abstract class EtablissementsRepository {
       String coverPath, int idSousCategorie, String idCommodite);
 
   Future<Result<EtablissementModel>> updateEtablissement(
-      Data batiment, int idEtablissement);
+      Data batiment, int idEtablissement,
+      {String? coverPath});
 
   Future<Result<ResponseModel>> deleteEtablissement(int idEtablissement);
 

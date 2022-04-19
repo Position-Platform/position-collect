@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:29 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-18 16:54:15
+ * @Last Modified time: 2022-04-19 14:24:13
  */
 // ignore_for_file: file_names
 
@@ -89,7 +89,7 @@ abstract class ApiService extends ChopperService {
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
 
-  @Post(
+  @Put(
       path: '/api/etablissements/{id}', headers: {'Accept': 'application/json'})
   Future<Response> updateetablissement(
       @Header('Authorization') String token,
@@ -110,7 +110,7 @@ abstract class ApiService extends ChopperService {
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
 
-  @Post(path: '/api/horaires/{id}', headers: {'Accept': 'application/json'})
+  @Put(path: '/api/horaires/{id}', headers: {'Accept': 'application/json'})
   Future<Response> updatehoraire(
       @Header('Authorization') String token,
       @Header('X-Authorization') String apiKey,

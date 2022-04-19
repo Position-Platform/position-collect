@@ -22,3 +22,14 @@ class BatimentUpdated extends EditBusinessState {
   @override
   String toString() => 'BatimentUpdated { Batiment :$batiment}';
 }
+
+class EtablissementUpdated extends EditBusinessState {
+  final etablissement.Data etab;
+  const EtablissementUpdated(this.etab);
+
+  @override
+  List<Object> get props => [etab];
+
+  @override
+  String toString() => 'EtablissementUpdated { Etablissement :$etab}';
+}

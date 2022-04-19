@@ -213,7 +213,7 @@ class _$ApiService extends ApiService {
 
     final $body = body;
     final $request =
-        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+        Request('PUT', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -259,7 +259,7 @@ class _$ApiService extends ApiService {
 
     final $body = body;
     final $request =
-        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+        Request('PUT', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 

@@ -142,8 +142,8 @@ Future<void> init() async {
       nominatimRepository: getIt()));
   getIt.registerFactory<NewBusinessBloc>(() => NewBusinessBloc(
       batimentsRepository: getIt(), etablissementsRepository: getIt()));
-  getIt.registerFactory<EditBusinessBloc>(
-      () => EditBusinessBloc(batimentsRepository: getIt()));
+  getIt.registerFactory<EditBusinessBloc>(() => EditBusinessBloc(
+      batimentsRepository: getIt(), etablissementsRepository: getIt()));
 
   getIt.registerFactory<ThemeBloc>(() => ThemeBloc());
 }
