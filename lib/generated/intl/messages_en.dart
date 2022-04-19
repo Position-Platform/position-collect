@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "disabledAccount": MessageLookupByLibrary.simpleMessage(
             "Your account has been deactivated"),
+        "editEtablissement":
+            MessageLookupByLibrary.simpleMessage("Edit a Company"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailNoSend":
             MessageLookupByLibrary.simpleMessage("Email error. Try again!!!"),

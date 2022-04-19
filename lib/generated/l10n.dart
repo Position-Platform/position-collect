@@ -590,6 +590,16 @@ class S {
     );
   }
 
+  /// `Edit a Company`
+  String get editEtablissement {
+    return Intl.message(
+      'Edit a Company',
+      name: 'editEtablissement',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Step`
   String get step {
     return Intl.message(
