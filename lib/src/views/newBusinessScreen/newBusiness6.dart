@@ -7,6 +7,7 @@
  * @Last Modified time: 2022-03-16 13:13:57
  */
 
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +51,7 @@ class _NewBusiness6State extends State<NewBusiness6> {
 
   Horaire? horaire;
 
-  next() {
+  next() async {
     horaires = [];
     if (daySelect.isNotEmpty && weekDayTime == null) {
       Fluttertoast.showToast(msg: "Selectionnez les horaires de la semaine");
@@ -83,7 +84,16 @@ class _NewBusiness6State extends State<NewBusiness6> {
         Fluttertoast.showToast(msg: "Selectionnez l'horaire de dimanche");
       }
 
-      newBusinessBloc?.add(AddHoraires(horaires));
+      if (await confirm(
+        context,
+        title: const Text('Confirmation'),
+        content: const Text(
+            "Tous les paramètres des horaires sont corrects ? (vous ne pourrez pas revenir en arrière)"),
+        textOK: const Text('Oui'),
+        textCancel: const Text('Annuler'),
+      )) {
+        return newBusinessBloc?.add(AddHoraires(horaires));
+      }
     }
   }
 
@@ -143,15 +153,14 @@ class _NewBusiness6State extends State<NewBusiness6> {
         }
         if (state is HorairesAdded) {
           Future.delayed(Duration.zero, () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlocProvider<NewBusinessBloc>(
-                      create: (context) => getIt<NewBusinessBloc>(),
-                      child: NewBusiness7(
-                          etablissements: widget.etablissements,
-                          user: widget.user))),
-            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => BlocProvider<NewBusinessBloc>(
+                        create: (context) => getIt<NewBusinessBloc>(),
+                        child: NewBusiness7(
+                            etablissements: widget.etablissements,
+                            user: widget.user))),
+                (Route<dynamic> route) => false);
           });
         }
       },

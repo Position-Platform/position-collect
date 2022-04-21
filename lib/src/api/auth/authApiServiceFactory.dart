@@ -33,7 +33,7 @@ class AuthApiServiceFactory implements AuthApiService {
   Future<Response> getUser(String token) async {
     Response response;
     try {
-      response = await apiService!.getuser('Bearer ' + token, apiKey);
+      response = await apiService!.getuser('Bearer ' + token, Configs.apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -47,7 +47,7 @@ class AuthApiServiceFactory implements AuthApiService {
 
     try {
       response = await apiService!
-          .login(apiKey, {"phone": phone, "password": password});
+          .login(Configs.apiKey, {"phone": phone, "password": password});
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -59,7 +59,7 @@ class AuthApiServiceFactory implements AuthApiService {
   Future<Response> logout(String token) async {
     Response response;
     try {
-      response = await apiService!.logout('Bearer ' + token, apiKey);
+      response = await apiService!.logout('Bearer ' + token, Configs.apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

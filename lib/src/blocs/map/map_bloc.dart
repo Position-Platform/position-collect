@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:15 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-29 00:25:01
+ * @Last Modified time: 2022-04-21 17:13:28
  */
 import 'dart:async';
 import 'dart:typed_data';
@@ -69,6 +69,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<NewBatiment>(_newBatiment);
     on<RemoveMarker>(_removeMarker);
     on<GetBatiment>(_getBatiment);
+    on<ZoomInSearchResult>(_zoomToResult);
   }
 
   void _setKeyBoardStatus(SetKeyBoardStatus event, Emitter<MapState> emit) {
@@ -233,6 +234,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     Emitter<MapState> emit,
   ) {
     return emit(BatimentLoaded(event.bati));
+  }
+
+  void _zoomToResult(ZoomInSearchResult event, Emitter<MapState> emit) async {
+    _mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(
+            double.parse(event.latitude!), double.parse(event.longitude!)),
+        zoom: 16)));
   }
 
   @override

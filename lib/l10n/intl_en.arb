@@ -55,6 +55,7 @@
     "sharePosition" : "Share Position",
     "delete" : "Delete",
     "addEtablissement" : "Add a New Company",
+    "editEtablissement" : "Edit a Company",
     "step" : "Step",
     "chooseTheme" : "Choose a Theme",
     "dark" : "Dark Theme",

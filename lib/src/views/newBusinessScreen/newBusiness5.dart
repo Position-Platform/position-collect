@@ -9,6 +9,7 @@
 
 import 'dart:io';
 
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,7 +57,7 @@ class _NewBusiness5State extends State<NewBusiness5> {
     newBusinessBloc = BlocProvider.of<NewBusinessBloc>(context);
   }
 
-  next() {
+  next() async {
     if (servicesController.text.isEmpty ||
         phoneController.text.isEmpty ||
         whatsapp1Controller.text.isEmpty) {
@@ -68,8 +69,17 @@ class _NewBusiness5State extends State<NewBusiness5> {
       widget.etablissements.whatsapp2 = whatsapp2Controller.text;
       widget.etablissements.ameliorations = ameliorationController.text;
 
-      newBusinessBloc?.add(AddEtablissement(widget.etablissements,
-          widget.cover.path, widget.idSousCatgorie, widget.idCommodite));
+      if (await confirm(
+        context,
+        title: const Text('Confirmation'),
+        content: const Text(
+            "Tous les paramètres de l'etablissement sont corrects ? (vous ne pourrez pas revenir en arrière)"),
+        textOK: const Text('Oui'),
+        textCancel: const Text('Annuler'),
+      )) {
+        return newBusinessBloc?.add(AddEtablissement(widget.etablissements,
+            widget.cover.path, widget.idSousCatgorie, widget.idCommodite));
+      }
     }
   }
 
@@ -119,15 +129,14 @@ class _NewBusiness5State extends State<NewBusiness5> {
         }
         if (state is EtablissementAdded) {
           Future.delayed(Duration.zero, () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlocProvider<NewBusinessBloc>(
-                      create: (context) => getIt<NewBusinessBloc>(),
-                      child: NewBusiness6(
-                          etablissements: state.etablissements,
-                          user: widget.user))),
-            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => BlocProvider<NewBusinessBloc>(
+                        create: (context) => getIt<NewBusinessBloc>(),
+                        child: NewBusiness6(
+                            etablissements: state.etablissements,
+                            user: widget.user))),
+                (Route<dynamic> route) => false);
           });
         }
       },

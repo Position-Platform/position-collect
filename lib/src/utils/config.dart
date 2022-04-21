@@ -2,16 +2,44 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:02:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 13:36:05
+ * @Last Modified time: 2022-04-21 14:41:08
  */
 // ignore_for_file: constant_identifier_names
 
-const appName = "Position Collect";
-const apiUrl = "https://servicesdev.position.cm";
-const assetsUrl = "https://service.geo.sm/var/www";
-const nominatimUrl = "https://nominatim.openstreetmap.org";
-const apiKey =
-    "KAJwm1CGJsKb33bxDaTHARdv1nC9BGoIgUzaAjp4IuGwOMK1KbQZyxO4wtUo1pes";
-const mapbox_access_token =
-    "pk.eyJ1IjoiZ2F1dHk5NiIsImEiOiJjanN4aDd2cG8wMmw3NDRwaDc2cnc2OXJwIn0.YRVVo-3FkQtfkMPH4lt2hw";
-String? fontFamilySecondaryGlobal;
+import 'package:positioncollect/src/core/app_environment.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+class Configs {
+  static late String apiUrl;
+  static late String apiKey;
+  static late String appName;
+  static late String assetsUrl;
+  static late String nominatimUrl;
+  static late String mapboxAccessToken;
+  static late AppEnvironment env;
+
+  /// Initializes config variables base on environment passed in parameter
+  static init({
+    AppEnvironment env = AppEnvironment.dev,
+  }) async {
+    String filePath = ".env";
+    if (env == AppEnvironment.prod) {
+      filePath = ".env.prod";
+    }
+    if (env == AppEnvironment.staging) {
+      filePath = ".env.staging";
+    }
+    await dotenv.load(fileName: filePath);
+    Configs.apiUrl = dotenv.get("APIURL");
+    Configs.apiKey = dotenv.get("APIKEY");
+    Configs.appName = dotenv.get("APPNAME");
+    Configs.assetsUrl = "https://service.geo.sm/var/www";
+    Configs.nominatimUrl = "https://nominatim.openstreetmap.org";
+    Configs.mapboxAccessToken =
+        "pk.eyJ1IjoiZ2F1dHk5NiIsImEiOiJjanN4aDd2cG8wMmw3NDRwaDc2cnc2OXJwIn0.YRVVo-3FkQtfkMPH4lt2hw";
+    Configs.env = env;
+  }
+}
+
+const String apiUrl = "http://10.0.2.2:8000";
+const String nominatimUrl = "https://nominatim.openstreetmap.org";

@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-29 16:28:15
+ * @Last Modified time: 2022-04-21 17:56:18
  */
 
 // ignore_for_file: prefer_const_literals_to_create_immutables
@@ -14,6 +14,7 @@ import 'package:positioncollect/generated/l10n.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
 import 'package:positioncollect/src/blocs/map/map_bloc.dart';
 import 'package:positioncollect/src/blocs/theme/theme_bloc.dart';
+import 'package:positioncollect/src/core/app_environment.dart';
 import 'package:positioncollect/src/models/user_model/user.dart';
 import 'package:positioncollect/src/utils/colors.dart';
 import 'package:positioncollect/src/utils/config.dart';
@@ -118,7 +119,9 @@ class NavigationDrawer extends StatelessWidget {
       case 1:
         break;
       case 2:
-        _showPopup(context, mapBloc!);
+        Configs.env == AppEnvironment.dev
+            ? _showPopup(context, mapBloc!)
+            : null;
         break;
       case 3:
         break;
@@ -131,7 +134,7 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   Widget headerWidget(User user) {
-    var url = apiUrl + user.imageProfil!;
+    var url = Configs.apiUrl + user.imageProfil!;
     return Column(
       children: [
         const SizedBox(

@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-21 14:41:32 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-28 21:37:38
+ * @Last Modified time: 2022-04-18 19:19:11
  */
 
 import 'package:chopper/chopper.dart';
@@ -18,6 +18,7 @@ import 'package:positioncollect/src/models/batiment_model/batiment_model.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/batiments_model/datum.dart';
+import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/models/sous_categories_model/sous_categories_model.dart';
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/utils/config.dart';
@@ -98,8 +99,8 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
 
         int idBatiment = model.data!.id!;
 
-        int? statusCode = await uploadImage(
-            'image', imagePath, apiUrl + "/api/batiments/$idBatiment", token);
+        int? statusCode = await uploadImage('image', imagePath,
+            Configs.apiUrl + "/api/batiments/$idBatiment", token);
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: model);
@@ -147,6 +148,86 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
         var model = BatimentModel.fromJson(response.body);
 
         return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<ResponseModel>> deleteBatiment(int idBatiment) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response =
+            await batimentsApiService!.deleteBatiment(token!, idBatiment);
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<BatimentModel>> updateBatiment(Data batiment, int idBatiment,
+      {String? imagePath}) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response = await batimentsApiService!
+            .updateBatiment(token!, batiment.toJson(), idBatiment);
+
+        var model = BatimentModel.fromJson(response.body);
+
+        if (imagePath != null) {
+          int? statusCode = await uploadImage('image', imagePath,
+              Configs.apiUrl + "/api/batiments/$idBatiment", token);
+
+          if (statusCode == 200 || statusCode == 201) {
+            final Response responseB =
+                await batimentsApiService!.getBatiments(token);
+
+            var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+            for (var i = 0; i < modelBatiment.data!.length; i++) {
+              BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                  id: Value(modelBatiment.data![i].id!),
+                  batiment: Value(modelBatiment.data![i]),
+                  online: const Value(true));
+
+              await batimentsDao!.insertBatiment(batimentsCompanion);
+            }
+            return Result(success: model);
+          } else {
+            return Result(error: UploadError());
+          }
+        } else {
+          final Response responseB =
+              await batimentsApiService!.getBatiments(token);
+
+          var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+          for (var i = 0; i < modelBatiment.data!.length; i++) {
+            BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                id: Value(modelBatiment.data![i].id!),
+                batiment: Value(modelBatiment.data![i]),
+                online: const Value(true));
+
+            await batimentsDao!.insertBatiment(batimentsCompanion);
+          }
+          return Result(success: model);
+        }
       } catch (e) {
         return Result(error: ServerError());
       }

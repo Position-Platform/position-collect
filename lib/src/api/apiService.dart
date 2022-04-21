@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:00:29 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 06:19:48
+ * @Last Modified time: 2022-04-21 15:39:04
  */
 // ignore_for_file: file_names
 
@@ -59,11 +59,22 @@ abstract class ApiService extends ChopperService {
   Future<Response> getbatimentsbyId(@Header('Authorization') String token,
       @Header('X-Authorization') String apiKey, @Path('id') int idBatiment);
 
+  @Delete(path: '/api/batiments/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> deletebatiment(@Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey, @Path('id') int idBatiment);
+
   @Post(path: '/api/batiments', headers: {'Accept': 'application/json'})
   Future<Response> addbatiment(
       @Header('Authorization') String token,
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
+
+  @Put(path: '/api/batiments/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> updatebatiment(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body,
+      @Path('id') int idBatiment);
 
 //Etablissements
   @Get(
@@ -78,6 +89,20 @@ abstract class ApiService extends ChopperService {
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
 
+  @Put(
+      path: '/api/etablissements/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> updateetablissement(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Body() Map<String, dynamic> body,
+      @Path('id') int idEtablissement);
+
+  @Delete(
+      path: '/api/etablissements/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> deleteetablissement(
+      @Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey,
+      @Path('id') int idEtablissement);
 //Horaires
   @Post(path: '/api/horaires', headers: {'Accept': 'application/json'})
   Future<Response> addhoraire(
@@ -85,13 +110,22 @@ abstract class ApiService extends ChopperService {
       @Header('X-Authorization') String apiKey,
       @Body() Map<String, dynamic> body);
 
-//Images
-
-  @Post(path: '/api/images', headers: {'Accept': 'application/json'})
-  Future<Response> addimage(
+  @Put(path: '/api/horaires/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> updatehoraire(
       @Header('Authorization') String token,
       @Header('X-Authorization') String apiKey,
-      @Body() Map<String, dynamic> body);
+      @Body() Map<String, dynamic> body,
+      @Path('id') int idHoraire);
+
+  @Delete(path: '/api/horaires/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> deletehoraire(@Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey, @Path('id') int idHoraire);
+
+//Images
+
+  @Delete(path: '/api/images/{id}', headers: {'Accept': 'application/json'})
+  Future<Response> deleteimage(@Header('Authorization') String token,
+      @Header('X-Authorization') String apiKey, @Path('id') int idImage);
 
 // SousCategories
   @Get(path: '/api/souscategories', headers: {'Accept': 'application/json'})

@@ -70,8 +70,8 @@ class _NewBusiness3State extends State<NewBusiness3> {
 
   next() {
     etablissement.Data etablissements = etablissement.Data(
-      idCommercial: widget.user!.commercial!.id,
-      idBatiment: widget.batiment.id,
+      idCommercial: widget.user!.commercial!.id.toString(),
+      idBatiment: widget.batiment.id.toString(),
       indicationAdresse: indicationController.text,
       nom: nomEntrepriseController.text,
       etage: etageController.text,
@@ -218,8 +218,9 @@ class _NewBusiness3State extends State<NewBusiness3> {
                                   return Container(
                                     color: whiteColor,
                                     child: ListTile(
-                                      leading: SvgPicture.network(assetsUrl +
-                                          suggestion.categorie!.logourl),
+                                      leading: SvgPicture.network(
+                                          Configs.assetsUrl +
+                                              suggestion.categorie!.logourl),
                                       title: Text(suggestion.nom!),
                                       subtitle:
                                           Text(suggestion.categorie!.nom!),
@@ -372,7 +373,6 @@ class _NewBusiness3State extends State<NewBusiness3> {
       return Image.file(
         _selectedFile!,
         width: MediaQuery.of(context).size.width - 16,
-        height: 150,
         fit: BoxFit.fill,
       );
     } else {

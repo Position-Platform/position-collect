@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:12:22 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-17 01:30:40
+ * @Last Modified time: 2022-04-03 01:13:44
  */
 
 import 'package:chopper/chopper.dart';
@@ -21,7 +21,7 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
   Future<Response> searchEtablissements(String query) async {
     Response response;
     try {
-      response = await apiService!.searchetablissement(apiKey, query);
+      response = await apiService!.searchetablissement(Configs.apiKey, query);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -35,7 +35,7 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
     Response response;
     try {
       response = await apiService!
-          .addetablissement("Bearer " + token, apiKey, etablissement);
+          .addetablissement("Bearer " + token, Configs.apiKey, etablissement);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -48,8 +48,8 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
       String token, Map<String, dynamic> horaire) async {
     Response response;
     try {
-      response =
-          await apiService!.addhoraire("Bearer " + token, apiKey, horaire);
+      response = await apiService!
+          .addhoraire("Bearer " + token, Configs.apiKey, horaire);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -58,10 +58,66 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
   }
 
   @override
-  Future<Response> addImage(String token, Map<String, dynamic> image) async {
+  Future<Response> deleteEtablissement(
+      String token, int idEtablissement) async {
     Response response;
     try {
-      response = await apiService!.addimage("Bearer " + token, apiKey, image);
+      response = await apiService!.deleteetablissement(
+          "Bearer " + token, Configs.apiKey, idEtablissement);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> deleteHoraire(String token, int idHoraire) async {
+    Response response;
+    try {
+      response = await apiService!
+          .deletehoraire("Bearer " + token, Configs.apiKey, idHoraire);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> deleteImage(String token, int idImage) async {
+    Response response;
+    try {
+      response = await apiService!
+          .deleteimage("Bearer " + token, Configs.apiKey, idImage);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> updateEtablissement(
+      String token, Map<String, dynamic> body, int idEtablissement) async {
+    Response response;
+    try {
+      response = await apiService!.updateetablissement(
+          "Bearer " + token, Configs.apiKey, body, idEtablissement);
+    } catch (e) {
+      print('Caught ${e.toString()}');
+      rethrow;
+    }
+    return response;
+  }
+
+  @override
+  Future<Response> updateHoraire(
+      String token, Map<String, dynamic> body, int idHoraire) async {
+    Response response;
+    try {
+      response = await apiService!
+          .updatehoraire("Bearer " + token, Configs.apiKey, body, idHoraire);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

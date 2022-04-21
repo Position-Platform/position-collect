@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 00:18:03 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-22 19:41:19
+ * @Last Modified time: 2022-04-19 17:49:27
  */
 
 import 'package:chopper/chopper.dart';
@@ -20,6 +20,8 @@ import 'package:positioncollect/src/models/batiments_model/batiments_model.dart'
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
 import 'package:positioncollect/src/models/etablissements_model/etablissements_model.dart';
+import 'package:positioncollect/src/models/horaire_model/horaire_model.dart';
+import 'package:positioncollect/src/models/response_model/response_model.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 import 'package:positioncollect/src/utils/config.dart';
 import 'package:positioncollect/src/utils/result.dart';
@@ -78,7 +80,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         int idEtablissement = model.data!.id!;
 
         int? statusCode = await uploadImage('cover', coverPath,
-            apiUrl + "/api/etablissements/$idEtablissement", token);
+            Configs.apiUrl + "/api/etablissements/$idEtablissement", token);
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: model);
@@ -122,7 +124,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
     if (isConnected) {
       try {
         int? statusCode = await postImage('imageUrl', imagePath,
-            apiUrl + "/api/images", token, idEtablissement.toString());
+            Configs.apiUrl + "/api/images", token, idEtablissement.toString());
 
         var response = await batimentsApiService!.getBatiments(token!);
 
@@ -136,6 +138,175 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
 
           await batimentsDao!.insertBatiment(batimentsCompanion);
         }
+
+        if (statusCode == 200 || statusCode == 201) {
+          return Result(success: statusCode);
+        } else {
+          return Result(error: UploadError());
+        }
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<ResponseModel>> deleteEtablissement(int idEtablissement) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper?.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response = await etablissementsApiService!
+            .deleteEtablissement(token!, idEtablissement);
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<ResponseModel>> deleteHoraire(int idHoraire) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper?.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response =
+            await etablissementsApiService!.deleteHoraire(token!, idHoraire);
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<ResponseModel>> deleteImage(int idImage) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response =
+            await etablissementsApiService!.deleteImage(token!, idImage);
+
+        var model = ResponseModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<EtablissementModel>> updateEtablissement(
+      Data etablissement, int idEtablissement,
+      {String? coverPath}) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response = await etablissementsApiService!
+            .updateEtablissement(
+                token!, etablissement.toJson(), idEtablissement);
+
+        var model = EtablissementModel.fromJson(response.body);
+
+        if (coverPath != null) {
+          int? statusCode = await uploadImage('cover', coverPath,
+              Configs.apiUrl + "/api/etablissements/$idEtablissement", token);
+
+          if (statusCode == 200 || statusCode == 201) {
+            final Response responseB =
+                await batimentsApiService!.getBatiments(token);
+
+            var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+            for (var i = 0; i < modelBatiment.data!.length; i++) {
+              BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                  id: Value(modelBatiment.data![i].id!),
+                  batiment: Value(modelBatiment.data![i]),
+                  online: const Value(true));
+
+              await batimentsDao!.insertBatiment(batimentsCompanion);
+            }
+            return Result(success: model);
+          } else {
+            return Result(error: UploadError());
+          }
+        } else {
+          final Response responseB =
+              await batimentsApiService!.getBatiments(token);
+
+          var modelBatiment = BatimentsModel.fromJson(responseB.body);
+
+          for (var i = 0; i < modelBatiment.data!.length; i++) {
+            BatimentsCompanion batimentsCompanion = BatimentsCompanion(
+                id: Value(modelBatiment.data![i].id!),
+                batiment: Value(modelBatiment.data![i]),
+                online: const Value(true));
+
+            await batimentsDao!.insertBatiment(batimentsCompanion);
+          }
+          return Result(success: model);
+        }
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<HoraireModel>> updateHoraire(
+      Horaire horaire, int idHoraire) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper!.getToken();
+
+    if (isConnected) {
+      try {
+        final Response response = await etablissementsApiService!
+            .updateHoraire(token!, horaire.toJson(), idHoraire);
+
+        var model = HoraireModel.fromJson(response.body);
+
+        return Result(success: model);
+      } catch (e) {
+        return Result(error: ServerError());
+      }
+    } else {
+      return Result(error: NoInternetError());
+    }
+  }
+
+  @override
+  Future<Result<int>> updateImage(String imagePath, int idEtablissement) async {
+    bool isConnected = await networkInfoHelper!.isConnected();
+    String? token = await sharedPreferencesHelper?.getToken();
+
+    if (isConnected) {
+      try {
+        int? statusCode = await postImage('imageUrl', imagePath,
+            Configs.apiUrl + "/api/images", token, idEtablissement.toString());
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: statusCode);

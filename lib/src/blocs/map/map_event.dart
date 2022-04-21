@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:45:09 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-28 21:39:20
+ * @Last Modified time: 2022-04-21 17:09:06
  */
 part of 'map_bloc.dart';
 
@@ -97,4 +97,18 @@ class GetBatiment extends MapEvent {
 
   @override
   String toString() => 'GetBatiment { GetBatiment: $bati }';
+}
+
+class ZoomInSearchResult extends MapEvent {
+  final String? longitude;
+  final String? latitude;
+
+  const ZoomInSearchResult(this.longitude, this.latitude);
+
+  @override
+  List<Object> get props => [longitude!, latitude!];
+
+  @override
+  String toString() =>
+      'ZoomInSearchResult { Longitude: $longitude, Latitude: $latitude }';
 }

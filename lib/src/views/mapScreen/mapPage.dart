@@ -4,7 +4,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-17 11:28:40 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-29 17:59:57
+ * @Last Modified time: 2022-04-18 18:39:17
  */
 
 import 'package:flutter/material.dart';
@@ -65,6 +65,8 @@ class _MapPageState extends State<MapPage> {
                         create: (context) => getIt<BatimentBloc>(),
                         child: BatimentDetail(
                           batiment: state.bati!,
+                          user: widget.user!,
+                          position: widget.position!,
                         ))),
               );
             });

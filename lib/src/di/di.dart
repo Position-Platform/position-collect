@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:01:23 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 17:48:08
+ * @Last Modified time: 2022-04-03 16:57:32
  */
 // ignore_for_file: file_names, avoid_print
 
@@ -21,6 +21,7 @@ import 'package:positioncollect/src/api/nominatimService.dart';
 import 'package:positioncollect/src/api/tracking/trackingApiService.dart';
 import 'package:positioncollect/src/api/tracking/trackingApiServiceFactory.dart';
 import 'package:positioncollect/src/blocs/auth/auth_bloc.dart';
+import 'package:positioncollect/src/blocs/edit_business/edit_business_bloc.dart';
 import 'package:positioncollect/src/blocs/gps/gps_bloc.dart';
 import 'package:positioncollect/src/blocs/home/home_bloc.dart';
 import 'package:positioncollect/src/blocs/login/login_bloc.dart';
@@ -47,7 +48,7 @@ final GetIt getIt = GetIt.instance;
 
 Future<void> init() async {
   final chopper = ChopperClient(
-    baseUrl: apiUrl,
+    baseUrl: Configs.apiUrl,
     services: [
       // the generated service
       ApiService.create()
@@ -56,7 +57,7 @@ Future<void> init() async {
   );
 
   final chopperNomonatim = ChopperClient(
-    baseUrl: nominatimUrl,
+    baseUrl: Configs.nominatimUrl,
     services: [
       // the generated service
       NominatimService.create()
@@ -140,6 +141,8 @@ Future<void> init() async {
       trackingRepository: getIt(),
       nominatimRepository: getIt()));
   getIt.registerFactory<NewBusinessBloc>(() => NewBusinessBloc(
+      batimentsRepository: getIt(), etablissementsRepository: getIt()));
+  getIt.registerFactory<EditBusinessBloc>(() => EditBusinessBloc(
       batimentsRepository: getIt(), etablissementsRepository: getIt()));
 
   getIt.registerFactory<ThemeBloc>(() => ThemeBloc());
