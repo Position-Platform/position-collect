@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-20 14:44:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-20 18:55:56
+ * @Last Modified time: 2022-04-21 17:24:09
  */
 // ignore_for_file: file_names
 
@@ -85,13 +85,13 @@ Widget buildFloatingSearchBar(
                         itemBuilder: (context, animation, item, i) {
                           return SizeFadeTransition(
                             animation: animation,
-                            child: buildItem(context, item, state),
+                            child: buildItem(context, item, state, mapBloc!),
                           );
                         },
                         updateItemBuilder: (context, animation, item) {
                           return FadeTransition(
                             opacity: animation,
-                            child: buildItem(context, item, state),
+                            child: buildItem(context, item, state, mapBloc!),
                           );
                         },
                         areItemsTheSame: (a, b) => a == b,
@@ -110,13 +110,15 @@ Widget buildFloatingSearchBar(
   );
 }
 
-Widget buildItem(
-    BuildContext context, Datum etablissement, SearchComplete state) {
+Widget buildItem(BuildContext context, Datum etablissement,
+    SearchComplete state, MapBloc mapBloc) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
       InkWell(
         onTap: () {
+          mapBloc.add(ZoomInSearchResult(etablissement.batiment!.longitude,
+              etablissement.batiment!.latitude));
           FloatingSearchBar.of(context)?.close();
         },
         child: Padding(
