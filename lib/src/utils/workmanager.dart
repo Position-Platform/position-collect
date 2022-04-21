@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-28 12:26:26 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-13 07:00:19
+ * @Last Modified time: 2022-04-21 14:41:39
  */
 import 'package:positioncollect/src/api/batiments/batimentsApiServiceFactory.dart';
 import 'package:positioncollect/src/api/tracking/trackingApiServiceFactory.dart';
@@ -22,7 +22,7 @@ import 'package:workmanager/workmanager.dart';
 
 void callbackDispatcher() {
   final chopper = ChopperClient(
-    baseUrl: apiUrl,
+    baseUrl: Configs.apiUrl,
     services: [
       // the generated service
       ApiService.create()

@@ -80,7 +80,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         int idEtablissement = model.data!.id!;
 
         int? statusCode = await uploadImage('cover', coverPath,
-            apiUrl + "/api/etablissements/$idEtablissement", token);
+            Configs.apiUrl + "/api/etablissements/$idEtablissement", token);
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: model);
@@ -124,7 +124,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
     if (isConnected) {
       try {
         int? statusCode = await postImage('imageUrl', imagePath,
-            apiUrl + "/api/images", token, idEtablissement.toString());
+            Configs.apiUrl + "/api/images", token, idEtablissement.toString());
 
         var response = await batimentsApiService!.getBatiments(token!);
 
@@ -232,7 +232,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
 
         if (coverPath != null) {
           int? statusCode = await uploadImage('cover', coverPath,
-              apiUrl + "/api/etablissements/$idEtablissement", token);
+              Configs.apiUrl + "/api/etablissements/$idEtablissement", token);
 
           if (statusCode == 200 || statusCode == 201) {
             final Response responseB =
@@ -306,7 +306,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
     if (isConnected) {
       try {
         int? statusCode = await postImage('imageUrl', imagePath,
-            apiUrl + "/api/images", token, idEtablissement.toString());
+            Configs.apiUrl + "/api/images", token, idEtablissement.toString());
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: statusCode);
