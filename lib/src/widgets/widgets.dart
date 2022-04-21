@@ -104,7 +104,7 @@ TextStyle secondaryTextStyle({
     fontSize: size != null ? size.toDouble() : textSecondarySizeGlobal,
     color: color ?? textSecondaryColorGlobal,
     fontWeight: weight ?? fontWeightSecondaryGlobal,
-    fontFamily: fontFamily ?? fontFamilySecondaryGlobal,
+    fontFamily: fontFamily ?? "",
     letterSpacing: letterSpacing,
     fontStyle: fontStyle,
     decoration: decoration,
@@ -416,7 +416,7 @@ Widget buildEtablissementDetailList(
                   child: buildCacheNetworkImage(
                       width: boxImageSize,
                       height: boxImageSize,
-                      url: apiUrl + data[index].cover!)),
+                      url: Configs.apiUrl + data[index].cover!)),
               const SizedBox(
                 width: 10,
               ),

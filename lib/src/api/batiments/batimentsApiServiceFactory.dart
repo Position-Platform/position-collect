@@ -21,7 +21,8 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   Future<Response> getBatiments(String token) async {
     Response response;
     try {
-      response = await apiService!.getbatiments("Bearer " + token, apiKey);
+      response =
+          await apiService!.getbatiments("Bearer " + token, Configs.apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -33,7 +34,8 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   Future<Response> addBatiment(String token, Map<String, dynamic> body) async {
     Response response;
     try {
-      response = await apiService!.addbatiment("Bearer " + token, apiKey, body);
+      response = await apiService!
+          .addbatiment("Bearer " + token, Configs.apiKey, body);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -45,7 +47,7 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
   Future<Response> getSousCategories() async {
     Response response;
     try {
-      response = await apiService!.getsouscategories(apiKey);
+      response = await apiService!.getsouscategories(Configs.apiKey);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -58,7 +60,7 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
     Response response;
     try {
       response = await apiService!
-          .getbatimentsbyId("Bearer " + token, apiKey, idBatiment);
+          .getbatimentsbyId("Bearer " + token, Configs.apiKey, idBatiment);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -71,7 +73,7 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
     Response response;
     try {
       response = await apiService!
-          .deletebatiment("Bearer " + token, apiKey, idBatiment);
+          .deletebatiment("Bearer " + token, Configs.apiKey, idBatiment);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -85,7 +87,7 @@ class BatimentsApiServiceFactory implements BatimentsApiService {
     Response response;
     try {
       response = await apiService!
-          .updatebatiment("Bearer " + token, apiKey, body, idBatiment);
+          .updatebatiment("Bearer " + token, Configs.apiKey, body, idBatiment);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

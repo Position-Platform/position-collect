@@ -21,7 +21,8 @@ class TrackingApiServiceFactory implements TrackingApiService {
   Future<Response> addtracking(String token, Map<String, dynamic> body) async {
     Response response;
     try {
-      response = await apiService!.addtracking("Bearer " + token, apiKey, body);
+      response = await apiService!
+          .addtracking("Bearer " + token, Configs.apiKey, body);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

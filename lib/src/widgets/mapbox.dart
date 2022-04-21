@@ -21,7 +21,7 @@ Widget buildMapBoxMap(String style, MapBloc? _mapBloc, Position position) {
     myLocationTrackingMode: MyLocationTrackingMode.Tracking,
     compassEnabled: true,
     styleString: style,
-    accessToken: mapbox_access_token,
+    accessToken: Configs.mapboxAccessToken,
     onMapLongClick: (point, latLng) => _mapBloc?.add(NewBatiment(latLng)),
     onMapCreated: (controller) =>
         _mapBloc?.add(OnMapInitializedEvent(controller)),

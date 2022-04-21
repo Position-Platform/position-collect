@@ -39,6 +39,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
+  flutter_dotenv: ^5.0.2
   flutter_keyboard_visibility: ^5.1.1
   flutter_localizations:
     sdk: flutter
@@ -101,6 +102,9 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
+    - .env
+    - .env.prod
+    - .env.staging
     - assets/images/
     - assets/images/onboarding/fr/
     - assets/images/onboarding/en/

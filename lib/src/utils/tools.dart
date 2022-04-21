@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:03:16 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-03-16 12:15:14
+ * @Last Modified time: 2022-04-21 14:44:29
  */
 // ignore_for_file: avoid_print
 
@@ -23,8 +23,8 @@ changeStatusColor(Color color) async {
 
 Future<int?> uploadImage(path, filepath, url, token) async {
   var request = MultipartRequest('POST', Uri.parse(url));
-  request.headers
-      .addAll({'X-Authorization': apiKey, 'Authorization': "Bearer " + token});
+  request.headers.addAll(
+      {'X-Authorization': Configs.apiKey, 'Authorization': "Bearer " + token});
   request.files.add(await MultipartFile.fromPath(path, filepath));
   request.fields['_method'] = 'PUT';
   var res = await request.send();
@@ -34,8 +34,8 @@ Future<int?> uploadImage(path, filepath, url, token) async {
 Future<int?> postImage(
     path, filepath, url, token, String idEtablissement) async {
   var request = MultipartRequest('POST', Uri.parse(url));
-  request.headers
-      .addAll({'X-Authorization': apiKey, 'Authorization': "Bearer " + token});
+  request.headers.addAll(
+      {'X-Authorization': Configs.apiKey, 'Authorization': "Bearer " + token});
   request.files.add(await MultipartFile.fromPath(path, filepath));
   request.fields['idEtablissement'] = idEtablissement;
   print(request.files);

@@ -48,7 +48,7 @@ final GetIt getIt = GetIt.instance;
 
 Future<void> init() async {
   final chopper = ChopperClient(
-    baseUrl: apiUrl,
+    baseUrl: Configs.apiUrl,
     services: [
       // the generated service
       ApiService.create()
@@ -57,7 +57,7 @@ Future<void> init() async {
   );
 
   final chopperNomonatim = ChopperClient(
-    baseUrl: nominatimUrl,
+    baseUrl: Configs.nominatimUrl,
     services: [
       // the generated service
       NominatimService.create()

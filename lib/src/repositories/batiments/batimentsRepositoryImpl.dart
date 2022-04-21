@@ -99,8 +99,8 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
 
         int idBatiment = model.data!.id!;
 
-        int? statusCode = await uploadImage(
-            'image', imagePath, apiUrl + "/api/batiments/$idBatiment", token);
+        int? statusCode = await uploadImage('image', imagePath,
+            Configs.apiUrl + "/api/batiments/$idBatiment", token);
 
         if (statusCode == 200 || statusCode == 201) {
           return Result(success: model);
@@ -191,8 +191,8 @@ class BatimentsRepositoryImpl implements BatimentsRepository {
         var model = BatimentModel.fromJson(response.body);
 
         if (imagePath != null) {
-          int? statusCode = await uploadImage(
-              'image', imagePath, apiUrl + "/api/batiments/$idBatiment", token);
+          int? statusCode = await uploadImage('image', imagePath,
+              Configs.apiUrl + "/api/batiments/$idBatiment", token);
 
           if (statusCode == 200 || statusCode == 201) {
             final Response responseB =

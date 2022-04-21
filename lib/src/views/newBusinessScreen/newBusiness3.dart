@@ -218,8 +218,9 @@ class _NewBusiness3State extends State<NewBusiness3> {
                                   return Container(
                                     color: whiteColor,
                                     child: ListTile(
-                                      leading: SvgPicture.network(assetsUrl +
-                                          suggestion.categorie!.logourl),
+                                      leading: SvgPicture.network(
+                                          Configs.assetsUrl +
+                                              suggestion.categorie!.logourl),
                                       title: Text(suggestion.nom!),
                                       subtitle:
                                           Text(suggestion.categorie!.nom!),

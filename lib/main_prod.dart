@@ -1,8 +1,8 @@
 /*
  * @Author: Boris Gautier 
- * @Date: 2022-01-09 09:03:58 
- * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-21 15:04:37
+ * @Date: 2022-04-21 15:03:54 
+ * @Last Modified by:   Boris Gautier 
+ * @Last Modified time: 2022-04-21 15:03:54 
  */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +18,6 @@ void main() {
       create: (_) => di.getIt<GpsBloc>(),
       child: MyApp(),
     ),
-    env: AppEnvironment.dev,
+    env: AppEnvironment.prod,
   );
 }

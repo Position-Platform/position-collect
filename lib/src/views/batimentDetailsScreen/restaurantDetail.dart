@@ -39,9 +39,9 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
   @override
   void initState() {
     super.initState();
-    imgList.add(apiUrl + widget.etablissement.cover!);
+    imgList.add(Configs.apiUrl + widget.etablissement.cover!);
     for (var i = 0; i < widget.etablissement.images!.length; i++) {
-      imgList.add(apiUrl + widget.etablissement.images![i].imageUrl!);
+      imgList.add(Configs.apiUrl + widget.etablissement.images![i].imageUrl!);
     }
     etablissement = Data(
       id: widget.etablissement.id,

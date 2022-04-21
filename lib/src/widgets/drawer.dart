@@ -131,7 +131,7 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   Widget headerWidget(User user) {
-    var url = apiUrl + user.imageProfil!;
+    var url = Configs.apiUrl + user.imageProfil!;
     return Column(
       children: [
         const SizedBox(

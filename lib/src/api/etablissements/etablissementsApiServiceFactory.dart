@@ -21,7 +21,7 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
   Future<Response> searchEtablissements(String query) async {
     Response response;
     try {
-      response = await apiService!.searchetablissement(apiKey, query);
+      response = await apiService!.searchetablissement(Configs.apiKey, query);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -35,7 +35,7 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
     Response response;
     try {
       response = await apiService!
-          .addetablissement("Bearer " + token, apiKey, etablissement);
+          .addetablissement("Bearer " + token, Configs.apiKey, etablissement);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -48,8 +48,8 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
       String token, Map<String, dynamic> horaire) async {
     Response response;
     try {
-      response =
-          await apiService!.addhoraire("Bearer " + token, apiKey, horaire);
+      response = await apiService!
+          .addhoraire("Bearer " + token, Configs.apiKey, horaire);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -62,8 +62,8 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
       String token, int idEtablissement) async {
     Response response;
     try {
-      response = await apiService!
-          .deleteetablissement("Bearer " + token, apiKey, idEtablissement);
+      response = await apiService!.deleteetablissement(
+          "Bearer " + token, Configs.apiKey, idEtablissement);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -75,8 +75,8 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
   Future<Response> deleteHoraire(String token, int idHoraire) async {
     Response response;
     try {
-      response =
-          await apiService!.deletehoraire("Bearer " + token, apiKey, idHoraire);
+      response = await apiService!
+          .deletehoraire("Bearer " + token, Configs.apiKey, idHoraire);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -88,8 +88,8 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
   Future<Response> deleteImage(String token, int idImage) async {
     Response response;
     try {
-      response =
-          await apiService!.deleteimage("Bearer " + token, apiKey, idImage);
+      response = await apiService!
+          .deleteimage("Bearer " + token, Configs.apiKey, idImage);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -103,7 +103,7 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
     Response response;
     try {
       response = await apiService!.updateetablissement(
-          "Bearer " + token, apiKey, body, idEtablissement);
+          "Bearer " + token, Configs.apiKey, body, idEtablissement);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;
@@ -117,7 +117,7 @@ class EtablissementsApiServiceFactory implements EtablissementsApiService {
     Response response;
     try {
       response = await apiService!
-          .updatehoraire("Bearer " + token, apiKey, body, idHoraire);
+          .updatehoraire("Bearer " + token, Configs.apiKey, body, idHoraire);
     } catch (e) {
       print('Caught ${e.toString()}');
       rethrow;

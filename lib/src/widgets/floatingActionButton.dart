@@ -41,7 +41,7 @@ Widget buildFloatingActionButton(
       }
       if (state is UrlPositionShared) {
         Share.share(S.of(context).shareContent + "\n" + state.url!,
-            subject: appName);
+            subject: Configs.appName);
       }
     },
     child: BlocBuilder<MapBloc, MapState>(

@@ -129,7 +129,7 @@ Widget buildItem(
                   duration: const Duration(milliseconds: 500),
                   child: etablissement.sousCategories!.isNotEmpty
                       ? SvgPicture.network(
-                          apiUrl +
+                          Configs.apiUrl +
                               etablissement
                                   .sousCategories![0].categorie!.logourl!,
                         )
