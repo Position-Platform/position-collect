@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-01-09 09:02:55 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-21 14:41:08
+ * @Last Modified time: 2022-04-21 21:03:13
  */
 // ignore_for_file: constant_identifier_names
 
@@ -41,5 +41,5 @@ class Configs {
   }
 }
 
-const String apiUrl = "http://10.0.2.2:8000";
+const String apiUrl = "https://servicesdev.position.cm";
 const String nominatimUrl = "https://nominatim.openstreetmap.org";
