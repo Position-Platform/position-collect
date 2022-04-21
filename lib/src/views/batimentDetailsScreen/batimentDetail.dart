@@ -108,8 +108,10 @@ class _BatimentDetailState extends State<BatimentDetail> {
               ),
             ),
           ),
-          editBatimentButton(
-              context, widget.batiment, widget.user, widget.position),
+          widget.user.id == widget.batiment.idUser
+              ? editBatimentButton(
+                  context, widget.batiment, widget.user, widget.position)
+              : const SizedBox(),
         ],
       ),
     );

@@ -2,7 +2,7 @@
  * @Author: Boris Gautier 
  * @Date: 2022-03-31 11:12:59 
  * @Last Modified by: Boris Gautier
- * @Last Modified time: 2022-04-19 17:38:03
+ * @Last Modified time: 2022-04-21 17:03:26
  */
 // ignore_for_file: file_names
 
@@ -111,8 +111,10 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
               : const SizedBox(),
           const SizedBox(height: 16),
           buildOpeningHours(widget.etablissement),
-          editEtablissementButton(
-              context, etablissement!, widget.user, widget.position),
+          widget.user.id == widget.etablissement.idUser
+              ? editEtablissementButton(
+                  context, etablissement!, widget.user, widget.position)
+              : const SizedBox(),
         ],
       ),
     );
