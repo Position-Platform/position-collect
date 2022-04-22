@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesHelper {
   final String _isFirstOpen = "firstOpen";
   final String _token = "token";
+  final String deepLink = "deepLink";
 
   Future<bool> setIsFirstOpen(String first) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -44,6 +45,20 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? res = prefs.getString(_token);
     print('Token ' + res.toString());
+    return res;
+  }
+
+  Future<bool> setDeepLink(String link) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool res = await prefs.setString(deepLink, link);
+    print('Deep Link ' + res.toString());
+    return res;
+  }
+
+  Future<String?> getDeepLink() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? res = prefs.getString(deepLink);
+    print('Deep Link ' + res.toString());
     return res;
   }
 }

@@ -8,6 +8,8 @@
  */
 import 'dart:async';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:positioncollect/src/core/app_environment.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,6 +47,16 @@ Future<void> initApp({
         frequency: const Duration(minutes: 15),
         constraints: Constraints(networkType: NetworkType.connected));
 
+    final PendingDynamicLinkData? initialLink =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+
+    if (initialLink != null) {
+      final Uri deepLink = initialLink.link;
+      deepLink.queryParameters.forEach((key, value) {
+        print("$key: $value");
+      });
+    }
+
     HydratedBlocOverrides.runZoned(() async {
       runApp(await builder());
     }, storage: storage, blocObserver: SimpleBlocObserver());
@@ -52,6 +64,6 @@ Future<void> initApp({
     print('runZonedGuarded: Caught error in my root zone.');
     print(stackTrace);
     print(error);
-    //FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }

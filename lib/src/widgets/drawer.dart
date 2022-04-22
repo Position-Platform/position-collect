@@ -52,15 +52,15 @@ class NavigationDrawer extends StatelessWidget {
                     height: 20,
                   ),
                   DrawerItem(
-                    name: 'People',
-                    icon: Icons.people,
+                    name: 'Statistiques',
+                    icon: Icons.bar_chart,
                     onPressed: () => onItemPressed(context, index: 0),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   DrawerItem(
-                      name: 'My Account',
+                      name: 'Mon Compte',
                       icon: Icons.account_box_rounded,
                       onPressed: () => onItemPressed(context, index: 1)),
                   const SizedBox(
@@ -74,7 +74,7 @@ class NavigationDrawer extends StatelessWidget {
                     height: 10,
                   ),
                   DrawerItem(
-                      name: 'Favourites',
+                      name: 'Langues',
                       icon: Icons.favorite_outline,
                       onPressed: () => onItemPressed(context, index: 3)),
                   const SizedBox(
@@ -91,7 +91,7 @@ class NavigationDrawer extends StatelessWidget {
                     height: 10,
                   ),
                   DrawerItem(
-                      name: 'Setting',
+                      name: 'Paramètres',
                       icon: Icons.settings,
                       onPressed: () => onItemPressed(context, index: 4)),
                   const SizedBox(

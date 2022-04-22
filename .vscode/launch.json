@@ -1,19 +1,49 @@
 {
-    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
-    // Pointez pour afficher la description des attributs existants.
-    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "positioncollect",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "positioncollect (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        }
-    ]
+  // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+  // Pointez pour afficher la description des attributs existants.
+  // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "positioncollect",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "positioncollect (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "positioncollect (staging)",
+      "program": "lib/main_staging.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "staging" //development or staging or production
+      ]
+    },
+    {
+      "name": "positioncollect (dev)",
+      "program": "lib/main_dev.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "dev" //development or staging or production
+      ]
+    },
+    {
+      "name": "positioncollect (staging)",
+      "program": "lib/main_prod.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "prod" //development or staging or production
+      ]
+    }
+  ]
 }
