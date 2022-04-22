@@ -6,6 +6,7 @@ import 'commodite.dart';
 import 'horaire.dart';
 import 'image.dart';
 import 'sous_category.dart';
+import 'user.dart';
 
 part 'etablissement.g.dart';
 
@@ -42,7 +43,7 @@ class Etablissement {
   dynamic idUser;
   dynamic logo;
   dynamic manager;
-  dynamic user;
+  User? user;
   Commercial? commercial;
   @JsonKey(name: 'sous_categories')
   List<SousCategory>? sousCategories;
@@ -129,7 +130,7 @@ class Etablissement {
     dynamic idUser,
     dynamic logo,
     dynamic manager,
-    dynamic user,
+    User? user,
     Commercial? commercial,
     List<SousCategory>? sousCategories,
     List<Commodite>? commodites,
