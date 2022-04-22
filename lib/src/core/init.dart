@@ -8,6 +8,7 @@
  */
 import 'dart:async';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:positioncollect/src/core/app_environment.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -52,6 +53,6 @@ Future<void> initApp({
     print('runZonedGuarded: Caught error in my root zone.');
     print(stackTrace);
     print(error);
-    //FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }
