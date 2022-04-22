@@ -611,6 +611,27 @@ Widget buildAddressDetail(String description) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text('Adresse',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15)),
+          ],
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(description,
+            style: const TextStyle(fontSize: 13),
+            overflow: TextOverflow.ellipsis),
+      ),
+    ],
+    /*  children: [
+      Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: const Text('Description',
             style: TextStyle(
@@ -624,7 +645,7 @@ Widget buildAddressDetail(String description) {
         child: Text(description,
             style: const TextStyle(fontSize: 13, color: greyAccent)),
       )
-    ],
+    ],*/
   );
 }
 
@@ -637,7 +658,7 @@ Widget buildOpeningHours(Etablissement etablissement) {
         child: const Text("Heures d'ouverture",
             style: TextStyle(
                 fontSize: 15,
-                color: Colors.black,
+                color: primaryColor,
                 fontWeight: FontWeight.bold)),
       ),
       const SizedBox(height: 8),

@@ -45,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (userResult.error is NoInternetError) {
             return emit(AuthNoInternet());
           } else if (userResult.error is ServerError) {
-            return emit(AuthServerError());
+            return emit(AuthFailure());
           } else {
             if (userResult.success!.data!.user!.commercial!.actif!) {
               return emit(AuthSuccess(userResult.success!.data!.user!));

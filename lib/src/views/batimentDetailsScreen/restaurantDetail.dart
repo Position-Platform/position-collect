@@ -35,6 +35,7 @@ class RestaurantDetail extends StatefulWidget {
 class _RestaurantDetailState extends State<RestaurantDetail> {
   final List<String> imgList = [];
   Data? etablissement;
+  int? idUser;
 
   @override
   void initState() {
@@ -63,6 +64,8 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
       whatsapp1: widget.etablissement.whatsapp1,
       whatsapp2: widget.etablissement.whatsapp2,
     );
+
+    idUser = widget.user.id ?? widget.etablissement.commercial!.idUser;
   }
 
   @override
@@ -87,35 +90,37 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
             ),
             preferredSize: const Size.fromHeight(1.0)),
       ),
-      body: ListView(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              autoPlay: true,
-              enableInfiniteScroll: true,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                autoPlay: true,
+                enableInfiniteScroll: true,
+              ),
+              items: imgList
+                  .map((item) => Center(
+                          child: Image.network(
+                        item,
+                        fit: BoxFit.cover,
+                        width: bannerWidth,
+                        height: bannerHeight,
+                      )))
+                  .toList(),
             ),
-            items: imgList
-                .map((item) => Center(
-                        child: Image.network(
-                      item,
-                      fit: BoxFit.cover,
-                      width: bannerWidth,
-                      height: bannerHeight,
-                    )))
-                .toList(),
-          ),
-          buildEtablissementTop(widget.etablissement),
-          divider2(),
-          widget.etablissement.description != null
-              ? buildAddressDetail(widget.etablissement.description!)
-              : const SizedBox(),
-          const SizedBox(height: 16),
-          buildOpeningHours(widget.etablissement),
-          widget.user.id == widget.etablissement.idUser
-              ? editEtablissementButton(
-                  context, etablissement!, widget.user, widget.position)
-              : const SizedBox(),
-        ],
+            buildEtablissementTop(widget.etablissement),
+            divider2(),
+            widget.etablissement.description != null
+                ? buildAddressDetail(widget.etablissement.description!)
+                : const SizedBox(),
+            const SizedBox(height: 16),
+            buildOpeningHours(widget.etablissement),
+            widget.user.id == idUser
+                ? editEtablissementButton(
+                    context, etablissement!, widget.user, widget.position)
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
