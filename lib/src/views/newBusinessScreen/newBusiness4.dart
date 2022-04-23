@@ -8,7 +8,6 @@
  */
 
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,8 +48,6 @@ class _NewBusiness4State extends State<NewBusiness4> {
   TextEditingController siteInternetController = TextEditingController();
   TextEditingController indicationAdresseController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-
-  final _random = Random();
 
   List<int> selectCommodites = [];
 
@@ -248,7 +245,7 @@ class _NewBusiness4State extends State<NewBusiness4> {
   List<Widget> commoditesChips() {
     List<Widget> chips = [];
     for (int i = 0; i < widget.commodites.length; i++) {
-      var element = colorsChips[_random.nextInt(colorsChips.length)];
+      var element = primaryColor;
       Widget item = Padding(
         padding: const EdgeInsets.only(left: 10, right: 5),
         child: ChoiceChip(

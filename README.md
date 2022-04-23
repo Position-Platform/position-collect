@@ -1,4 +1,4 @@
-# Position Collect v0.4.0
+# Position Collect v0.4.2
 
 Depot officiel de l'application mobile Position Collect
 
