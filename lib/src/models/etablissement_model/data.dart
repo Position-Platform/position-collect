@@ -32,7 +32,7 @@ class Data {
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
-  int? idUser;
+  String? idUser;
   dynamic logo;
 
   Data({
@@ -100,7 +100,7 @@ class Data {
     dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
-    int? idUser,
+    String? idUser,
     dynamic logo,
   }) {
     return Data(

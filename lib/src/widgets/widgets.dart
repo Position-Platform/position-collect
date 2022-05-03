@@ -416,7 +416,9 @@ Widget buildEtablissementDetailList(
                   child: buildCacheNetworkImage(
                       width: boxImageSize,
                       height: boxImageSize,
-                      url: Configs.apiUrl + data[index].cover!)),
+                      url: data[index].cover!.contains("http")
+                          ? data[index].cover
+                          : Configs.apiUrl + data[index].cover!)),
               const SizedBox(
                 width: 10,
               ),

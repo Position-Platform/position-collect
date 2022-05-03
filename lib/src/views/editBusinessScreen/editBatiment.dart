@@ -394,7 +394,9 @@ class _EditBatimentState extends State<EditBatiment> {
       );
     } else if (widget.batiment.image != null) {
       return Image.network(
-        Configs.apiUrl + widget.batiment.image,
+        widget.batiment.image.toString().contains("http")
+            ? widget.batiment.image
+            : Configs.apiUrl + widget.batiment.image,
         width: MediaQuery.of(context).size.width - 16,
         fit: BoxFit.fill,
       );

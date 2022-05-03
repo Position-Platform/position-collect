@@ -436,7 +436,9 @@ class _EditEtablissementState extends State<EditEtablissement> {
       );
     } else if (widget.etablissement.cover != null) {
       return Image.network(
-        Configs.apiUrl + widget.etablissement.cover!,
+        widget.etablissement.cover!.contains('http')
+            ? widget.etablissement.cover!
+            : Configs.apiUrl + widget.etablissement.cover!,
         width: MediaQuery.of(context).size.width - 16,
         fit: BoxFit.fill,
       );
