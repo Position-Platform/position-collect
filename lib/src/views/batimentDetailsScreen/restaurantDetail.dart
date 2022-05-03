@@ -47,7 +47,11 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
   @override
   void initState() {
     super.initState();
-    imgList.add(Configs.apiUrl + widget.etablissement.cover!);
+    if (widget.etablissement.cover!.contains('http')) {
+      imgList.add(widget.etablissement.cover!);
+    } else {
+      imgList.add(Configs.apiUrl + widget.etablissement.cover!);
+    }
     for (var i = 0; i < widget.etablissement.images!.length; i++) {
       imgList.add(Configs.apiUrl + widget.etablissement.images![i].imageUrl!);
     }
@@ -82,325 +86,315 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
   Widget build(BuildContext context) {
     final double bannerWidth = MediaQuery.of(context).size.width;
     final double bannerHeight = MediaQuery.of(context).size.width * 3 / 4;
-    return Hero(
-        tag: widget.etablissement.id!,
-        child: Scaffold(
-          backgroundColor: whiteColor,
-          appBar: AppBar(
-            iconTheme: const IconThemeData(
-              color: blackColor,
+    return Scaffold(
+      backgroundColor: whiteColor,
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: blackColor,
+        ),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        centerTitle: true,
+        title: Text(widget.etablissement.nom!,
+            style: const TextStyle(fontSize: 18, color: blackColor)),
+        backgroundColor: whiteColor,
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.grey[100],
+              height: 1.0,
             ),
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            centerTitle: true,
-            title: Text(widget.etablissement.nom!,
-                style: const TextStyle(fontSize: 18, color: blackColor)),
-            backgroundColor: whiteColor,
-            bottom: PreferredSize(
-                child: Container(
-                  color: Colors.grey[100],
-                  height: 1.0,
-                ),
-                preferredSize: const Size.fromHeight(1.0)),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 260,
-                  child: Stack(
-                    children: [
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          enableInfiniteScroll: true,
-                        ),
-                        items: imgList
-                            .map((item) => Center(
-                                    child: Image.network(
-                                  item,
-                                  fit: BoxFit.cover,
-                                  width: bannerWidth,
-                                  height: bannerHeight,
-                                )))
-                            .toList(),
-                      ),
-                    ],
+            preferredSize: const Size.fromHeight(1.0)),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 260,
+              child: Stack(
+                children: [
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enableInfiniteScroll: true,
+                    ),
+                    items: imgList
+                        .map((item) => Center(
+                                child: Image.network(
+                              item,
+                              fit: BoxFit.cover,
+                              width: bannerWidth,
+                              height: bannerHeight,
+                            )))
+                        .toList(),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 10.0),
-                  child: Column(
+                ],
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 30.0, right: 30.0, top: 10.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      widget.etablissement.nom!,
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 24,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              "Site Internet : ",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.etablissement.siteInternet ?? "",
+                                style: const TextStyle(
+                                    color: greyAccent, fontSize: 14)),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Text(
+                              "Phone : ",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.etablissement.phone!,
+                                style: const TextStyle(
+                                    color: greyAccent, fontSize: 14)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              "Code Postal : ",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.etablissement.codePostal ?? "",
+                                style: const TextStyle(
+                                    color: greyAccent, fontSize: 14)),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Text(
+                              "Whatsapp : ",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.etablissement.whatsapp1!,
+                                style: const TextStyle(
+                                    color: greyAccent, fontSize: 14)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              "Services : ",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.etablissement.services!,
+                                style: const TextStyle(
+                                    color: greyAccent, fontSize: 14)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundImage: CachedNetworkImageProvider(
+                                Configs.apiUrl + imageProfile!),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Ajouté le " +
+                                      convertCreatedAt(
+                                          widget.etablissement.createdAt!) +
+                                      " Par ",
+                                  style: const TextStyle(
+                                      color: primaryColor, fontSize: 14),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  userName!,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 1,
+                    ),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        const Text("Description",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         Text(
-                          widget.etablissement.nom!,
-                          textAlign: TextAlign.start,
+                          widget.etablissement.description ?? "",
                           style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 24,
-                          ),
+                              fontWeight: FontWeight.w300, fontSize: 14),
+                          textAlign: TextAlign.start,
                         ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text("Heures d'ouverture",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
                         const SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  "Site Internet : ",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(widget.etablissement.siteInternet ?? "",
-                                    style: const TextStyle(
-                                        color: greyAccent, fontSize: 14)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  "Phone : ",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(widget.etablissement.phone!,
-                                    style: const TextStyle(
-                                        color: greyAccent, fontSize: 14)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  "Code Postal : ",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(widget.etablissement.codePostal ?? "",
-                                    style: const TextStyle(
-                                        color: greyAccent, fontSize: 14)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  "Whatsapp : ",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(widget.etablissement.whatsapp1!,
-                                    style: const TextStyle(
-                                        color: greyAccent, fontSize: 14)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  "Services : ",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(widget.etablissement.services!,
-                                    style: const TextStyle(
-                                        color: greyAccent, fontSize: 14)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 30.0, bottom: 10.0),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundImage: CachedNetworkImageProvider(
-                                    Configs.apiUrl + imageProfile!),
+                        ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: widget.etablissement.horaires!.length,
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          widget.etablissement.horaires![index]
+                                              .jour!,
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              color: greyAccent,
+                                              fontWeight: FontWeight.w600)),
+                                      Text(
+                                          widget.etablissement.horaires![index]
+                                              .plageHoraire!,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: greyAccent,
+                                          )),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 6),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Ajouté le " +
-                                          convertCreatedAt(
-                                              widget.etablissement.createdAt!) +
-                                          " Par ",
-                                      style: const TextStyle(
-                                          color: primaryColor, fontSize: 14),
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      userName!,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
+                            );
+                          },
+                        ),
+                        Container(
+                          height: 80,
+                        )
+                      ],
+                    ),
+                  ]),
+            )
+          ],
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+          height: 73,
+          child: BottomAppBar(
+              color: Colors.white,
+              elevation: 0.0,
+              child: FittedBox(
+                  fit: BoxFit.none,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        onTap: () {
+                          Future.delayed(Duration.zero, () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      BlocProvider<EditBusinessBloc>(
+                                          create: (context) =>
+                                              getIt<EditBusinessBloc>(),
+                                          child: EditEtablissement(
+                                            etablissement: etablissement!,
+                                            user: widget.user,
+                                            position: widget.position,
+                                          ))),
+                            );
+                          });
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(bottom: 6.0),
+                          height: 46,
+                          width: 210,
+                          decoration: BoxDecoration(
+                            color: accentPrimaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
                               ),
                             ],
                           ),
+                          child: const Text(
+                            "Modifier cette entreprise",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
                         ),
-                        const Divider(
-                          thickness: 1,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            const Text("Description",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18)),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              widget.etablissement.description ?? "",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w300, fontSize: 14),
-                              textAlign: TextAlign.start,
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Text("Heures d'ouverture",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18)),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount: widget.etablissement.horaires!.length,
-                              padding: const EdgeInsets.symmetric(vertical: 0),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                              widget.etablissement
-                                                  .horaires![index].jour!,
-                                              style: const TextStyle(
-                                                  fontSize: 13,
-                                                  color: greyAccent,
-                                                  fontWeight: FontWeight.w600)),
-                                          Text(
-                                              widget
-                                                  .etablissement
-                                                  .horaires![index]
-                                                  .plageHoraire!,
-                                              style: const TextStyle(
-                                                fontSize: 13,
-                                                color: greyAccent,
-                                              )),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 6),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                            Container(
-                              height: 80,
-                            )
-                          ],
-                        ),
-                      ]),
-                )
-              ],
-            ),
-          ),
-          bottomNavigationBar: SizedBox(
-              height: 73,
-              child: BottomAppBar(
-                  color: Colors.white,
-                  elevation: 0.0,
-                  child: FittedBox(
-                      fit: BoxFit.none,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: InkWell(
-                            onTap: () {
-                              Future.delayed(Duration.zero, () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          BlocProvider<EditBusinessBloc>(
-                                              create: (context) =>
-                                                  getIt<EditBusinessBloc>(),
-                                              child: EditEtablissement(
-                                                etablissement: etablissement!,
-                                                user: widget.user,
-                                                position: widget.position,
-                                              ))),
-                                );
-                              });
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              margin: const EdgeInsets.only(bottom: 6.0),
-                              height: 46,
-                              width: 210,
-                              decoration: BoxDecoration(
-                                color: accentPrimaryColor,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    offset: Offset(0.0, 1.0), //(x,y)
-                                    blurRadius: 6.0,
-                                  ),
-                                ],
-                              ),
-                              child: const Text(
-                                "Modifier cette entreprise",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ))))),
-        ));
+                      ))))),
+    );
   }
 
   String convertCreatedAt(String createdAt) {

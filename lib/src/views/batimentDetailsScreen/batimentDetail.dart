@@ -85,7 +85,9 @@ class _BatimentDetailState extends State<BatimentDetail> {
                 buildCacheNetworkImage(
                     width: bannerWidth,
                     height: bannerHeight,
-                    url: Configs.apiUrl + widget.batiment.image),
+                    url: widget.batiment.image.toString().contains("http")
+                        ? widget.batiment.image
+                        : Configs.apiUrl + widget.batiment.image),
                 buildBatimentTop(widget.batiment),
                 divider1(),
                 buildNewMenu(widget.batiment, widget.user, widget.position),

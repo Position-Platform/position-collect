@@ -10,6 +10,7 @@ import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:positioncollect/src/core/app_environment.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,6 +47,10 @@ Future<void> initApp({
     Workmanager().registerPeriodicTask("2", "addtracking",
         frequency: const Duration(minutes: 15),
         constraints: Constraints(networkType: NetworkType.connected));
+
+    FirebasePerformance performance = FirebasePerformance.instance;
+
+    performance.setPerformanceCollectionEnabled(true);
 
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();

@@ -32,7 +32,7 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       deletedAt: json['deleted_at'],
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
-      idUser: json['idUser'] as int?,
+      idUser: json['idUser'] as String?,
       logo: json['logo'],
     );
 
