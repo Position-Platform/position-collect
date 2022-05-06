@@ -116,8 +116,28 @@ class NewBusinessBloc extends Bloc<NewBusinessEvent, NewBusinessState> {
           .addEtablissement(event.etablissements, event.coverPath,
               event.idSousCategorie, event.idCommodite);
 
+      etablissement.Data etab = etablissement.Data(
+        id: etablissementResult.success!.data!.id,
+        nom: etablissementResult.success!.data!.nom,
+        etage: etablissementResult.success!.data!.etage,
+        ameliorations: etablissementResult.success!.data!.ameliorations,
+        codePostal: etablissementResult.success!.data!.codePostal,
+        avis: 0,
+        createdAt: etablissementResult.success!.data!.createdAt,
+        updatedAt: etablissementResult.success!.data!.updatedAt,
+        description: etablissementResult.success!.data!.description,
+        idBatiment: etablissementResult.success!.data!.idBatiment.toString(),
+        idCommercial:
+            etablissementResult.success!.data!.idCommercial.toString(),
+        indicationAdresse: etablissementResult.success!.data!.indicationAdresse,
+        phone: etablissementResult.success!.data!.phone,
+        services: etablissementResult.success!.data!.services,
+        siteInternet: etablissementResult.success!.data!.siteInternet,
+        whatsapp1: etablissementResult.success!.data!.whatsapp1,
+      );
+
       if (etablissementResult.success!.success!) {
-        emit(EtablissementAdded(etablissementResult.success!.data!));
+        emit(EtablissementAdded(etab));
       } else if (etablissementResult.error! is UploadError) {
         emit(const Error("Upload Error"));
       }
