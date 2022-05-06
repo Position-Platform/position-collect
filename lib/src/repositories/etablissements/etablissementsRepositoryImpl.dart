@@ -19,6 +19,7 @@ import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/batiments_model/batiments_model.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
+import 'package:positioncollect/src/models/etablissement_post/etablissement_post.dart';
 import 'package:positioncollect/src/models/etablissements_model/etablissements_model.dart';
 import 'package:positioncollect/src/models/horaire_model/horaire_model.dart';
 import 'package:positioncollect/src/models/response_model/response_model.dart';
@@ -62,7 +63,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
   }
 
   @override
-  Future<Result<EtablissementModel>> addEtablissement(Data etablissement,
+  Future<Result<EtablissementPost>> addEtablissement(Data etablissement,
       String coverPath, int idSousCategorie, String idCommodite) async {
     bool isConnected = await networkInfoHelper!.isConnected();
     String? token = await sharedPreferencesHelper?.getToken();
@@ -75,7 +76,7 @@ class EtablissementsRepositoryImpl implements EtablissementsRepository {
         final Response response =
             await etablissementsApiService!.addEtablissement(token!, etab);
 
-        var model = EtablissementModel.fromJson(response.body);
+        var model = EtablissementPost.fromJson(response.body);
 
         int idEtablissement = model.data!.id!;
 

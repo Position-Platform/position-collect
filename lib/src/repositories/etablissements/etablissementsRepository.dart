@@ -10,6 +10,7 @@
 import 'package:positioncollect/src/models/batiment_model/horaire.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/etablissement_model.dart';
+import 'package:positioncollect/src/models/etablissement_post/etablissement_post.dart';
 import 'package:positioncollect/src/models/etablissements_model/etablissements_model.dart';
 import 'package:positioncollect/src/models/horaire_model/horaire_model.dart';
 import 'package:positioncollect/src/models/response_model/response_model.dart';
@@ -18,7 +19,7 @@ import 'package:positioncollect/src/utils/result.dart';
 abstract class EtablissementsRepository {
   Future<Result<EtablissementsModel>> searchEtablissements(String query);
 
-  Future<Result<EtablissementModel>> addEtablissement(Data etablissement,
+  Future<Result<EtablissementPost>> addEtablissement(Data etablissement,
       String coverPath, int idSousCategorie, String idCommodite);
 
   Future<Result<EtablissementModel>> updateEtablissement(
