@@ -37,9 +37,9 @@ Future<void> initApp({
     final storage = await HydratedStorage.build(
       storageDirectory: await getApplicationSupportDirectory(),
     );
-    Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+    Workmanager().initialize(callbackDispatcher);
     Workmanager().registerPeriodicTask("1", "updatebatiments",
-        frequency: const Duration(minutes: 45),
+        frequency: const Duration(minutes: 15),
         constraints: Constraints(
             requiresBatteryNotLow: true,
             networkType: NetworkType.connected,

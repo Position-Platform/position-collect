@@ -5,6 +5,8 @@ part 'batiment.g.dart';
 @JsonSerializable()
 class Batiment {
   int? id;
+  int? idCommercial;
+  int? idUser;
   String? nom;
   String? nombreNiveau;
   String? codeBatiment;
@@ -22,11 +24,11 @@ class Batiment {
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
-  int? idCommercial;
-  int? idUser;
 
   Batiment({
     this.id,
+    this.idCommercial,
+    this.idUser,
     this.nom,
     this.nombreNiveau,
     this.codeBatiment,
@@ -41,13 +43,11 @@ class Batiment {
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
-    this.idCommercial,
-    this.idUser,
   });
 
   @override
   String toString() {
-    return 'Batiment(id: $id, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, idCommercial: $idCommercial, idUser: $idUser)';
+    return 'Batiment(id: $id, idCommercial: $idCommercial, idUser: $idUser, nom: $nom, nombreNiveau: $nombreNiveau, codeBatiment: $codeBatiment, longitude: $longitude, latitude: $latitude, image: $image, indication: $indication, rue: $rue, ville: $ville, commune: $commune, quartier: $quartier, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   factory Batiment.fromJson(Map<String, dynamic> json) {
@@ -58,6 +58,8 @@ class Batiment {
 
   Batiment copyWith({
     int? id,
+    int? idCommercial,
+    int? idUser,
     String? nom,
     String? nombreNiveau,
     String? codeBatiment,
@@ -72,11 +74,11 @@ class Batiment {
     dynamic deletedAt,
     String? createdAt,
     String? updatedAt,
-    int? idCommercial,
-    int? idUser,
   }) {
     return Batiment(
       id: id ?? this.id,
+      idCommercial: idCommercial ?? this.idCommercial,
+      idUser: idUser ?? this.idUser,
       nom: nom ?? this.nom,
       nombreNiveau: nombreNiveau ?? this.nombreNiveau,
       codeBatiment: codeBatiment ?? this.codeBatiment,
@@ -91,8 +93,6 @@ class Batiment {
       deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      idCommercial: idCommercial ?? this.idCommercial,
-      idUser: idUser ?? this.idUser,
     );
   }
 }

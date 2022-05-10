@@ -8,6 +8,8 @@ part of 'batiment.dart';
 
 Batiment _$BatimentFromJson(Map<String, dynamic> json) => Batiment(
       id: json['id'] as int?,
+      idCommercial: json['idCommercial'] as int?,
+      idUser: json['idUser'] as int?,
       nom: json['nom'] as String?,
       nombreNiveau: json['nombreNiveau'] as String?,
       codeBatiment: json['codeBatiment'] as String?,
@@ -22,12 +24,12 @@ Batiment _$BatimentFromJson(Map<String, dynamic> json) => Batiment(
       deletedAt: json['deleted_at'],
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
-      idCommercial: json['idCommercial'] as int?,
-      idUser: json['idUser'] as int?,
     );
 
 Map<String, dynamic> _$BatimentToJson(Batiment instance) => <String, dynamic>{
       'id': instance.id,
+      'idCommercial': instance.idCommercial,
+      'idUser': instance.idUser,
       'nom': instance.nom,
       'nombreNiveau': instance.nombreNiveau,
       'codeBatiment': instance.codeBatiment,
@@ -42,6 +44,4 @@ Map<String, dynamic> _$BatimentToJson(Batiment instance) => <String, dynamic>{
       'deleted_at': instance.deletedAt,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
-      'idCommercial': instance.idCommercial,
-      'idUser': instance.idUser,
     };
