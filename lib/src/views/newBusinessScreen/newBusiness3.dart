@@ -70,8 +70,8 @@ class _NewBusiness3State extends State<NewBusiness3> {
 
   next() {
     etablissement.Data etablissements = etablissement.Data(
-      idCommercial: widget.user!.commercial!.id.toString(),
-      idBatiment: widget.batiment.id.toString(),
+      idCommercial: widget.user!.commercial!.id,
+      idBatiment: widget.batiment.id,
       indicationAdresse: indicationController.text,
       nom: nomEntrepriseController.text,
       etage: etageController.text,

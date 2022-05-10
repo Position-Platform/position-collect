@@ -24,7 +24,7 @@ class BatimentUpdated extends EditBusinessState {
 }
 
 class EtablissementUpdated extends EditBusinessState {
-  final etablissement.Data etab;
+  final etablissementupdate.Data etab;
   const EtablissementUpdated(this.etab);
 
   @override

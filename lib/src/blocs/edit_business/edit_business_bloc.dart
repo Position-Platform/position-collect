@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:positioncollect/src/models/batiment_model/data.dart';
 import 'package:positioncollect/src/models/etablissement_model/data.dart'
     as etablissement;
+import 'package:positioncollect/src/models/etablissement_update_model/data.dart'
+    as etablissementupdate;
 import 'package:positioncollect/src/repositories/batiments/batimentsRepository.dart';
 import 'package:positioncollect/src/repositories/etablissements/etablissementsRepository.dart';
 

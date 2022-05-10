@@ -1,15 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'batiment.dart';
-import 'commercial.dart';
-import 'commodite.dart';
-import 'sous_category.dart';
-import 'user.dart';
 
-part 'datum.g.dart';
+part 'data.g.dart';
 
 @JsonSerializable()
-class Datum {
+class Data {
   int? id;
   String? nom;
   String? idBatiment;
@@ -41,17 +37,8 @@ class Datum {
   @JsonKey(name: 'updated_at')
   String? updatedAt;
   Batiment? batiment;
-  @JsonKey(name: 'sous_categories')
-  List<SousCategory>? sousCategories;
-  List<Commodite>? commodites;
-  List<dynamic>? images;
-  List<dynamic>? horaires;
-  List<dynamic>? commentaires;
-  dynamic manager;
-  User? user;
-  Commercial? commercial;
 
-  Datum({
+  Data({
     this.id,
     this.nom,
     this.idBatiment,
@@ -80,26 +67,18 @@ class Datum {
     this.createdAt,
     this.updatedAt,
     this.batiment,
-    this.sousCategories,
-    this.commodites,
-    this.images,
-    this.horaires,
-    this.commentaires,
-    this.manager,
-    this.user,
-    this.commercial,
   });
 
   @override
   String toString() {
-    return 'Datum(id: $id, nom: $nom, idBatiment: $idBatiment, indicationAdresse: $indicationAdresse, codePostal: $codePostal, siteInternet: $siteInternet, idCommercial: $idCommercial, idManager: $idManager, idUser: $idUser, etage: $etage, cover: $cover, vues: $vues, phone: $phone, whatsapp1: $whatsapp1, whatsapp2: $whatsapp2, description: $description, osmId: $osmId, updated: $updated, revoir: $revoir, valide: $valide, services: $services, ameliorations: $ameliorations, avis: $avis, logo: $logo, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, batiment: $batiment, sousCategories: $sousCategories, commodites: $commodites, images: $images, horaires: $horaires, commentaires: $commentaires, manager: $manager, user: $user, commercial: $commercial)';
+    return 'Data(id: $id, nom: $nom, idBatiment: $idBatiment, indicationAdresse: $indicationAdresse, codePostal: $codePostal, siteInternet: $siteInternet, idCommercial: $idCommercial, idManager: $idManager, idUser: $idUser, etage: $etage, cover: $cover, vues: $vues, phone: $phone, whatsapp1: $whatsapp1, whatsapp2: $whatsapp2, description: $description, osmId: $osmId, updated: $updated, revoir: $revoir, valide: $valide, services: $services, ameliorations: $ameliorations, avis: $avis, logo: $logo, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, batiment: $batiment)';
   }
 
-  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DatumToJson(this);
+  Map<String, dynamic> toJson() => _$DataToJson(this);
 
-  Datum copyWith({
+  Data copyWith({
     int? id,
     String? nom,
     String? idBatiment,
@@ -128,16 +107,8 @@ class Datum {
     String? createdAt,
     String? updatedAt,
     Batiment? batiment,
-    List<SousCategory>? sousCategories,
-    List<Commodite>? commodites,
-    List<dynamic>? images,
-    List<dynamic>? horaires,
-    List<dynamic>? commentaires,
-    dynamic manager,
-    User? user,
-    Commercial? commercial,
   }) {
-    return Datum(
+    return Data(
       id: id ?? this.id,
       nom: nom ?? this.nom,
       idBatiment: idBatiment ?? this.idBatiment,
@@ -166,14 +137,6 @@ class Datum {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       batiment: batiment ?? this.batiment,
-      sousCategories: sousCategories ?? this.sousCategories,
-      commodites: commodites ?? this.commodites,
-      images: images ?? this.images,
-      horaires: horaires ?? this.horaires,
-      commentaires: commentaires ?? this.commentaires,
-      manager: manager ?? this.manager,
-      user: user ?? this.user,
-      commercial: commercial ?? this.commercial,
     );
   }
 }

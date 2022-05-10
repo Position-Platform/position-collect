@@ -23,7 +23,7 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
       whatsapp1: json['whatsapp1'] as String?,
       whatsapp2: json['whatsapp2'] as String?,
       description: json['description'] as String?,
-      osmId: json['osmId'],
+      osmId: json['osmId'] as String?,
       updated: json['updated'] as bool?,
       revoir: json['revoir'] as String?,
       valide: json['valide'] as String?,
@@ -40,18 +40,19 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
       sousCategories: (json['sous_categories'] as List<dynamic>?)
           ?.map((e) => SousCategory.fromJson(e as Map<String, dynamic>))
           .toList(),
-      commodites: json['commodites'] as List<dynamic>?,
-      images: (json['images'] as List<dynamic>?)
-          ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
+      commodites: (json['commodites'] as List<dynamic>?)
+          ?.map((e) => Commodite.fromJson(e as Map<String, dynamic>))
           .toList(),
-      horaires: (json['horaires'] as List<dynamic>?)
-          ?.map((e) => Horaire.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      images: json['images'] as List<dynamic>?,
+      horaires: json['horaires'] as List<dynamic>?,
       commentaires: json['commentaires'] as List<dynamic>?,
+      manager: json['manager'],
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
       commercial: json['commercial'] == null
           ? null
           : Commercial.fromJson(json['commercial'] as Map<String, dynamic>),
-      manager: json['manager'],
     );
 
 Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
@@ -88,6 +89,7 @@ Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
       'images': instance.images,
       'horaires': instance.horaires,
       'commentaires': instance.commentaires,
-      'commercial': instance.commercial,
       'manager': instance.manager,
+      'user': instance.user,
+      'commercial': instance.commercial,
     };
